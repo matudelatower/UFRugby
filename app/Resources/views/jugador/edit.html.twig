@@ -1,0 +1,96 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+Jugador
+{% endblock title %}
+{% block body %}
+    <h1>Editar Jugador</h1>
+    {{ form_start(edit_form) }}
+    <div class="box">
+        <div class="box-header">
+            <h3 class="box-title">Información Personal</h3>
+        </div>
+        <div class="box-body">
+
+
+            <div class="col-md-6">
+
+                {{ form_row(edit_form.tipoIdentificacion) }}
+                {{ form_row(edit_form.nombre) }}
+                {{ form_row(edit_form.fechaNacimiento) }}
+                {{ form_widget(edit_form.imageFile) }}
+            </div>
+            <div class="col-md-6">
+                {{ form_row(edit_form.numeroIdentificacion) }}
+                {{ form_row(edit_form.apellido) }}
+                {{ form_row(edit_form.sexo) }}
+            </div>
+
+        </div>
+    </div>
+
+
+    <div class="box">
+        <div class="box-header">
+            <h3 class="box-title">Datos de Contacto</h3>
+        </div>
+        <div class="box-body">
+            <div class="col-md-6">
+                {{ form_row(edit_form.contacto.telefono) }}
+                {{ form_row(edit_form.contacto.mail) }}
+                {{ form_row(edit_form.contacto.direccion) }}
+                {{ form_row(edit_form.contacto.provincia) }}
+
+
+            </div>
+            <div class="col-md-6">
+                {{ form_row(edit_form.contacto.telefonoAlternativa) }}
+                {{ form_row(edit_form.contacto.skype) }}
+                <div class="col-md-6">
+                    {{ form_row(edit_form.contacto.localidad) }}
+                </div>
+                <div class="col-md-6">
+                    {{ form_row(edit_form.contacto.codigoPostal) }}
+                </div>
+                {{ form_row(edit_form.contacto.pais) }}
+            </div>
+
+
+        </div>
+    </div>
+    <div class="box">
+        <div class="box-header">
+            <h3 class="box-title">Actualidad</h3>
+        </div>
+        <div class="box-body">
+            <div class="col-md-6">
+                {{ form_row(edit_form.jugador.peso) }}
+                {{ form_row(edit_form.jugador.categoria) }}
+                <div class="col-md-6">
+                    {{ form_row(edit_form.jugador.posicionHabitual) }}
+                </div>
+                <div class="col-md-6">
+                    {{ form_row(edit_form.jugador.posicionAlternativa) }}
+                </div>
+                {{ form_row(edit_form.jugador.dadoDeBaja) }}
+            </div>
+            <div class="col-md-6">
+
+                {{ form_row(edit_form.jugador.altura) }}
+                {{ form_row(edit_form.jugador.condicionJugador) }}
+                {{ form_row(edit_form.jugador.segundaPosicionAlternativa) }}
+
+
+            </div>
+
+        </div>
+    </div>
+
+    <input class="btn btn-primary" type="submit" value="Guardar"/>
+    <a class="btn btn-default" href="{{ path('jugador_index') }}">Volver</a>
+    <div class="hidden">
+
+        {{ form_end(edit_form) }}
+    </div>
+
+{% endblock %}

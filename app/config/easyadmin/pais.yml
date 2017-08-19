@@ -1,0 +1,11 @@
+easy_admin:
+    entities:
+        Pais:
+            label: "País"
+            class: AppBundle\Entity\Pais
+            disabled_actions: ['delete']
+            form:
+                fields:
+                - { property: 'nombre' }
+                - { property: 'codigoPais' }
+                - { property: 'codigoArea' }

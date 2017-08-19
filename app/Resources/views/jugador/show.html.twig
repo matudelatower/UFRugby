@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Jugador</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ jugador.id }}</td>
+            </tr>
+            <tr>
+                <th>Peso</th>
+                <td>{{ jugador.peso }}</td>
+            </tr>
+            <tr>
+                <th>Altura</th>
+                <td>{{ jugador.altura }}</td>
+            </tr>
+            <tr>
+                <th>Dadodebaja</th>
+                <td>{% if jugador.dadoDeBaja %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Activo</th>
+                <td>{% if jugador.activo %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Fechacreacion</th>
+                <td>{% if jugador.fechaCreacion %}{{ jugador.fechaCreacion|date('d/m/Y H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Fechaactualizacion</th>
+                <td>{% if jugador.fechaActualizacion %}{{ jugador.fechaActualizacion|date('d/m/Y H:i:s') }}{% endif %}</td>
+            </tr>
+        </tbody>
+    </table>
+
+
+<a class="btn btn-default" href="{{ path('jugador_index') }}">Volver</a>
+
+    <a class="btn btn-default" href="{{ path('jugador_edit', { 'id': jugador.id }) }}">Editar</a>
+
+    {{ form_start(delete_form) }}
+        <input class="btn btn-danger" type="submit" value="Eliminar">
+    {{ form_end(delete_form) }}
+
+{% endblock %}

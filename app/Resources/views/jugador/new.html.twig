@@ -1,0 +1,98 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Jugador
+{% endblock title %}
+{% block body %}
+    <h1>Alta de Jugador</h1>
+    {{ form_start(form) }}
+    <div class="box">
+        <div class="box-header">
+            <h3 class="box-title">Información Personal</h3>
+        </div>
+        <div class="box-body">
+
+
+            <div class="col-md-6">
+
+                {{ form_row(form.tipoIdentificacion) }}
+                {{ form_row(form.nombre) }}
+                {{ form_row(form.fechaNacimiento) }}
+                {{ form_widget(form.imageFile) }}
+            </div>
+            <div class="col-md-6">
+                {{ form_row(form.numeroIdentificacion) }}
+                {{ form_row(form.apellido) }}
+                {{ form_row(form.sexo) }}
+            </div>
+
+        </div>
+    </div>
+
+
+    <div class="box">
+        <div class="box-header">
+            <h3 class="box-title">Datos de Contacto</h3>
+        </div>
+        <div class="box-body">
+            <div class="col-md-6">
+                {{ form_row(form.contacto.telefono) }}
+                {{ form_row(form.contacto.mail) }}
+                {{ form_row(form.contacto.direccion) }}
+                {{ form_row(form.contacto.provincia) }}
+
+
+            </div>
+            <div class="col-md-6">
+                {{ form_row(form.contacto.telefonoAlternativa) }}
+                {{ form_row(form.contacto.skype) }}
+                <div class="col-md-6">
+                    {{ form_row(form.contacto.localidad) }}
+                </div>
+                <div class="col-md-6">
+                    {{ form_row(form.contacto.codigoPostal) }}
+                </div>
+                {{ form_row(form.contacto.pais) }}
+            </div>
+
+
+        </div>
+    </div>
+    <div class="box">
+        <div class="box-header">
+            <h3 class="box-title">Actualidad</h3>
+        </div>
+        <div class="box-body">
+            <div class="col-md-6">
+                {{ form_row(form.jugador.peso) }}
+                {{ form_row(form.jugador.categoria) }}
+                <div class="col-md-6">
+                    {{ form_row(form.jugador.posicionHabitual) }}
+                </div>
+                <div class="col-md-6">
+                    {{ form_row(form.jugador.posicionAlternativa) }}
+                </div>
+                {{ form_row(form.jugador.dadoDeBaja) }}
+            </div>
+            <div class="col-md-6">
+
+                {{ form_row(form.jugador.altura) }}
+                {{ form_row(form.jugador.condicionJugador) }}
+                {{ form_row(form.jugador.segundaPosicionAlternativa) }}
+
+
+            </div>
+
+        </div>
+    </div>
+
+    <input class="btn btn-primary" type="submit" value="Crear"/>
+    <a class="btn btn-default" href="{{ path('jugador_index') }}">Volver</a>
+    <div class="hidden">
+
+    {{ form_end(form) }}
+    </div>
+
+
+
+{% endblock %}

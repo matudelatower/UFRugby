@@ -1,0 +1,10 @@
+easy_admin:
+    entities:
+        Categoria:
+            label: "Categoría"
+            class: AppBundle\Entity\Categoria
+            disabled_actions: ['delete']
+            form:
+                fields:
+                - { property: 'nombre' }
+                - { property: 'descripcion' }

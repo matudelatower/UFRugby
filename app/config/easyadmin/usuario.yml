@@ -1,0 +1,25 @@
+#Usuario
+easy_admin:
+    entities:
+        Usuario:
+            class: UsuariosBundle\Entity\Usuario
+            disabled_actions: ['delete']
+            edit:
+                fields:
+                    - { property: 'username' }
+                    - { property: 'plainPassword', type: 'text', label: 'Contraseña', type_options: { required: false } }
+                    - { property: 'email' }
+                    - { property: 'enabled' }
+#                    - { property: 'roles' }
+            new:
+                fields:
+                    - { property: 'username' }
+                    - { property: 'email', type: 'email', label: 'E-mail address' }
+                    - { property: 'plainPassword', type: 'password' }
+                    - { property: 'enabled'}
+            list:
+                fields:
+                    - { property: 'username' }
+                    - { property: 'email' }
+#                    - { property: 'enabled' }
+#                    - { property: 'lastLogin' }

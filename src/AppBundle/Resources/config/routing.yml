@@ -1,0 +1,15 @@
+app_persona:
+    resource: "@AppBundle/Resources/config/routing/persona.yml"
+    prefix:   /persona
+
+app_jugador:
+    resource: "@AppBundle/Resources/config/routing/jugador.yml"
+    prefix:   /jugador
+
+app_club:
+    resource: "@AppBundle/Resources/config/routing/club.yml"
+    prefix:   /club
+
+app_homepage:
+    path:     /
+    defaults: { _controller: AppBundle:Default:index }
