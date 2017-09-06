@@ -32,7 +32,7 @@ Clubs
                 <td>{% if club.fechaActualizacion %}{{ club.fechaActualizacion|date('d/m/Y H:i:s') }}{% endif %}</td>
                 <td>
                         <a class="btn btn-default" href="{{ path('club_show', { 'id': club.id }) }}">
-                            <i class="fa fa-show"></i>
+                            <i class="fa fa-eye"></i>
                                                     </a>
                         <a class="btn btn-default" href="{{ path('club_edit', { 'id': club.id }) }}">
                             <i class="fa fa-edit"></i>

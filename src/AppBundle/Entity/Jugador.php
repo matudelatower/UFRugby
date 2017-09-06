@@ -93,6 +93,13 @@ class Jugador extends BaseClass
 	private $dadoDeBaja;
 
 
+	/**
+	 *
+	 * @ORM\OneToMany(targetEntity="AppBundle\Entity\ClubJugador", mappedBy="jugador", cascade={"persist", "remove"})
+	 */
+	private $club;
+
+
     /**
      * Get id
      *
@@ -373,5 +380,46 @@ class Jugador extends BaseClass
         $this->actualizadoPor = $actualizadoPor;
 
         return $this;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->club = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add club
+     *
+     * @param \AppBundle\Entity\ClubJugador $club
+     *
+     * @return Jugador
+     */
+    public function addClub(\AppBundle\Entity\ClubJugador $club)
+    {
+        $this->club[] = $club;
+
+        return $this;
+    }
+
+    /**
+     * Remove club
+     *
+     * @param \AppBundle\Entity\ClubJugador $club
+     */
+    public function removeClub(\AppBundle\Entity\ClubJugador $club)
+    {
+        $this->club->removeElement($club);
+    }
+
+    /**
+     * Get club
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getClub()
+    {
+        return $this->club;
     }
 }

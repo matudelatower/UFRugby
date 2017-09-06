@@ -42,7 +42,7 @@ class Club extends BaseClass
 	/**
 	 * @var
 	 *
-	 * @ORM\OneToOne(targetEntity="AppBundle\Entity\Contacto")
+	 * @ORM\OneToOne(targetEntity="AppBundle\Entity\Contacto", cascade={"persist"})
 	 * @ORM\JoinColumn(name="contacto_id", referencedColumnName="id")
 	 */
 	private $contacto;
@@ -50,10 +50,16 @@ class Club extends BaseClass
 	/**
 	 * @var
 	 *
-	 * @ORM\OneToOne(targetEntity="AppBundle\Entity\Categoria")
+	 * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Categoria")
 	 * @ORM\JoinColumn(name="categoria_id", referencedColumnName="id")
 	 */
 	private $categoria;
+
+	/**
+	 *
+	 * @ORM\OneToMany(targetEntity="AppBundle\Entity\ClubJugador", mappedBy="club", cascade={"persist", "remove"})
+	 */
+	private $jugador;
 
 
 	/**
@@ -122,11 +128,25 @@ class Club extends BaseClass
 		return $this->imageName;
 	}
 
+	public function __toString() {
+		return $this->nombre;
+	}
 
-	/**
+
+	
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->sede = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->jugador = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
      * Get id
      *
-     * @return int
+     * @return integer
      */
     public function getId()
     {
@@ -155,13 +175,6 @@ class Club extends BaseClass
     public function getNombre()
     {
         return $this->nombre;
-    }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->sede = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -251,6 +264,64 @@ class Club extends BaseClass
     }
 
     /**
+     * Set categoria
+     *
+     * @param \AppBundle\Entity\Categoria $categoria
+     *
+     * @return Club
+     */
+    public function setCategoria(\AppBundle\Entity\Categoria $categoria = null)
+    {
+        $this->categoria = $categoria;
+
+        return $this;
+    }
+
+    /**
+     * Get categoria
+     *
+     * @return \AppBundle\Entity\Categoria
+     */
+    public function getCategoria()
+    {
+        return $this->categoria;
+    }
+
+    /**
+     * Add jugador
+     *
+     * @param \AppBundle\Entity\ClubJugador $jugador
+     *
+     * @return Club
+     */
+    public function addJugador(\AppBundle\Entity\ClubJugador $jugador)
+    {
+        $this->jugador[] = $jugador;
+
+        return $this;
+    }
+
+    /**
+     * Remove jugador
+     *
+     * @param \AppBundle\Entity\ClubJugador $jugador
+     */
+    public function removeJugador(\AppBundle\Entity\ClubJugador $jugador)
+    {
+        $this->jugador->removeElement($jugador);
+    }
+
+    /**
+     * Get jugador
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getJugador()
+    {
+        return $this->jugador;
+    }
+
+    /**
      * Set creadoPor
      *
      * @param \UsuariosBundle\Entity\Usuario $creadoPor
@@ -276,29 +347,5 @@ class Club extends BaseClass
         $this->actualizadoPor = $actualizadoPor;
 
         return $this;
-    }
-
-    /**
-     * Set categoria
-     *
-     * @param \AppBundle\Entity\Categoria $categoria
-     *
-     * @return Club
-     */
-    public function setCategoria(\AppBundle\Entity\Categoria $categoria = null)
-    {
-        $this->categoria = $categoria;
-
-        return $this;
-    }
-
-    /**
-     * Get categoria
-     *
-     * @return \AppBundle\Entity\Categoria
-     */
-    public function getCategoria()
-    {
-        return $this->categoria;
     }
 }

@@ -22,3 +22,8 @@ jugador_delete:
     path:     /{id}/delete
     defaults: { _controller: "AppBundle:Jugador:delete" }
     methods:  DELETE
+
+jugador_precompetitivo:
+    path:     /precompetitivo
+    defaults: { _controller: "AppBundle:Jugador:precompetitivo" }
+    methods:  [GET, POST]

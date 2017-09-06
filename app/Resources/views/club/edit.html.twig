@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-Club
+    Club
 {% endblock title %}
 {% block body %}
     <h1>Editar Club</h1>
@@ -11,17 +11,15 @@ Club
         </div>
         <div class="box-body">
 
-        {{ form_start(edit_form) }}
+            {{ form_start(edit_form) }}
             {{ form_widget(edit_form) }}
-            <input class="btn btn-primary" type="submit" value="Guardar" />
-        {{ form_end(edit_form) }}
+            <input class="btn btn-primary" type="submit" value="Guardar"/>
+            {{ form_end(edit_form) }}
         </div>
     </div>
 
-<a class="btn btn-default" href="{{ path('club_index') }}">Volver</a>
+    <a class="btn btn-default" href="{{ path('club_index') }}">Volver</a>
 
-    {{ form_start(delete_form) }}
-        <input class="btn btn-danger" type="submit" value="Eliminar">
-    {{ form_end(delete_form) }}
+
 
 {% endblock %}

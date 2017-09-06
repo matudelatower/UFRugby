@@ -6,22 +6,12 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class JugadorType extends AbstractType {
+class ClubJugadorType extends AbstractType {
 	/**
 	 * {@inheritdoc}
 	 */
 	public function buildForm( FormBuilderInterface $builder, array $options ) {
-		$builder
-			->add( 'peso' )
-			->add( 'altura' )
-			->add( 'dadoDeBaja' )
-			->add( 'categoria' )
-			->add( 'posicionHabitual' )
-			->add( 'posicionAlternativa' )
-			->add( 'segundaPosicionAlternativa' )
-			->add( 'condicionJugador' )
-			->add('club', ClubJugadorType::class)
-		;
+		$builder->add( 'club' );
 	}
 
 	/**
@@ -29,7 +19,7 @@ class JugadorType extends AbstractType {
 	 */
 	public function configureOptions( OptionsResolver $resolver ) {
 		$resolver->setDefaults( array(
-			'data_class' => 'AppBundle\Entity\Jugador'
+			'data_class' => 'AppBundle\Entity\ClubJugador'
 		) );
 	}
 
@@ -37,7 +27,7 @@ class JugadorType extends AbstractType {
 	 * {@inheritdoc}
 	 */
 	public function getBlockPrefix() {
-		return 'appbundle_jugador';
+		return 'appbundle_clubjugador';
 	}
 
 

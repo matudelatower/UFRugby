@@ -88,16 +88,16 @@ class Contacto extends BaseClass
 	/**
 	 * @var
 	 *
-	 * @ORM\OneToOne(targetEntity="AppBundle\Entity\Pais")
+	 * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Pais")
 	 * @ORM\JoinColumn(name="pais_id", referencedColumnName="id")
 	 */
 	private $pais;
-
+    
 
     /**
      * Get id
      *
-     * @return int
+     * @return integer
      */
     public function getId()
     {
@@ -349,6 +349,30 @@ class Contacto extends BaseClass
     }
 
     /**
+     * Set pais
+     *
+     * @param \AppBundle\Entity\Pais $pais
+     *
+     * @return Contacto
+     */
+    public function setPais(\AppBundle\Entity\Pais $pais = null)
+    {
+        $this->pais = $pais;
+
+        return $this;
+    }
+
+    /**
+     * Get pais
+     *
+     * @return \AppBundle\Entity\Pais
+     */
+    public function getPais()
+    {
+        return $this->pais;
+    }
+
+    /**
      * Set creadoPor
      *
      * @param \UsuariosBundle\Entity\Usuario $creadoPor
@@ -374,29 +398,5 @@ class Contacto extends BaseClass
         $this->actualizadoPor = $actualizadoPor;
 
         return $this;
-    }
-
-    /**
-     * Set pais
-     *
-     * @param \AppBundle\Entity\Pais $pais
-     *
-     * @return Contacto
-     */
-    public function setPais(\AppBundle\Entity\Pais $pais = null)
-    {
-        $this->pais = $pais;
-
-        return $this;
-    }
-
-    /**
-     * Get pais
-     *
-     * @return \AppBundle\Entity\Pais
-     */
-    public function getPais()
-    {
-        return $this->pais;
     }
 }
