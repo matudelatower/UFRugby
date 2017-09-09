@@ -1,0 +1,67 @@
+{% extends 'base_public.html.twig' %}
+
+{% block title %}
+
+{% endblock title %}
+{% block body %}
+    <div class="public-box">
+        <div class="public-logo center-block">
+            <a href="#">
+                <img src="{{ asset('bundles/app/img/logo_urp.jpg') }}" class="img-responsive">
+            </a>
+        </div>
+
+        <div class="public-box-body">
+            {#<p class="login-box-msg">Register a new membership</p>#}
+            <h1 class="text-center">EVALUACIÓN PRE-COMPETITIVA {{ "now" | date('Y') }}</h1>
+
+            <h3>Datos Personales</h3>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <label>Nombre y apellido:</label><span> Mauricio Escalante</span><br>
+                    <label>Fecha de Nacimiento:</label><span> 27/05/1989</span><br>
+                    <label>Nº de Identificación:</label><span> 13131313</span><br>
+                    <label>Dirección:</label><span> Nicomedes Castro 123</span><br>
+                    <label>Tel:</label><span> 37641231231</span><br>
+                    <label>Tel Alternativo:</label><span> </span><br>
+                    <label>Mail:</label><span> admin@admin</span><br>
+                </div>
+            </div>
+
+            <h3>Datos Médicos</h3>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <label>Cobertura Médica:</label><span> IPS</span><br>
+                    <label>Grupo sanguíneo:</label><span> 0-</span><br>
+                    <label>Peso:</label><span> 78 Kg.</span><br>
+                    <label>Altura:</label><span> 1.71 cm</span><br>
+                    <label>Índice de Torg:</label><span> 0-</span><br>
+                </div>
+            </div>
+
+            <h3>Datos de Juego</h3>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <label>Club:</label><span> Asunción Rugby Club</span><br>
+                    <label>Posición en la que juega:</label><span> 02 - HOOKER | 01 - PILAR IZQUIERDO</span><br>
+                </div>
+            </div>
+
+            <p class="text-red">Antes de enviar la solicitud verificá que los datos sean correctos</p>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <a href="#" class="btn btn-default btn-block btn-flat">Anterior</a>
+                </div>
+                <div class="col-md-4 pull-right">
+                    <a href="{{ path('jugador_precompetitivo_consentimiento') }}" class="btn btn-primary btn-block btn-flat">Confirmar</a>
+                </div>
+            </div>
+
+        </div>
+        <!-- /.form-box -->
+    </div>
+{% endblock %}

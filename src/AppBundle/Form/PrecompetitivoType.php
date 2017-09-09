@@ -47,7 +47,8 @@ class PrecompetitivoType extends AbstractType {
 	 */
 	public function configureOptions( OptionsResolver $resolver ) {
 		$resolver->setDefaults( array(
-			'data_class' => 'AppBundle\Entity\Persona'
+			'data_class' => 'AppBundle\Entity\Persona',
+			'required'   => false, //TODO descomentar cuando salga de muestra
 		) );
 	}
 

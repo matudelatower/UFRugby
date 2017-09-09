@@ -20,8 +20,8 @@ class JugadorType extends AbstractType {
 			->add( 'posicionAlternativa' )
 			->add( 'segundaPosicionAlternativa' )
 			->add( 'condicionJugador' )
-			->add('club', ClubJugadorType::class)
-		;
+			->add( 'club', ClubJugadorType::class )
+			->add( 'fichaMedica', FichaMedicaType::class );
 	}
 
 	/**

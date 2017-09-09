@@ -117,3 +117,12 @@ vich_uploader:
             uri_prefix:         /uploads/images/persona
             upload_destination: '%kernel.root_dir%/../web/uploads/images/persona'
             namer: vich_uploader.namer_uniqid
+
+#ck editor
+ivory_ck_editor:
+    default_config: my_config
+    configs:
+        my_config:
+#            toolbar: full
+            toolbar: [ ['Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo'],  ['Bold', 'Italic', 'Strike', '-', 'RemoveFormat'], ['JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'], '/', ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote'], ['Styles', 'Format'], ['Table']  ]
+

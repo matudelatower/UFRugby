@@ -123,14 +123,86 @@ class JugadorController extends Controller {
 		            ->getForm();
 	}
 
-	public function precompetitivoAction() {
+	public function precompetitivoPresentacionAction( Request $request ) {
+
+		$em = $this->getDoctrine()->getManager();
+
+		$texto = $em->getRepository( 'AppBundle:Texto' )->findOneBySlug( 'evaluacion-pre-competitiva' );
+
+		return $this->render( 'jugador/precompetitivo_presentacion.html.twig',
+			array(
+				'texto' => $texto
+			) );
+	}
+
+	public function precompetitivoCategoriaAction( Request $request ) {
+
+		return $this->render( 'jugador/precompetitivo_categoria.html.twig',
+			array() );
+	}
+
+	public function precompetitivoDatosPersonalesAction( Request $request ) {
 
 		$persona = new Persona();
 		$form    = $this->createForm( 'AppBundle\Form\PrecompetitivoType', $persona );
 
-		return $this->render( 'jugador/precompetitivo.html.twig',
+		if ( $request->getMethod() == 'POST' ) {
+			return $this->redirectToRoute( 'jugador_precompetitivo_datos_medicos_presentacion' );
+		}
+
+		return $this->render( 'jugador/precompetitivo_datos_personales.html.twig',
+			array(
+				'form' => $form->createView(),
+			) );
+	}
+
+	public function precompetitivoDatosMedicosPresentacionAction( Request $request ) {
+
+		$em = $this->getDoctrine()->getManager();
+
+		$texto = $em->getRepository( 'AppBundle:Texto' )->findOneBySlug( 'datos-ficha-medica' );
+
+		return $this->render( 'jugador/precompetitivo_presentacion_datos_medicos.html.twig',
+			array(
+				'texto' => $texto
+			) );
+	}
+
+	public function precompetitivoDatosMedicosAction( Request $request ) {
+
+		$form = $this->createForm( 'AppBundle\Form\FichaMedicaType' );
+
+		return $this->render( 'jugador/precompetitivo_datos_medicos.html.twig',
 			array(
 				'form' => $form->createView()
+			) );
+	}
+
+	public function precompetitivoResumenAction( Request $request ) {
+
+
+		return $this->render( 'jugador/precompetitivo_resumen.html.twig',
+			array(
+			) );
+	}
+
+	public function precompetitivoConsentimientoAction( Request $request ) {
+
+		$em = $this->getDoctrine()->getManager();
+
+		$texto = $em->getRepository( 'AppBundle:Texto' )->findOneBySlug( 'precompetitivo-consentimiento' );
+
+		return $this->render( 'jugador/precompetitivo_consentimiento.html.twig',
+			array(
+				'texto' => $texto
+			) );
+	}
+
+	public function precompetitivoOkAction( Request $request ) {
+
+
+		return $this->render( 'jugador/precompetitivo_ok.html.twig',
+			array(
 			) );
 	}
 }

@@ -23,7 +23,42 @@ jugador_delete:
     defaults: { _controller: "AppBundle:Jugador:delete" }
     methods:  DELETE
 
-jugador_precompetitivo:
-    path:     /precompetitivo
-    defaults: { _controller: "AppBundle:Jugador:precompetitivo" }
+jugador_precompetitivo_presentacion:
+    path:     /precompetitivo_presentacion
+    defaults: { _controller: "AppBundle:Jugador:precompetitivoPresentacion" }
+    methods:  [GET]
+
+jugador_precompetitivo_categoria:
+    path:     /precompetitivo_categoria
+    defaults: { _controller: "AppBundle:Jugador:precompetitivoCategoria" }
+    methods:  [GET]
+
+jugador_precompetitivo_datos_personales:
+    path:     /precompetitivo_datos_personales
+    defaults: { _controller: "AppBundle:Jugador:precompetitivoDatosPersonales" }
     methods:  [GET, POST]
+
+jugador_precompetitivo_datos_medicos_presentacion:
+    path:     /precompetitivo_datos_medicos_presentacion
+    defaults: { _controller: "AppBundle:Jugador:precompetitivoDatosMedicosPresentacion" }
+    methods:  [GET]
+
+jugador_precompetitivo_datos_medicos:
+    path:     /precompetitivo_datos_medicos
+    defaults: { _controller: "AppBundle:Jugador:precompetitivoDatosMedicos" }
+    methods:  [GET]
+
+jugador_precompetitivo_resumen:
+    path:     /precompetitivo_resumen
+    defaults: { _controller: "AppBundle:Jugador:precompetitivoResumen" }
+    methods:  [GET]
+
+jugador_precompetitivo_consentimiento:
+    path:     /precompetitivo_consentimiento
+    defaults: { _controller: "AppBundle:Jugador:precompetitivoConsentimiento" }
+    methods:  [GET]
+
+jugador_precompetitivo_ok:
+    path:     /precompetitivo_ok
+    defaults: { _controller: "AppBundle:Jugador:precompetitivoOk" }
+    methods:  [GET]
