@@ -147,13 +147,15 @@ class JugadorController extends Controller {
 		$form    = $this->createForm( 'AppBundle\Form\PrecompetitivoType', $persona );
 
 		if ( $request->getMethod() == 'POST' ) {
-			return $this->redirectToRoute( 'jugador_precompetitivo_datos_medicos_presentacion' );
+			return $this->render( 'jugador/precompetitivo_datos_personales.html.twig',
+				array(
+					'form' => $form->createView(),
+				) );
+
 		}
 
-		return $this->render( 'jugador/precompetitivo_datos_personales.html.twig',
-			array(
-				'form' => $form->createView(),
-			) );
+		return $this->redirectToRoute( 'jugador_precompetitivo_datos_medicos_presentacion' );
+
 	}
 
 	public function precompetitivoDatosMedicosPresentacionAction( Request $request ) {
