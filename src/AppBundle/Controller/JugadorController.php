@@ -25,8 +25,11 @@ class JugadorController extends Controller {
 
 		$club = $this->getUser()->getClub();
 
-		$jugadors = $em->getRepository( 'AppBundle:Jugador' )->getQbAll();
-
+		if ( $club ) {
+			$jugadors = $em->getRepository( 'AppBundle:Jugador' )->getJugadoresByClub($club);
+		} else {
+			$jugadors = $em->getRepository( 'AppBundle:Jugador' )->getQbAll();
+		}
 
 		$paginator = $this->get( 'knp_paginator' );
 		$jugadors  = $paginator->paginate(
@@ -362,8 +365,8 @@ class JugadorController extends Controller {
 
 		$html = $this->renderView( ':jugador:evaluacion_precompetitiva.pdf.twig',
 			[
-				'clubJugador'      => $clubJugador,
-				'title'            => $title,
+				'clubJugador'        => $clubJugador,
+				'title'              => $title,
 				'texto_ficha_medica' => $textoFichaMedica
 			]
 		);

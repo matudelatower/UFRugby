@@ -46,7 +46,7 @@ class Jugador extends BaseClass {
 	/**
 	 * @var
 	 *
-	 * @ORM\OneToOne(targetEntity="AppBundle\Entity\Division")
+	 * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Division")
 	 * @ORM\JoinColumn(name="division_id", referencedColumnName="id")
 	 */
 	private $division;
@@ -55,7 +55,7 @@ class Jugador extends BaseClass {
 	/**
 	 * @var
 	 *
-	 * @ORM\OneToOne(targetEntity="AppBundle\Entity\PosicionJugador")
+	 * @ORM\ManyToOne(targetEntity="AppBundle\Entity\PosicionJugador")
 	 * @ORM\JoinColumn(name="posicion_habitual_id", referencedColumnName="id")
 	 */
 	private $posicionHabitual;
@@ -63,7 +63,7 @@ class Jugador extends BaseClass {
 	/**
 	 * @var
 	 *
-	 * @ORM\OneToOne(targetEntity="AppBundle\Entity\PosicionJugador")
+	 * @ORM\ManyToOne(targetEntity="AppBundle\Entity\PosicionJugador")
 	 * @ORM\JoinColumn(name="posicion_alternativa_id", referencedColumnName="id")
 	 */
 	private $posicionAlternativa;
@@ -71,7 +71,7 @@ class Jugador extends BaseClass {
 	/**
 	 * @var
 	 *
-	 * @ORM\OneToOne(targetEntity="AppBundle\Entity\PosicionJugador")
+	 * @ORM\ManyToOne(targetEntity="AppBundle\Entity\PosicionJugador")
 	 * @ORM\JoinColumn(name="segunda_posicion_alternativa_id", referencedColumnName="id")
 	 */
 	private $segundaPosicionAlternativa;

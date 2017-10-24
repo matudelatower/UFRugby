@@ -88,13 +88,15 @@ class Builder implements ContainerAwareInterface {
 			     ->setExtra( 'icon', 'fa fa-folder-open-o' )
 			     ->setAttribute( 'class', 'treeview' );
 
-			$menu[ $keyPersonal ]
-				->addChild(
-					'Clubs',
-					array(
-						'route' => 'club_index',
-					)
-				);
+			if ($this->container->get( 'security.authorization_checker' )->isGranted( 'ROLE_ADMIN' )) {
+				$menu[ $keyPersonal ]
+					->addChild(
+						'Clubs',
+						array(
+							'route' => 'club_index',
+						)
+					);
+			}
 
 			$menu[ $keyPersonal ]
 				->addChild(
