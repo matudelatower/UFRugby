@@ -31,3 +31,8 @@ confirmacion_precompetitivo:
     path:     /confirmacion_precompetitivo/{token}
     defaults: { _controller: "AppBundle:Jugador:precompetitivoConfirmacion" }
     methods:  GET
+
+jugador_ficha_precompetitiva:
+    path:     /ficha_precompetitiva/{clubJugadorId}
+    defaults: { _controller: "AppBundle:Jugador:fichaPrecompetitiva" }
+    methods:  [GET]
