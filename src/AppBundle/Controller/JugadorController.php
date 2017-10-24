@@ -76,12 +76,12 @@ class JugadorController extends Controller {
 	 *
 	 */
 	public function showAction( Jugador $jugador ) {
-		$deleteForm = $this->createDeleteForm( $jugador );
+//		$deleteForm = $this->createDeleteForm( $jugador );
 
 		return $this->render( 'jugador/show.html.twig',
 			array(
 				'jugador'     => $jugador,
-				'delete_form' => $deleteForm->createView(),
+//				'delete_form' => $deleteForm->createView(),
 			) );
 	}
 

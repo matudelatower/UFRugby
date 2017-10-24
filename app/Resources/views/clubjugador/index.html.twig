@@ -18,6 +18,7 @@
                     <th>Fecha de Nacimiento</th>
                     <th>Posición</th>
                     <th>Fecha de Registro</th>
+                    <th>Estado</th>
                     <th>Acciones</th>
                 </tr>
                 </thead>
@@ -31,12 +32,22 @@
                         <td>{{ clubJugador.jugador.posicionHabitual }}</td>
                         <td>{% if clubJugador.fechaCreacion %}{{ clubJugador.fechaCreacion|date('d/m/Y H:i:s') }}{% endif %}</td>
                         <td>
-                            {#<a class="btn btn-default" href="{{ path('clubjugador_show', { 'id': clubJugador.id }) }}">#}
-                                {#<i class="fa fa-eye"></i>#}
-                            {#</a>#}
-                            <a class="btn btn-default" href="{{ path('clubjugador_confirmar', { 'id': clubJugador.id }) }}">
+                            {% if not clubJugador.confirmadoUnion %}
+                                <small class="label bg-yellow">Pendiente Unión</small>
+                            {% endif %}
+                            {% if not clubJugador.confirmadoClub %}
+                                <small class="label bg-yellow">Pendiente Club</small>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if (is_granted('ROLE_CLUB') and not clubJugador.confirmadoClub) or
+                            is_granted('ROLE_ADMIN') and not clubJugador.confirmadoUnion %}
+
+                            <a class="btn btn-default"
+                               href="{{ path('clubjugador_confirmar', { 'id': clubJugador.id }) }}">
                                 <i class="fa fa-check"></i>
                             </a>
+                            {% endif %}
                         </td>
                     </tr>
                 {% endfor %}

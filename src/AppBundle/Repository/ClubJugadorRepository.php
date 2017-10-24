@@ -23,8 +23,7 @@ class ClubJugadorRepository extends \Doctrine\ORM\EntityRepository {
 		$qb->andWhere( 'cj.anio = :anio' );
 		$qb->andWhere( 'cj.confirmado = true' );
 		$qb->andWhere( 'cj.confirmadoClub = false' );
-		$qb->andWhere( 'cj.confirmadoUnion = false' );
-//		$qb->orWhere( 'cj.confirmadoUnion is NULL' );
+		$qb->orWhere( 'cj.confirmadoUnion = false' );
 
 		$qb->setParameter( 'club', $club );
 		$qb->setParameter( 'anio', date( 'Y' ) );
@@ -36,12 +35,10 @@ class ClubJugadorRepository extends \Doctrine\ORM\EntityRepository {
 	public function getQbByUnion() {
 		$qb = $this->createQueryBuilder( 'cj' );
 
-//		$qb->where( 'cj.club = :club' );
 		$qb->andWhere( 'cj.anio = :anio' );
 		$qb->andWhere( 'cj.confirmado = true' );
 		$qb->andWhere( 'cj.confirmadoClub = true' );
 		$qb->andWhere( 'cj.confirmadoUnion = false' );
-//		$qb->orWhere( 'cj.confirmadoUnion is NULL' );
 
 		$qb->setParameter( 'anio', date( 'Y' ) );
 
