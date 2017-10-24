@@ -68,12 +68,14 @@ class ClubJugadorController extends Controller {
 				'confirmarClub'  => $confirmarClub
 			] );
 
+		$fichaMedica = $em->getRepository( 'AppBundle:FichaMedica' )->findOneByClubJugador( $jugador );
+
 		$form->handleRequest( $request );
 
 		if ( $form->isSubmitted() && $form->isValid() ) {
 
 			if ( $confirmarClub ) {
-				$fichaMedica = $em->getRepository( 'AppBundle:FichaMedica' )->findOneByClubJugador( $jugador );
+
 				$fichaMedica->setDoctor( $request->get( 'doctor' ) );
 				$fichaMedica->setMatricula( $request->get( 'matricula' ) );
 				$em->persist( $fichaMedica );
@@ -96,8 +98,10 @@ class ClubJugadorController extends Controller {
 
 		return $this->render( ':clubjugador:confirmar.html.twig',
 			[
-				'form'    => $form->createView(),
-				'jugador' => $jugador
+				'form'        => $form->createView(),
+				'jugador'     => $jugador,
+				'fichaMedica' => $fichaMedica,
+
 			] );
 	}
 }

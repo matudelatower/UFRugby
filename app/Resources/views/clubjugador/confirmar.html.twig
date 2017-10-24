@@ -35,10 +35,12 @@
                         </div>
                     </div>
                 </div>
+
+                <h3 class="box-title">Ficha Médica</h3>
                 {{ form_start(form) }}
                 {% if is_granted('ROLE_CLUB') %}
 
-                    <h3 class="box-title">Ficha Médica</h3>
+
                     <div class="form-group">
                         <label for="matricula" class="control-label">Matrícula</label>
                         <input class="form-control" id="matricula" name="matricula" required
@@ -55,6 +57,22 @@
 
                 {% endif %}
                 {% if is_granted('ROLE_ADMIN') %}
+                    <div class="row">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Matrícula</label>
+                            <div class="col-sm-10">
+                                {{ fichaMedica.matricula }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Doctor</label>
+                            <div class="col-sm-10">
+                                {{ fichaMedica.doctor }}
+                            </div>
+                        </div>
+                    </div>
                     {{ form_widget(form.confirmadoUnion) }}
                 {% endif %}
                 <button type="submit" class="btn btn-primary">Confirmar</button>
