@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Clubjugador</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ clubJugador.id }}</td>
+            </tr>
+            <tr>
+                <th>Anio</th>
+                <td>{{ clubJugador.anio }}</td>
+            </tr>
+            <tr>
+                <th>Tokenconfirmacion</th>
+                <td>{{ clubJugador.tokenConfirmacion }}</td>
+            </tr>
+            <tr>
+                <th>Confirmado</th>
+                <td>{% if clubJugador.confirmado %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Consentimiento</th>
+                <td>{% if clubJugador.consentimiento %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Activo</th>
+                <td>{% if clubJugador.activo %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Fechacreacion</th>
+                <td>{% if clubJugador.fechaCreacion %}{{ clubJugador.fechaCreacion|date('d/m/Y H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Fechaactualizacion</th>
+                <td>{% if clubJugador.fechaActualizacion %}{{ clubJugador.fechaActualizacion|date('d/m/Y H:i:s') }}{% endif %}</td>
+            </tr>
+        </tbody>
+    </table>
+
+
+<a class="btn btn-default" href="{{ path('clubjugador_index') }}">Volver</a>
+
+{% endblock %}

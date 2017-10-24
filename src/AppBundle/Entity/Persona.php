@@ -42,7 +42,7 @@ class Persona extends BaseClass {
 	/**
 	 * @var
 	 *
-	 * @ORM\OneToOne(targetEntity="AppBundle\Entity\TipoIdentificacion")
+	 * @ORM\ManyToOne(targetEntity="AppBundle\Entity\TipoIdentificacion")
 	 * @ORM\JoinColumn(name="tipo_identificacion_id", referencedColumnName="id")
 	 */
 	private $tipoIdentificacion;
@@ -63,7 +63,7 @@ class Persona extends BaseClass {
 	/**
 	 * @var
 	 *
-	 * @ORM\OneToOne(targetEntity="AppBundle\Entity\Contacto")
+	 * @ORM\OneToOne(targetEntity="AppBundle\Entity\Contacto", cascade={"persist"})
 	 * @ORM\JoinColumn(name="contacto_id", referencedColumnName="id")
 	 */
 	private $contacto;
@@ -71,7 +71,7 @@ class Persona extends BaseClass {
 	/**
 	 * @var
 	 *
-	 * @ORM\OneToOne(targetEntity="AppBundle\Entity\Sexo")
+	 * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Sexo")
 	 * @ORM\JoinColumn(name="sexo_id", referencedColumnName="id")
 	 */
 	private $sexo;
@@ -148,262 +148,244 @@ class Persona extends BaseClass {
 		return $this->imageName;
 	}
 
+	public function __toString() {
+		return $this->nombre . ' ' . $this->apellido;
+	}
 
-    /**
-     * Get id
-     *
-     * @return integer
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
+	/**
+	 * Get id
+	 *
+	 * @return integer
+	 */
+	public function getId() {
+		return $this->id;
+	}
 
-    /**
-     * Set nombre
-     *
-     * @param string $nombre
-     *
-     * @return Persona
-     */
-    public function setNombre($nombre)
-    {
-        $this->nombre = $nombre;
+	/**
+	 * Set nombre
+	 *
+	 * @param string $nombre
+	 *
+	 * @return Persona
+	 */
+	public function setNombre( $nombre ) {
+		$this->nombre = $nombre;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * Get nombre
-     *
-     * @return string
-     */
-    public function getNombre()
-    {
-        return $this->nombre;
-    }
+	/**
+	 * Get nombre
+	 *
+	 * @return string
+	 */
+	public function getNombre() {
+		return $this->nombre;
+	}
 
-    /**
-     * Set apellido
-     *
-     * @param string $apellido
-     *
-     * @return Persona
-     */
-    public function setApellido($apellido)
-    {
-        $this->apellido = $apellido;
+	/**
+	 * Set apellido
+	 *
+	 * @param string $apellido
+	 *
+	 * @return Persona
+	 */
+	public function setApellido( $apellido ) {
+		$this->apellido = $apellido;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * Get apellido
-     *
-     * @return string
-     */
-    public function getApellido()
-    {
-        return $this->apellido;
-    }
+	/**
+	 * Get apellido
+	 *
+	 * @return string
+	 */
+	public function getApellido() {
+		return $this->apellido;
+	}
 
-    /**
-     * Set numeroIdentificacion
-     *
-     * @param string $numeroIdentificacion
-     *
-     * @return Persona
-     */
-    public function setNumeroIdentificacion($numeroIdentificacion)
-    {
-        $this->numeroIdentificacion = $numeroIdentificacion;
+	/**
+	 * Set numeroIdentificacion
+	 *
+	 * @param string $numeroIdentificacion
+	 *
+	 * @return Persona
+	 */
+	public function setNumeroIdentificacion( $numeroIdentificacion ) {
+		$this->numeroIdentificacion = $numeroIdentificacion;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * Get numeroIdentificacion
-     *
-     * @return string
-     */
-    public function getNumeroIdentificacion()
-    {
-        return $this->numeroIdentificacion;
-    }
+	/**
+	 * Get numeroIdentificacion
+	 *
+	 * @return string
+	 */
+	public function getNumeroIdentificacion() {
+		return $this->numeroIdentificacion;
+	}
 
-    /**
-     * Set fechaCreacion
-     *
-     * @param \DateTime $fechaCreacion
-     *
-     * @return Persona
-     */
-    public function setFechaCreacion($fechaCreacion)
-    {
-        $this->fechaCreacion = $fechaCreacion;
+	/**
+	 * Set fechaNacimiento
+	 *
+	 * @param \DateTime $fechaNacimiento
+	 *
+	 * @return Persona
+	 */
+	public function setFechaNacimiento( $fechaNacimiento ) {
+		$this->fechaNacimiento = $fechaNacimiento;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * Set fechaActualizacion
-     *
-     * @param \DateTime $fechaActualizacion
-     *
-     * @return Persona
-     */
-    public function setFechaActualizacion($fechaActualizacion)
-    {
-        $this->fechaActualizacion = $fechaActualizacion;
+	/**
+	 * Get fechaNacimiento
+	 *
+	 * @return \DateTime
+	 */
+	public function getFechaNacimiento() {
+		return $this->fechaNacimiento;
+	}
 
-        return $this;
-    }
+	/**
+	 * Set fechaCreacion
+	 *
+	 * @param \DateTime $fechaCreacion
+	 *
+	 * @return Persona
+	 */
+	public function setFechaCreacion( $fechaCreacion ) {
+		$this->fechaCreacion = $fechaCreacion;
 
-    /**
-     * Set tipoIdentificacion
-     *
-     * @param \AppBundle\Entity\TipoIdentificacion $tipoIdentificacion
-     *
-     * @return Persona
-     */
-    public function setTipoIdentificacion(\AppBundle\Entity\TipoIdentificacion $tipoIdentificacion = null)
-    {
-        $this->tipoIdentificacion = $tipoIdentificacion;
+		return $this;
+	}
 
-        return $this;
-    }
+	/**
+	 * Set fechaActualizacion
+	 *
+	 * @param \DateTime $fechaActualizacion
+	 *
+	 * @return Persona
+	 */
+	public function setFechaActualizacion( $fechaActualizacion ) {
+		$this->fechaActualizacion = $fechaActualizacion;
 
-    /**
-     * Get tipoIdentificacion
-     *
-     * @return \AppBundle\Entity\TipoIdentificacion
-     */
-    public function getTipoIdentificacion()
-    {
-        return $this->tipoIdentificacion;
-    }
+		return $this;
+	}
 
-    /**
-     * Set jugador
-     *
-     * @param \AppBundle\Entity\Jugador $jugador
-     *
-     * @return Persona
-     */
-    public function setJugador(\AppBundle\Entity\Jugador $jugador = null)
-    {
-        $this->jugador = $jugador;
+	/**
+	 * Set tipoIdentificacion
+	 *
+	 * @param \AppBundle\Entity\TipoIdentificacion $tipoIdentificacion
+	 *
+	 * @return Persona
+	 */
+	public function setTipoIdentificacion( \AppBundle\Entity\TipoIdentificacion $tipoIdentificacion = null ) {
+		$this->tipoIdentificacion = $tipoIdentificacion;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * Get jugador
-     *
-     * @return \AppBundle\Entity\Jugador
-     */
-    public function getJugador()
-    {
-        return $this->jugador;
-    }
+	/**
+	 * Get tipoIdentificacion
+	 *
+	 * @return \AppBundle\Entity\TipoIdentificacion
+	 */
+	public function getTipoIdentificacion() {
+		return $this->tipoIdentificacion;
+	}
 
-    /**
-     * Set contacto
-     *
-     * @param \AppBundle\Entity\Contacto $contacto
-     *
-     * @return Persona
-     */
-    public function setContacto(\AppBundle\Entity\Contacto $contacto = null)
-    {
-        $this->contacto = $contacto;
+	/**
+	 * Set jugador
+	 *
+	 * @param \AppBundle\Entity\Jugador $jugador
+	 *
+	 * @return Persona
+	 */
+	public function setJugador( \AppBundle\Entity\Jugador $jugador = null ) {
+		$this->jugador = $jugador;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * Get contacto
-     *
-     * @return \AppBundle\Entity\Contacto
-     */
-    public function getContacto()
-    {
-        return $this->contacto;
-    }
+	/**
+	 * Get jugador
+	 *
+	 * @return \AppBundle\Entity\Jugador
+	 */
+	public function getJugador() {
+		return $this->jugador;
+	}
 
-    /**
-     * Set creadoPor
-     *
-     * @param \UsuariosBundle\Entity\Usuario $creadoPor
-     *
-     * @return Persona
-     */
-    public function setCreadoPor(\UsuariosBundle\Entity\Usuario $creadoPor = null)
-    {
-        $this->creadoPor = $creadoPor;
+	/**
+	 * Set contacto
+	 *
+	 * @param \AppBundle\Entity\Contacto $contacto
+	 *
+	 * @return Persona
+	 */
+	public function setContacto( \AppBundle\Entity\Contacto $contacto = null ) {
+		$this->contacto = $contacto;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * Set actualizadoPor
-     *
-     * @param \UsuariosBundle\Entity\Usuario $actualizadoPor
-     *
-     * @return Persona
-     */
-    public function setActualizadoPor(\UsuariosBundle\Entity\Usuario $actualizadoPor = null)
-    {
-        $this->actualizadoPor = $actualizadoPor;
+	/**
+	 * Get contacto
+	 *
+	 * @return \AppBundle\Entity\Contacto
+	 */
+	public function getContacto() {
+		return $this->contacto;
+	}
 
-        return $this;
-    }
+	/**
+	 * Set sexo
+	 *
+	 * @param \AppBundle\Entity\Sexo $sexo
+	 *
+	 * @return Persona
+	 */
+	public function setSexo( \AppBundle\Entity\Sexo $sexo = null ) {
+		$this->sexo = $sexo;
 
-    /**
-     * Set fechaNacimiento
-     *
-     * @param \DateTime $fechaNacimiento
-     *
-     * @return Persona
-     */
-    public function setFechaNacimiento($fechaNacimiento)
-    {
-        $this->fechaNacimiento = $fechaNacimiento;
+		return $this;
+	}
 
-        return $this;
-    }
+	/**
+	 * Get sexo
+	 *
+	 * @return \AppBundle\Entity\Sexo
+	 */
+	public function getSexo() {
+		return $this->sexo;
+	}
 
-    /**
-     * Get fechaNacimiento
-     *
-     * @return \DateTime
-     */
-    public function getFechaNacimiento()
-    {
-        return $this->fechaNacimiento;
-    }
+	/**
+	 * Set creadoPor
+	 *
+	 * @param \UsuariosBundle\Entity\Usuario $creadoPor
+	 *
+	 * @return Persona
+	 */
+	public function setCreadoPor( \UsuariosBundle\Entity\Usuario $creadoPor = null ) {
+		$this->creadoPor = $creadoPor;
 
-    /**
-     * Set sexo
-     *
-     * @param \AppBundle\Entity\Sexo $sexo
-     *
-     * @return Persona
-     */
-    public function setSexo(\AppBundle\Entity\Sexo $sexo = null)
-    {
-        $this->sexo = $sexo;
+		return $this;
+	}
 
-        return $this;
-    }
+	/**
+	 * Set actualizadoPor
+	 *
+	 * @param \UsuariosBundle\Entity\Usuario $actualizadoPor
+	 *
+	 * @return Persona
+	 */
+	public function setActualizadoPor( \UsuariosBundle\Entity\Usuario $actualizadoPor = null ) {
+		$this->actualizadoPor = $actualizadoPor;
 
-    /**
-     * Get sexo
-     *
-     * @return \AppBundle\Entity\Sexo
-     */
-    public function getSexo()
-    {
-        return $this->sexo;
-    }
+		return $this;
+	}
 }

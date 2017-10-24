@@ -1,25 +1,28 @@
-#Usuario
 easy_admin:
     entities:
         Usuario:
             class: UsuariosBundle\Entity\Usuario
-            disabled_actions: ['delete']
-            edit:
-                fields:
-                    - { property: 'username' }
-                    - { property: 'plainPassword', type: 'text', label: 'Contraseña', type_options: { required: false } }
-                    - { property: 'email' }
-                    - { property: 'enabled' }
-#                    - { property: 'roles' }
-            new:
-                fields:
-                    - { property: 'username' }
-                    - { property: 'email', type: 'email', label: 'E-mail address' }
-                    - { property: 'plainPassword', type: 'password' }
-                    - { property: 'enabled'}
             list:
                 fields:
                     - { property: 'username' }
                     - { property: 'email' }
-#                    - { property: 'enabled' }
-#                    - { property: 'lastLogin' }
+                    - { property: 'enabled' }
+                    - { property: 'lastLogin' }
+            form:
+                fields:
+                    - username
+                    - email
+                    - enabled
+#                    - lastLogin
+                    # if administrators are allowed to edit users' passwords and roles, add this:
+                    - { property: 'plainPassword', type: 'text', type_options: { required: false } }
+                    - { property: 'persona' }
+                    - { property: 'club' }
+                    - { property: 'roles', type: 'choice', type_options: { multiple: true, choices:
+                          { 'ROLE_USER': 'ROLE_USER',
+                            'ROLE_ADMIN': 'ROLE_ADMIN',
+                            'ROLE_CLUB': 'ROLE_CLUB',
+                            'ROLE_REFEREE': 'ROLE_REFEREE'
+                          }
+                        }
+                      }

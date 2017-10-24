@@ -98,6 +98,23 @@ class Builder implements ContainerAwareInterface {
 
 			$menu[ $keyPersonal ]
 				->addChild(
+					'Registro de Jugadores',
+					array(
+						'route' => 'clubjugador_index',
+					)
+				);
+
+			$menu[ $keyPersonal ]
+				->addChild(
+					'Pases',
+					array(
+//						'route' => 'jugador_index',
+						'uri' => '#',
+					)
+				);
+
+			$menu[ $keyPersonal ]
+				->addChild(
 					'Jugadores',
 					array(
 						'route' => 'jugador_index',

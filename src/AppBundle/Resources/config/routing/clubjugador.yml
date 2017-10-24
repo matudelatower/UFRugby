@@ -1,0 +1,15 @@
+clubjugador_index:
+    path:     /
+    defaults: { _controller: "AppBundle:ClubJugador:index" }
+    methods:  GET
+
+clubjugador_show:
+    path:     /{id}/show
+    defaults: { _controller: "AppBundle:ClubJugador:show" }
+    methods:  GET
+
+clubjugador_confirmar:
+    path:     /{id}/clubjugador_confirmar
+    defaults: { _controller: "AppBundle:ClubJugador:confirmar" }
+    methods:  [GET, POST]
+

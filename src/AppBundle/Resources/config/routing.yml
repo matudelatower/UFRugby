@@ -1,3 +1,7 @@
+app_clubjugador:
+    resource: "@AppBundle/Resources/config/routing/clubjugador.yml"
+    prefix:   /clubjugador
+
 app_persona:
     resource: "@AppBundle/Resources/config/routing/persona.yml"
     prefix:   /persona

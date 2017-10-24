@@ -1,51 +1,52 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-Jugadores
+    Jugadores
 {% endblock title %}
 {% block body %}
-<div class="box">
-    <div class="box-header">
-        <h3 class="box-title">Listado de Jugadores</h3>
+    <div class="box">
+        <div class="box-header">
+            <h3 class="box-title">Listado de Jugadores</h3>
+        </div>
+        <div class="box-body">
+            <table class="table table-bordered table-striped data-table">
+                <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Nº Identificación</th>
+                    <th>Jugador</th>
+                    <th>Fecha de Nacimiento</th>
+                    <th>Posición</th>
+                    <th>Fecha de Registro</th>
+                    <th>Acciones</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for jugador in jugadors %}
+                    <tr>
+                        <td><a href="{{ path('jugador_show', { 'id': jugador.id }) }}">{{ jugador.id }}</a></td>
+                        <td>{{ jugador.persona.numeroIdentificacion }}</td>
+                        <td>{{ jugador.persona.nombre }} {{ jugador.persona.apellido }}</td>
+                        <td>{{ jugador.persona.fechaNacimiento | date ('d/m/Y') }}</td>
+                        <td>{{ jugador.posicionHabitual }}</td>
+                        <td>{% if jugador.fechaCreacion %}{{ jugador.fechaCreacion|date('d/m/Y H:i:s') }}{% endif %}</td>
+                        <td>
+                            <a class="btn btn-default" href="{{ path('jugador_show', { 'id': jugador.id }) }}">
+                                <i class="fa fa-eye"></i>
+                            </a>
+                            <a class="btn btn-default" href="{{ path('jugador_edit', { 'id': jugador.id }) }}">
+                                <i class="fa fa-edit"></i>
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="navigation">
+            {{ knp_pagination_render(jugadors) }}
+        </div>
     </div>
-    <div class="box-body">
-        <table class="table table-bordered table-striped data-table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Peso</th>
-                <th>Altura</th>
-                <th>Dado de baja</th>
-                <th>Activo</th>
-                <th>Fecha creacion</th>
-                <th>Fecha actualizacion</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for jugador in jugadors %}
-            <tr>
-                <td><a href="{{ path('jugador_show', { 'id': jugador.id }) }}">{{ jugador.id }}</a></td>
-                <td>{{ jugador.peso }}</td>
-                <td>{{ jugador.altura }}</td>
-                <td>{% if jugador.dadoDeBaja %}Si{% else %}No{% endif %}</td>
-                <td>{% if jugador.activo %}Si{% else %}No{% endif %}</td>
-                <td>{% if jugador.fechaCreacion %}{{ jugador.fechaCreacion|date('d/m/Y H:i:s') }}{% endif %}</td>
-                <td>{% if jugador.fechaActualizacion %}{{ jugador.fechaActualizacion|date('d/m/Y H:i:s') }}{% endif %}</td>
-                <td>
-                        <a class="btn btn-default" href="{{ path('jugador_show', { 'id': jugador.id }) }}">
-                            <i class="fa fa-show"></i>
-                                                    </a>
-                        <a class="btn btn-default" href="{{ path('jugador_edit', { 'id': jugador.id }) }}">
-                            <i class="fa fa-edit"></i>
-                                                    </a>
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-        </table>
-    </div>
-</div>
 
-    <a class="btn btn-primary" href="{{ path('jugador_new') }}">Nuevo jugador</a>
+    {#<a class="btn btn-primary" href="{{ path('jugador_new') }}">Nuevo jugador</a>#}
 {% endblock %}

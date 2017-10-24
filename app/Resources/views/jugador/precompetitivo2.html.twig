@@ -1,0 +1,389 @@
+{% extends 'base_public.html.twig' %}
+
+{% block title %}
+
+{% endblock title %}
+{% block body %}
+    <div class="public-box">
+        <div class="public-logo center-block">
+            <a href="#">
+                <img src="{{ asset('bundles/app/img/logo_urp.jpg') }}" class="img-responsive">
+            </a>
+        </div>
+
+        <div class="public-box-body">
+            {#<p class="login-box-msg">Register a new membership</p>#}
+            <h1 class="text-center">EVALUACIÓN PRE-COMPETITIVA {{ "now" | date('Y') }}</h1>
+
+            <div class="row">
+                <form method="post" id="form-precompetitivo">
+                    <div class="col-md-12">
+                        <div id="rootwizard">
+                            <div class="navbar">
+                                <div class="navbar-inner">
+                                    <div class="container">
+                                        <ul>
+                                            <li><a href="#tab1" data-toggle="tab">Paso 1</a></li>
+                                            <li><a href="#tab2" data-toggle="tab">Paso 2</a></li>
+                                            <li><a href="#tab3" data-toggle="tab">Paso 3</a></li>
+                                            <li><a href="#tab4" data-toggle="tab">Paso 4</a></li>
+                                            <li><a href="#tab5" data-toggle="tab">Paso 5</a></li>
+                                            <li><a href="#tab6" data-toggle="tab">Paso 6</a></li>
+                                            <li><a href="#tab7" data-toggle="tab">Paso 7</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-content">
+                                <div class="tab-pane" id="tab1">
+                                    {{ texto_presentacion.cuerpo | raw }}
+                                </div>
+                                <div class="tab-pane" id="tab2">
+                                    <h4>Seleccioná una opción *</h4>
+
+                                    <div class="form-group">
+                                        <div class="radio">
+                                            <label>
+                                                <input name="categoria" required class="optionsRadios2"
+                                                       value="infantil"
+                                                       type="radio">
+                                                Infantil (no competitivo)
+                                            </label>
+                                        </div>
+
+                                        <div class="radio">
+                                            <label>
+                                                <input name="categoria" required class="optionsRadios2"
+                                                       value="menor"
+                                                       type="radio">
+                                                Menor de 18 años
+                                            </label>
+                                        </div>
+
+                                        <div class="radio">
+                                            <label>
+                                                <input name="categoria" required class="optionsRadios2"
+                                                       value="mayor"
+                                                       type="radio">
+                                                Mayor de 18 años
+                                            </label>
+                                        </div>
+
+                                        <div class="radio">
+                                            <label>
+                                                <input name="categoria" required class="optionsRadios2"
+                                                       value="referee"
+                                                       type="radio">
+                                                Referee (No jugador)
+                                            </label>
+                                        </div>
+
+                                        <div class="mensaje-aviso hidden">
+                                            <label class="text-red">* Debe elegir una opcion</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane" id="tab3">
+                                    <h4>Completá tus datos personales</h4>
+
+
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            {{ form_row(form.apellido) }}
+                                        </div>
+                                        <div class="col-md-4">
+                                            {{ form_row(form.nombre) }}
+                                        </div>
+                                        <div class="col-md-4">
+                                            {{ form_row(form.sexo) }}
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            {{ form_row(form.tipoIdentificacion) }}
+                                        </div>
+                                        <div class="col-md-4">
+                                            {{ form_row(form.numeroIdentificacion) }}
+                                        </div>
+                                        <div class="col-md-4">
+                                            {{ form_row(form.fechaNacimiento) }}
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            {{ form_row(form.contacto.direccion) }}
+                                        </div>
+                                        <div class="col-md-6"></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            {{ form_row(form.contacto.telefono) }}
+                                        </div>
+                                        <div class="col-md-3">
+                                            {{ form_row(form.contacto.telefonoAlternativa) }}
+                                        </div>
+                                        <div class="col-md-6"></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            {{ form_row(form.contacto.mail) }}
+                                            <span class="text-yellow">Este mail se utilizará para enviar la confirmación</span>
+                                        </div>
+                                        <div class="col-md-6"></div>
+                                    </div>
+
+                                    <h3>Datos de Juego</h3>
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            {#{{ dump(form.jugador.clubJugador.children) }}#}
+                                            {#{{ form_row(form.jugador.clubJugador.club) }}#}
+                                            {{ form_row(form.jugador.clubJugador.children.0.club) }}
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            {{ form_row(form.jugador.posicionHabitual) }}
+                                        </div>
+                                        <div class="col-md-4">
+                                            {{ form_row(form.jugador.posicionAlternativa) }}
+                                        </div>
+                                        <div class="col-md-4">
+                                            {{ form_row(form.jugador.segundaPosicionAlternativa) }}
+                                        </div>
+                                    </div>
+
+                                    <div class="mensaje-aviso hidden">
+                                        <label class="text-red">* Debe completar los campos obligatorios</label>
+                                    </div>
+
+                                </div>
+                                <div class="tab-pane" id="tab4">
+                                    {{ texto_ficha_medica.cuerpo | raw }}
+                                </div>
+                                <div class="tab-pane" id="tab5">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            {{ form_row(formFichaMedica.tieneCobertura) }}
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            {{ form_row(formFichaMedica.prestador) }}
+                                        </div>
+                                        <div class="col-md-6">
+                                            {{ form_row(formFichaMedica.numeroAfiliado) }}
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            {{ form_row(form.jugador.altura) }}
+                                        </div>
+                                        <div class="col-md-6">
+                                            {{ form_row(form.jugador.peso) }}
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            {{ form_row(formFichaMedica.grupoSanguineo) }}
+                                        </div>
+                                    </div>
+
+                                    <div class="mensaje-aviso hidden">
+                                        <label class="text-red">* Debe completar los campos obligatorios</label>
+                                    </div>
+                                </div>
+                                <div class="tab-pane" id="tab6">
+                                    {# resumen form #}
+                                    <h3>Datos Personales</h3>
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label>Nombre y apellido:</label><span> Mauricio Escalante</span><br>
+                                            <label>Fecha de Nacimiento:</label><span> 27/05/1989</span><br>
+                                            <label>Nº de Identificación:</label><span> 13131313</span><br>
+                                            <label>Dirección:</label><span> Nicomedes Castro 123</span><br>
+                                            <label>Tel:</label><span> 37641231231</span><br>
+                                            <label>Tel Alternativo:</label><span> </span><br>
+                                            <label>Mail:</label><span> admin@admin</span><br>
+                                        </div>
+                                    </div>
+
+                                    <h3>Datos Médicos</h3>
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label>Cobertura Médica:</label><span> IPS</span><br>
+                                            <label>Grupo sanguíneo:</label><span> 0-</span><br>
+                                            <label>Peso:</label><span> 78 Kg.</span><br>
+                                            <label>Altura:</label><span> 1.71 cm</span><br>
+                                            <label>Índice de Torg:</label><span> 0-</span><br>
+                                        </div>
+                                    </div>
+
+                                    <h3>Datos de Juego</h3>
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label>Club:</label><span> Asunción Rugby Club</span><br>
+                                            <label>Posición en la que juega:</label><span> 02 - HOOKER | 01 - PILAR IZQUIERDO</span><br>
+                                        </div>
+                                    </div>
+
+                                    <p class="text-red">Antes de enviar la solicitud verificá que los datos sean correctos</p>
+                                </div>
+                                <div class="tab-pane" id="tab7">
+                                    <h2>CONSENTIMIENTO</h2>
+                                    {{ texto_consentimiento.cuerpo | raw }}
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            ACEPTACIÓN
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            {#{{ form_row(form.jugador.clubJugador.consentimiento) }}#}
+                                            {{ form_row(form.jugador.clubJugador.children.0.consentimiento) }}
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4 pull-right">
+
+                                            <button type="submit" class="btn btn-primary btn-block btn-flat">Enviar
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <ul class="pager wizard">
+                                    <li class="previous first" style="display:none;"><a href="#">First</a></li>
+                                    <li class="previous"><a href="#">Anterior</a></li>
+                                    <li class="next last" style="display:none;"><a href="#">Last</a></li>
+                                    <li class="next"><a href="#">Siguiente</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    {{ form_widget(form._token) }}
+                    {{ form_widget(formFichaMedica._token) }}
+                </form>
+            </div>
+
+
+        </div>
+        <!-- /.form-box -->
+    </div>
+
+{% endblock %}
+
+{% block javascript %}
+    <script src="{{ asset('bundles/theme/plugins/twitter-bootstrap-wizard/jquery.bootstrap.wizard.js') }}"></script>
+    <script>
+        function isValidEmailAddress(emailAddress) {
+            var pattern = /^([a-z\d!#$%&'*+\-\/=?^_`{|}~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+(\.[a-z\d!#$%&'*+\-\/=?^_`{|}~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+)*|"((([ \t]*\r\n)?[ \t]+)?([\x01-\x08\x0b\x0c\x0e-\x1f\x7f\x21\x23-\x5b\x5d-\x7e\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|\\[\x01-\x09\x0b\x0c\x0d-\x7f\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))*(([ \t]*\r\n)?[ \t]+)?")@(([a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|[a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF][a-z\d\-._~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]*[a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])\.)+([a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|[a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF][a-z\d\-._~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]*[a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])\.?$/i;
+            return pattern.test(emailAddress);
+        };
+        $(document).ready(function () {
+
+            $('input[name*="[{{ formFichaMedica.tieneCobertura.vars.name }}]"]').change(function () {
+                if ($(this).val() == 1) {
+                    $('.tieneCobertura').prop('required', true);
+                }
+                else if ($(this).val() == 0) {
+                    $('.tieneCobertura').removeAttr('required');
+                }
+
+            })
+
+            $('#rootwizard').bootstrapWizard({
+                onNext: function (tab, navigation, index) {
+                    if (index == 2) {
+                        // Make sure we entered the name
+
+                        if ($('.optionsRadios2').is(':checked') == false) {
+                            $('.mensaje-aviso').removeClass('hidden');
+                            return false;
+                        } else {
+                            $('.mensaje-aviso').addClass('hidden');
+                        }
+                    }
+                    if (index == 3) {
+                        var err = 0;
+                        $('form#form-precompetitivo').find('input:visible, select:visible').each(function () {
+
+                            if (!$(this).prop('required')) {
+                                console.log("NR");
+
+                            } else {
+                                console.log("IR");
+
+                                if (!$(this).val() || $(this).val() === "") {
+                                    $(this).css('background-color', '#FFF7E5');
+                                    $('.mensaje-aviso').removeClass('hidden');
+
+                                    err += 1;
+                                } else {
+                                    $(this).css('background-color', '#fff');
+                                    $('.mensaje-aviso').addClass('hidden');
+                                }
+
+                                if ($(this).attr('type') == 'email') {
+                                    if (!isValidEmailAddress($(this).val())) {
+                                        $(this).css('border', '1px red solid');
+                                        err += 1;
+                                    } else {
+                                        $(this).css('border', '1px #d2d6de solid');
+
+                                    }
+                                }
+                            }
+                        });
+                        if (err > 0) {
+                            return false;
+                        }
+                    }
+                    if (index == 5) {
+                        var err = 0;
+                        $('form#form-precompetitivo').find('input:visible, select:visible').each(function () {
+
+                            if (!$(this).prop('required')) {
+                                console.log("NR");
+
+                            } else {
+                                console.log("IR");
+
+                                if ($(this).attr('type') !== 'radio') {
+
+                                    console.log('val', $(this).val());
+
+                                    if (!$(this).val() || $(this).val() === "") {
+                                        $(this).css('background-color', '#FFF7E5');
+                                        $('.mensaje-aviso').removeClass('hidden');
+
+                                        err += 1;
+                                    } else {
+                                        $(this).css('background-color', '#fff');
+                                        $('.mensaje-aviso').addClass('hidden');
+                                    }
+                                }
+                            }
+                        });
+
+                        if (err > 0) {
+                            return false;
+                        }
+                    }
+
+                    // Set the name for the next tab
+//                    $('#tab3').html('Hello, ' + $('#name').val());
+
+                },
+                onTabClick: function (tab, navigation, index) {
+                    return false;
+                }
+            });
+
+
+        });
+    </script>
+{% endblock javascript %}

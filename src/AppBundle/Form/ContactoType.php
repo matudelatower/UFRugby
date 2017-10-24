@@ -3,6 +3,7 @@
 namespace AppBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -15,7 +16,9 @@ class ContactoType extends AbstractType
     {
         $builder->add('telefono')
                 ->add('telefonoAlternativa')
-                ->add('mail')
+                ->add('mail', EmailType::class, [
+
+                ])
                 ->add('direccion')
                 ->add('web')
                 ->add('skype')

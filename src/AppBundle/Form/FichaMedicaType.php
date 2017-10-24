@@ -2,8 +2,10 @@
 
 namespace AppBundle\Form;
 
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -21,10 +23,27 @@ class FichaMedicaType extends AbstractType {
 					'multiple' => false,
 					'choices'  => array( 'Sí' => true, 'No' => false ),
 				] )
-			->add( 'prestador' )
-			->add( 'numeroAfiliado' )
-			->add( 'indiceTorg' )
-			->add( 'grupoSanguineo' );
+			->add( 'prestador',
+				TextType::class,
+				[
+					'required' => true,
+					'attr'     => [ 'class' => 'tieneCobertura' ]
+				] )
+			->add( 'numeroAfiliado',
+				TextType::class,
+				[
+					'label' => 'Nº Afiliado',
+					'required' => true,
+					'attr'     => [ 'class' => 'tieneCobertura' ]
+				] )
+			->add( 'grupoSanguineo',
+				EntityType::class,
+				[
+					'label'    => 'Grupo Sanguíneo *',
+					'class'    => 'AppBundle\Entity\GrupoSanguineo',
+					'required' => true,
+					'placeholder' => 'Seleccionar'
+				] );
 	}
 
 	/**

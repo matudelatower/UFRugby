@@ -32,12 +32,21 @@ class PrecompetitivoType extends AbstractType {
 						'class' => 'datepicker',
 					),
 				) )
-			->add( 'sexo' )
+			->add( 'sexo',
+				EntityType::class,
+				[
+					'required'    => true,
+					'class'       => 'AppBundle\Entity\Sexo',
+					'placeholder' => 'Seleccionar',
+					'label'       => 'Sexo *'
+				] )
 			->add( 'tipoIdentificacion',
 				EntityType::class,
 				[
-					'label' => 'Tipo identificación',
-					'class' => 'AppBundle\Entity\TipoIdentificacion'
+					'required'    => true,
+					'class'       => 'AppBundle\Entity\TipoIdentificacion',
+					'placeholder' => 'Seleccionar',
+					'label'       => 'Tipo de Identificación *'
 				] )
 			->add( 'jugador', JugadorType::class );
 	}
@@ -48,7 +57,6 @@ class PrecompetitivoType extends AbstractType {
 	public function configureOptions( OptionsResolver $resolver ) {
 		$resolver->setDefaults( array(
 			'data_class' => 'AppBundle\Entity\Persona',
-			'required'   => false, //TODO descomentar cuando salga de muestra
 		) );
 	}
 

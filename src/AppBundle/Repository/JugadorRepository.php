@@ -10,4 +10,10 @@ namespace AppBundle\Repository;
  */
 class JugadorRepository extends \Doctrine\ORM\EntityRepository
 {
+
+	public function getQbAll(  ) {
+		$qb = $this->createQueryBuilder('j');
+
+		return $qb;
+	}
 }

@@ -36,21 +36,13 @@ class FichaMedica extends BaseClass
      */
     private $numeroAfiliado;
 
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="indice_torg", type="string", length=255)
-     */
-    private $indiceTorg;
-
 	/**
 	 * @var
 	 *
-	 * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Jugador", inversedBy="fichaMedica")
-	 * @ORM\JoinColumn(name="jugador_id", referencedColumnName="id")
+	 * @ORM\ManyToOne(targetEntity="AppBundle\Entity\ClubJugador", inversedBy="fichaMedica")
+	 * @ORM\JoinColumn(name="club_jugador_id", referencedColumnName="id")
 	 */
-	private $jugador;
+	private $clubJugador;
 
 	/**
 	 * @var
@@ -66,6 +58,20 @@ class FichaMedica extends BaseClass
 	 * @ORM\Column(name="tiene_cobertura", type="boolean", nullable=true)
 	 */
 	private $tieneCobertura;
+
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(name="doctor", type="string", length=255, nullable=true)
+	 */
+	private $doctor;
+
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(name="matricula", type="string", length=255, nullable=true)
+	 */
+	private $matricula;
 	
 
     /**
@@ -127,27 +133,27 @@ class FichaMedica extends BaseClass
     }
 
     /**
-     * Set indiceTorg
+     * Set tieneCobertura
      *
-     * @param string $indiceTorg
+     * @param boolean $tieneCobertura
      *
      * @return FichaMedica
      */
-    public function setIndiceTorg($indiceTorg)
+    public function setTieneCobertura($tieneCobertura)
     {
-        $this->indiceTorg = $indiceTorg;
+        $this->tieneCobertura = $tieneCobertura;
 
         return $this;
     }
 
     /**
-     * Get indiceTorg
+     * Get tieneCobertura
      *
-     * @return string
+     * @return boolean
      */
-    public function getIndiceTorg()
+    public function getTieneCobertura()
     {
-        return $this->indiceTorg;
+        return $this->tieneCobertura;
     }
 
     /**
@@ -174,34 +180,6 @@ class FichaMedica extends BaseClass
     public function setFechaActualizacion($fechaActualizacion)
     {
         $this->fechaActualizacion = $fechaActualizacion;
-
-        return $this;
-    }
-
-    /**
-     * Set creadoPor
-     *
-     * @param \UsuariosBundle\Entity\Usuario $creadoPor
-     *
-     * @return FichaMedica
-     */
-    public function setCreadoPor(\UsuariosBundle\Entity\Usuario $creadoPor = null)
-    {
-        $this->creadoPor = $creadoPor;
-
-        return $this;
-    }
-
-    /**
-     * Set actualizadoPor
-     *
-     * @param \UsuariosBundle\Entity\Usuario $actualizadoPor
-     *
-     * @return FichaMedica
-     */
-    public function setActualizadoPor(\UsuariosBundle\Entity\Usuario $actualizadoPor = null)
-    {
-        $this->actualizadoPor = $actualizadoPor;
 
         return $this;
     }
@@ -255,26 +233,102 @@ class FichaMedica extends BaseClass
     }
 
     /**
-     * Set tieneCobertura
+     * Set creadoPor
      *
-     * @param boolean $tieneCobertura
+     * @param \UsuariosBundle\Entity\Usuario $creadoPor
      *
      * @return FichaMedica
      */
-    public function setTieneCobertura($tieneCobertura)
+    public function setCreadoPor(\UsuariosBundle\Entity\Usuario $creadoPor = null)
     {
-        $this->tieneCobertura = $tieneCobertura;
+        $this->creadoPor = $creadoPor;
 
         return $this;
     }
 
     /**
-     * Get tieneCobertura
+     * Set actualizadoPor
      *
-     * @return boolean
+     * @param \UsuariosBundle\Entity\Usuario $actualizadoPor
+     *
+     * @return FichaMedica
      */
-    public function getTieneCobertura()
+    public function setActualizadoPor(\UsuariosBundle\Entity\Usuario $actualizadoPor = null)
     {
-        return $this->tieneCobertura;
+        $this->actualizadoPor = $actualizadoPor;
+
+        return $this;
+    }
+
+    /**
+     * Set doctor
+     *
+     * @param string $doctor
+     *
+     * @return FichaMedica
+     */
+    public function setDoctor($doctor)
+    {
+        $this->doctor = $doctor;
+
+        return $this;
+    }
+
+    /**
+     * Get doctor
+     *
+     * @return string
+     */
+    public function getDoctor()
+    {
+        return $this->doctor;
+    }
+
+    /**
+     * Set matricula
+     *
+     * @param string $matricula
+     *
+     * @return FichaMedica
+     */
+    public function setMatricula($matricula)
+    {
+        $this->matricula = $matricula;
+
+        return $this;
+    }
+
+    /**
+     * Get matricula
+     *
+     * @return string
+     */
+    public function getMatricula()
+    {
+        return $this->matricula;
+    }
+
+    /**
+     * Set clubJugador
+     *
+     * @param \AppBundle\Entity\ClubJugador $clubJugador
+     *
+     * @return FichaMedica
+     */
+    public function setClubJugador(\AppBundle\Entity\ClubJugador $clubJugador = null)
+    {
+        $this->clubJugador = $clubJugador;
+
+        return $this;
+    }
+
+    /**
+     * Get clubJugador
+     *
+     * @return \AppBundle\Entity\ClubJugador
+     */
+    public function getClubJugador()
+    {
+        return $this->clubJugador;
     }
 }

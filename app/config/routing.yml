@@ -26,3 +26,8 @@ easy_admin_bundle:
     resource: "@AppBundle/Controller/AdminController.php"
     type:     annotation
     prefix:   /admin
+
+confirmacion_precompetitivo:
+    path:     /confirmacion_precompetitivo/{token}
+    defaults: { _controller: "AppBundle:Jugador:precompetitivoConfirmacion" }
+    methods:  GET

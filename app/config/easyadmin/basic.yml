@@ -17,6 +17,7 @@ easy_admin:
             - { label: 'Condición Jugador', entity: CondicionJugador , default: true}
             - { label: 'Posición Jugador', entity: PosicionJugador }
             - { label: 'Categoría', entity: Categoria }
+            - { label: 'División', entity: Division }
             - { label: 'Tipo Identificación', entity: TipoIdentificacion }
             - { label: 'Sexo', entity: Sexo }
             - { label: 'Textos', entity: Texto }
