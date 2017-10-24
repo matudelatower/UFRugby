@@ -25,6 +25,7 @@ class AppKernel extends Kernel
 	        new ThemeBundle\ThemeBundle(),
 	        new Ivory\CKEditorBundle\IvoryCKEditorBundle(),
 	        new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
+	        new Knp\Bundle\SnappyBundle\KnpSnappyBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

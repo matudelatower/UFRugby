@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{{ title }}</title>
+    <style>
+        label {
+            margin-right: 15%;
+        }
+
+        .firma {
+            width: 100%;
+            margin-top: 15%;
+        }
+
+        .firma td {
+            border-top: 1px black solid;
+            width: 30%;
+            text-align: center;
+        }
+        .page-break{
+            page-break-after: always;
+        }
+    </style>
+</head>
+<body>
+<section>
+    <h1>EVALUACIÓN PRE-COMPETITIVA {{ date('now') |date('Y') }}</h1>
+</section>
+<section>
+    <h2>Datos Personales</h2>
+
+    <label>Nombre y apellido: <b>{{ clubJugador.jugador.persona.nombre }} {{ clubJugador.jugador.persona.apellido }}</b>
+    </label><br>
+    <label>Fecha de Nacimiento: <b>{{ clubJugador.jugador.persona.fechaNacimiento | date('d/m/Y') }}</b> </label><br>
+    <label>Nº de identificación: <b>{{ clubJugador.jugador.persona.numeroIdentificacion }}</b></label><br>
+    <label>Tel: <b>{{ clubJugador.jugador.persona.contacto.telefono }}</b> </label> <label>Tel alternativo:
+        <b>{{ clubJugador.jugador.persona.contacto.telefonoAlternativa }}</b></label><br>
+    <label>Email: <b>{{ clubJugador.jugador.persona.contacto.mail }}</b></label><br>
+    <hr>
+    <label>Cobertura Médica: <b>{{ clubJugador.fichaMedica.first.prestador }}</b> </label><label>Grupo sanguíneo:
+        <b>{{ clubJugador.fichaMedica.first.grupoSanguineo }}</b></label><br>
+    <label>Peso: <b>{{ clubJugador.jugador.peso }} Kg</b></label> <label>Altura: <b>{{ clubJugador.jugador.altura }}
+            mts</b></label><br>
+    <hr>
+
+    <label>Club: <b>{{ clubJugador.club }}</b></label><br>
+    <label>Posición en la que juega: <b>{{ clubJugador.jugador.posicionHabitual }}</b></label><br>
+
+    <hr>
+
+    <h2>Datos Médicos</h2>
+
+    {{ texto_ficha_medica.cuerpo | raw }}
+
+    <p>
+        SI ALGÚN ELEMENTO DE LA HISTORIA CLÍNICA ES POSITIVO, EL PROFESIONAL INDICARÁ TODOS LOS ESTUDIOS Y CONSULTAS QUE
+        CREA CONVINIENTE PARA PODER EVALUAR ADECUADAMENTE AL JUGADOR.
+    </p>
+
+    <hr>
+
+    <p>
+        El/La Sr/Srta. <b>{{ clubJugador.jugador.persona.nombre }} {{ clubJugador.jugador.persona.apellido }} </b>,
+        N° de identificación <b>{{ clubJugador.jugador.persona.numeroIdentificacion }}</b>,
+        es apto para la práctica federada de Rugby, habiendo tomado conocimiento de los
+        "Antecedentes de Enfermedad" que acompañan el presente.
+    </p>
+
+    <table class="firma">
+        <tr>
+            <td>Lugar y Fecha</td>
+            <td>Firma y sello del Médico</td>
+        </tr>
+    </table>
+
+    <hr class="page-break">
+
+    <h2>CONSENTIMIENTO (mayores de 18)</h2>
+
+    <p>
+        Yo <b>{{ clubJugador.jugador.persona.nombre }} {{ clubJugador.jugador.persona.apellido }} </b>, con N° de
+        identificación
+        <b>{{ clubJugador.jugador.persona.numeroIdentificacion }}</b>,
+        manifiesto formal aceptación a los fines de integrar equipos representativos del club
+        <b>{{ clubJugador.club }}</b> y/o seleccionados provinciales y/o regionales y/o nacionales, tanto para actuar
+        como
+        jugador titular y/o suplente, así como para realizar todas las actividades relacionadas con tal participación.
+        Asimismo declaro conocer y aceptar que el rugby es un deporte con contacto entre aquellos que participan de la
+        competencia, lo que implica que aun cumpliendo con las leyes del juego y los reglamentos dictados por los
+        organismos rectores pertinentes, tanto en materia de seguridad como de juego en general, puedan igualmente
+        presentarse situaciones de riesgo para los participantes, acontecimientos estos que a su vez podrían derivar en
+        accidentes y, eventualmente, en daños a la persona. Concorde con ello, rati co conocer y aceptar los riesgos
+        que
+        implica la práctica del rugby, asumiéndolos libre y voluntariamente, relevando a la Unión Argentina de Rugby
+        de
+        toda responsabilidad por hechos que pudieren originarse con motivo de la práctica del rugby.
+    </p>
+
+    <p>
+        Lugar y fecha: <br>
+        Domicilio: <br>
+        N° de identificación: <br>
+        FIRMA: <br>
+        Aclaración: <br>
+    </p>
+
+</section>
+</body>
+</html>

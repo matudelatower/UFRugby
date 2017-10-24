@@ -67,3 +67,8 @@ jugador_precompetitivo:
     path:     /precompetitivo
     defaults: { _controller: "AppBundle:Jugador:precompetitivo" }
     methods:  [GET, POST]
+
+jugador_ficha_precompetitiva:
+    path:     /{clubJugadorId}/ficha_precompetitiva
+    defaults: { _controller: "AppBundle:Jugador:fichaPrecompetitiva" }
+    methods:  [GET]

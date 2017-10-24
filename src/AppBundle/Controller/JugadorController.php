@@ -8,6 +8,7 @@ use AppBundle\Entity\Jugador;
 use AppBundle\Entity\Persona;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
@@ -293,7 +294,7 @@ class JugadorController extends Controller {
 //		$body   = $request->get( 'cuerpo' );
 		$asunto = 'URP - Confirmación Precompetitivo';
 
-		$url = $this->get('router')->generate( 'confirmacion_precompetitivo',
+		$url = $this->get( 'router' )->generate( 'confirmacion_precompetitivo',
 			array( 'token' => $token ),
 			UrlGeneratorInterface::ABSOLUTE_URL );
 
@@ -348,7 +349,41 @@ class JugadorController extends Controller {
 
 		return $this->render( ':jugador:precompetitivo_mensaje.html.twig',
 			array(
-				'mensaje' => $mensaje
+				'mensaje'     => $mensaje,
+				'clubJugador' => $fichaje
 			) );
+	}
+
+	public function fichaPrecompetitivaAction( $clubJugadorId ) {
+		$em               = $this->getDoctrine()->getManager();
+		$clubJugador      = $em->getRepository( 'AppBundle:ClubJugador' )->findOneById( $clubJugadorId );
+		$title            = 'Evaluación PreCompetitiva';
+		$textoFichaMedica = $em->getRepository( 'AppBundle:Texto' )->findOneBySlug( 'datos-ficha-medica' );
+
+		$html = $this->renderView( ':jugador:evaluacion_precompetitiva.pdf.twig',
+			[
+				'clubJugador'      => $clubJugador,
+				'title'            => $title,
+				'texto_ficha_medica' => $textoFichaMedica
+			]
+		);
+
+//        return new Response($html);
+
+		return new Response(
+			$this->get( 'knp_snappy.pdf' )->getOutputFromHtml( $html,
+				array(
+					'margin-left'  => "3cm",
+					'margin-right' => "3cm",
+					'margin-top'   => "3cm",
+//                    'margin-bottom' => "1cm"
+				)
+			)
+			, 200, array(
+				'Content-Type'        => 'application/pdf',
+				'Content-Disposition' => 'inline; filename="' . $title . '.pdf"'
+			)
+		);
+
 	}
 }

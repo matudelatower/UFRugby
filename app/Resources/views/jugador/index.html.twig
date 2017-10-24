@@ -12,7 +12,7 @@
             <table class="table table-bordered table-striped data-table">
                 <thead>
                 <tr>
-                    <th>Id</th>
+                    <th>Club</th>
                     <th>Nº Identificación</th>
                     <th>Jugador</th>
                     <th>Fecha de Nacimiento</th>
@@ -24,7 +24,7 @@
                 <tbody>
                 {% for jugador in jugadors %}
                     <tr>
-                        <td><a href="{{ path('jugador_show', { 'id': jugador.id }) }}">{{ jugador.id }}</a></td>
+                        <td>{{ jugador.clubJugador.first.club }}</td>
                         <td>{{ jugador.persona.numeroIdentificacion }}</td>
                         <td>{{ jugador.persona.nombre }} {{ jugador.persona.apellido }}</td>
                         <td>{{ jugador.persona.fechaNacimiento | date ('d/m/Y') }}</td>
