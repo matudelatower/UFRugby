@@ -24,7 +24,7 @@
                 <tbody>
                 {% for clubJugador in clubJugadors %}
                     <tr>
-                        <td>{{ clubJugador.jugador.club }}</td>
+                        <td>{{ clubJugador.club }}</td>
                         <td>{{ clubJugador.jugador.persona.numeroIdentificacion }}</td>
                         <td>{{ clubJugador.jugador.persona.nombre }} {{ clubJugador.jugador.persona.apellido }}</td>
                         <td>{{ clubJugador.jugador.persona.fechaNacimiento | date ('d/m/Y') }}</td>
