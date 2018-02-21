@@ -271,6 +271,9 @@ class AjaxController extends Controller {
 			$clubJugador = new ClubJugador();
 			$cub         = $em->getRepository( 'AppBundle:Club' )->find( $data['club']['id'] );
 			$clubJugador->setClub( $cub );
+			$clubJugador->setConfirmado(false);
+			$clubJugador->setConfirmadoClub(false);
+			$clubJugador->setConfirmadoUnion(false);
 			$clubJugador->setConsentimiento( true );
 
 			$jugador->addClubJugador( $clubJugador );

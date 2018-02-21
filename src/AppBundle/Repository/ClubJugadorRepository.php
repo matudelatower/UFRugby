@@ -22,9 +22,11 @@ class ClubJugadorRepository extends \Doctrine\ORM\EntityRepository {
 		$qb->where( 'cj.club = :club' );
 		$qb->andWhere( 'cj.anio = :anio' );
 
-		$qb->andWhere( 'cj.confirmado is null' )
-		   ->andWhere( 'cj.confirmadoClub = false' )
-		   ->andWhere( 'cj.confirmadoUnion = false' );
+//		$qb
+//			->orWhere( 'cj.confirmado = false' )
+//			->orWhere( 'cj.confirmadoClub = false' )
+//			->orWhere( 'cj.confirmadoUnion = false' )
+//		;
 
 //		$qb->andWhere( 'cj.confirmado = true' );
 //		$qb->andWhere( 'cj.confirmadoClub = false' );
@@ -106,15 +108,23 @@ class ClubJugadorRepository extends \Doctrine\ORM\EntityRepository {
 	public function getQbByUnion() {
 		$qb = $this->createQueryBuilder( 'cj' );
 
+		$qb->select( 'cj.id' );
+
 		$qb->andWhere( 'cj.anio = :anio' );
-		$qb->andWhere( 'cj.confirmado = true' )
-		->orWhere('cj.confirmado is null');
-		$qb->andWhere( 'cj.confirmadoClub = false' );
-		$qb->andWhere( 'cj.confirmadoUnion = false' );
 
-		$qb->setParameter( 'anio', date( 'Y' ) );
+		$qb
+			->andwhere( 'cj.confirmado = true' )
+			->andwhere( 'cj.confirmadoClub = true' )
+			->andwhere( 'cj.confirmadoUnion = true' );
+
+		$qb2 = $this->createQueryBuilder( 'cj2' );
+		$qb2->where(
+			$qb2->expr()->notIn( 'cj2.id', $qb->getDQL() )
+		);
+
+		$qb2->setParameter( 'anio', date( 'Y' ) );
 
 
-		return $qb;
+		return $qb2;
 	}
 }
