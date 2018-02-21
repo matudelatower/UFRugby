@@ -23,6 +23,7 @@ security:
                 csrf_token_generator: security.csrf.token_manager
                 # if you are using Symfony < 2.8, use the following config instead:
                 # csrf_provider: form.csrf_provider
+            logout_on_user_change: true
 
             logout:       true
             anonymous:    true
@@ -32,6 +33,7 @@ security:
         - { path: ^/jugador/precompetitivo, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/confirmacion_precompetitivo/, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/ficha_precompetitiva/, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/ajax-public/, role: IS_AUTHENTICATED_ANONYMOUSLY }
 #        - { path: ^/jugador/precompetitivo_(?!(/)).*$, role: IS_AUTHENTICATED_ANONYMOUSLY }
 #        - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
 #        - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }

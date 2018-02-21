@@ -19,6 +19,7 @@ easy_admin:
             - { label: 'Categoría', entity: Categoria }
             - { label: 'División', entity: Division }
             - { label: 'Tipo Identificación', entity: TipoIdentificacion }
+            - { label: 'Tipo Relación', entity: TipoRelacion }
             - { label: 'Sexo', entity: Sexo }
             - { label: 'Textos', entity: Texto }
             - { label: 'Grupos Sanguineos', entity: GrupoSanguineo }

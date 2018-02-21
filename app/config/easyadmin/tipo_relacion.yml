@@ -1,0 +1,9 @@
+easy_admin:
+    entities:
+        TipoRelacion:
+            label: "Tipo TipoRelación"
+            class: AppBundle\Entity\TipoRelacion
+            disabled_actions: ['delete']
+            form:
+                fields:
+                - { property: 'nombre' }

@@ -87,7 +87,7 @@ class Jugador extends BaseClass {
 	/**
 	 * @var bool
 	 *
-	 * @ORM\Column(name="dado_de_baja", type="boolean")
+	 * @ORM\Column(name="dado_de_baja", type="boolean", nullable=true)
 	 */
 	private $dadoDeBaja;
 

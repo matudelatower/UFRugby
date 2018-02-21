@@ -1,0 +1,36 @@
+{% extends 'base_public.html.twig' %}
+
+{% block title %}
+
+{% endblock title %}
+{% block body %}
+    <div class="public-box">
+        <div class="public-logo center-block">
+            <a href="#">
+                <img src="{{ asset('bundles/app/img/logo_urp.jpg') }}" class="img-responsive">
+            </a>
+        </div>
+
+        <div class="public-box-body">
+            <h1 class="text-center">EVALUACIÓN PRE-COMPETITIVA {{ "now" | date('Y') }}</h1>
+
+            <div class="row">
+
+                <precompetitivo>
+                    <template slot="textoPresentacion">
+                        {{ texto_presentacion.cuerpo | raw }}
+                    </template>
+                </precompetitivo>
+
+            </div>
+
+
+        </div>
+        <!-- /.form-box -->
+    </div>
+
+{% endblock %}
+
+{% block javascript %}
+
+{% endblock javascript %}

@@ -89,6 +89,15 @@ class Builder implements ContainerAwareInterface {
 			     ->setAttribute( 'class', 'treeview' );
 
 			if ($this->container->get( 'security.authorization_checker' )->isGranted( 'ROLE_ADMIN' )) {
+
+				$menu[ $keyPersonal ]
+					->addChild(
+						'Administración',
+						array(
+							'route' => 'admin',
+						)
+					);
+
 				$menu[ $keyPersonal ]
 					->addChild(
 						'Clubs',

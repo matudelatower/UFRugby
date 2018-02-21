@@ -19,7 +19,7 @@ class AppKernel extends Kernel
 	        new Knp\Bundle\MenuBundle\KnpMenuBundle(),
 	        new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
 	        new Vich\UploaderBundle\VichUploaderBundle(),
-	        new JavierEguiluz\Bundle\EasyAdminBundle\EasyAdminBundle(),
+	        new EasyCorp\Bundle\EasyAdminBundle\EasyAdminBundle(),
             new AppBundle\AppBundle(),
 	        new UsuariosBundle\UsuariosBundle(),
 	        new ThemeBundle\ThemeBundle(),

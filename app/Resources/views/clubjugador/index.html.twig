@@ -32,6 +32,9 @@
                         <td>{{ clubJugador.jugador.posicionHabitual }}</td>
                         <td>{% if clubJugador.fechaCreacion %}{{ clubJugador.fechaCreacion|date('d/m/Y H:i:s') }}{% endif %}</td>
                         <td>
+                            {% if not clubJugador.confirmado %}
+                                <small class="label bg-yellow">El jugador no Confirmó su mail</small>
+                            {% endif %}
                             {% if not clubJugador.confirmadoUnion %}
                                 <small class="label bg-yellow">Pendiente Unión</small>
                             {% endif %}
@@ -41,12 +44,14 @@
                         </td>
                         <td>
                             {% if (is_granted('ROLE_CLUB') and not clubJugador.confirmadoClub) or
-                            is_granted('ROLE_ADMIN') and not clubJugador.confirmadoUnion %}
+                                is_granted('ROLE_ADMIN') and not clubJugador.confirmadoUnion %}
 
-                            <a class="btn btn-default"
-                               href="{{ path('clubjugador_confirmar', { 'id': clubJugador.id }) }}">
-                                <i class="fa fa-check"></i>
-                            </a>
+                                {% if clubJugador.confirmado %}
+                                    <a class="btn btn-default"
+                                       href="{{ path('clubjugador_confirmar', { 'id': clubJugador.id }) }}">
+                                        <i class="fa fa-check"></i>
+                                    </a>
+                                {% endif %}
                             {% endif %}
                         </td>
                     </tr>

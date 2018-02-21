@@ -280,7 +280,8 @@ class JugadorController extends Controller {
 			}
 		}
 
-		return $this->render( 'jugador/precompetitivo2.html.twig',
+//		return $this->render( 'jugador/precompetitivo2.html.twig',
+		return $this->render( 'jugador/precompetitivo3.html.twig',
 			array(
 				'texto_presentacion'   => $textoPresentacion,
 				'form'                 => $form->createView(),

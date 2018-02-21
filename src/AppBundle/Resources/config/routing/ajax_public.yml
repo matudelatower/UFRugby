@@ -1,0 +1,44 @@
+get_sexos:
+    path:     /sexos
+    defaults: { _controller: "AppBundle:Ajax:getSexos" }
+    methods:  GET
+
+get_tipos_identificacion:
+    path:     /tipos-identificacion
+    defaults: { _controller: "AppBundle:Ajax:getTiposIdentificacion" }
+    methods:  GET
+
+get_club:
+    path:     /club
+    defaults: { _controller: "AppBundle:Ajax:getClub" }
+    methods:  GET
+
+get_posicion:
+    path:     /posicion
+    defaults: { _controller: "AppBundle:Ajax:getPosicion" }
+    methods:  GET
+
+get_texto_ficha_medica:
+    path:     /texto-ficha-medica
+    defaults: { _controller: "AppBundle:Ajax:getTextoFichaMedica" }
+    methods:  GET
+
+get_texto_consentimiento:
+    path:     /texto-consentimiento
+    defaults: { _controller: "AppBundle:Ajax:getTextoConsentimiento" }
+    methods:  GET
+
+get_grupo_sanguineo:
+    path:     /grupo-sanguineo
+    defaults: { _controller: "AppBundle:Ajax:getGrupoSanguineo" }
+    methods:  GET
+
+get_tipo_relacion:
+    path:     /tipo-relacion
+    defaults: { _controller: "AppBundle:Ajax:getTipoRelacion" }
+    methods:  GET
+
+post_precompetitivo:
+    path:     /precompetitivo
+    defaults: { _controller: "AppBundle:Ajax:postPrecompetitivo" }
+    methods:  POST

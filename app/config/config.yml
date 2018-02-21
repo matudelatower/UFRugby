@@ -44,6 +44,7 @@ twig:
     globals:
         version: "%version%"
         site_name: "%site_name%"
+        union_name: "%union_name%"
     form_themes:
         - 'AppBundle:Form:custom_widgets.html.twig'
 #        - 'TetranzSelect2EntityBundle:Form:fields.html.twig'

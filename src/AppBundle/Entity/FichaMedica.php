@@ -184,29 +184,6 @@ class FichaMedica extends BaseClass
         return $this;
     }
 
-    /**
-     * Set jugador
-     *
-     * @param \AppBundle\Entity\Jugador $jugador
-     *
-     * @return FichaMedica
-     */
-    public function setJugador(\AppBundle\Entity\Jugador $jugador = null)
-    {
-        $this->jugador = $jugador;
-
-        return $this;
-    }
-
-    /**
-     * Get jugador
-     *
-     * @return \AppBundle\Entity\Jugador
-     */
-    public function getJugador()
-    {
-        return $this->jugador;
-    }
 
     /**
      * Set grupoSanguineo

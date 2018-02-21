@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link rel="icon" type="image/x-icon" href="{{ asset('bundles/app/img/logo_urp.jpg') }}"/>
-    <title>{% block title %}Bienvenido!{% endblock %} | URP</title>
+    <title>{% block title %}Bienvenido!{% endblock %} | {{ site_name }}</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
@@ -55,9 +55,9 @@
         <!-- Logo -->
         <a href="{{ path('app_homepage') }}" class="logo">
             <!-- mini logo for sidebar mini 50x50 pixels -->
-            <span class="logo-mini"><b>UR</b>P</span>
+            <span class="logo-mini">{{ site_name }}</span>
             <!-- logo for regular state and mobile devices -->
-            <span class="logo-lg"><b>Unión de Rugby de</b>Paraguay</span>
+            <span class="logo-lg">{{ union_name }}</span>
         </a>
         <!-- Header Navbar: style can be found in header.less -->
         <nav class="navbar navbar-static-top">
@@ -81,8 +81,12 @@
                                      alt="User Image">
 
                                 <p>
-                                    {{ app.user }} - Web Developer
-                                    <small>Activo desde -</small>
+                                    {% set tipoPerfil = 'Unión' %}
+                                    {% if app.user.club %}
+                                        {% set tipoPerfil = 'Club' %}
+                                    {% endif %}
+                                    {{ app.user }} - {{ tipoPerfil }}
+                                    {#<small>Activo desde - {{ app.user.cre }}</small>#}
                                 </p>
                             </li>
 
@@ -190,7 +194,7 @@
         <div class="pull-right hidden-xs">
             <b>Version</b> {{ version }}
         </div>
-        <strong>Copyright &copy; {{ "now"|date("Y") }} <a href="https://hcdposadas.gob.ar">UFRugby - Posadas</a>.</strong>
+        <strong>Copyright &copy; {{ "now"|date("Y") }} <a href="#">{{ union_name }}</a>.</strong>
     </footer>
     <!-- Add the sidebar's background. This div must be placed
          immediately after the control sidebar -->

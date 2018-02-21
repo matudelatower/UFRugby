@@ -1,3 +1,11 @@
+app_ajax:
+    resource: "@AppBundle/Resources/config/routing/ajax.yml"
+    prefix:   /ajax
+
+app_ajax_public:
+    resource: "@AppBundle/Resources/config/routing/ajax_public.yml"
+    prefix:   /ajax-public
+
 app_clubjugador:
     resource: "@AppBundle/Resources/config/routing/clubjugador.yml"
     prefix:   /clubjugador
