@@ -12,26 +12,26 @@ class DefaultController extends Controller {
 		$club = $this->getUser()->getClub();
 
 		if ( $club ) {
-			$nuevosFichajes    = $em->getRepository( 'AppBundle:ClubJugador' )->getCountNuevosFichajes( $club );
+			$nuevosFichajes    = count( $em->getRepository( 'AppBundle:ClubJugador' )->getCountNuevosFichajes( $club ) );
 			$cantidadJugadores = $em->getRepository( 'AppBundle:ClubJugador' )->getCountJugadores( $club );
-			$incidencias       = [];
-			$estadisticas      = [];
+			$incidencias       = 0;
+			$estadisticas      = 0;
 
 
 		} else {
-			$nuevosFichajes    = [];
-			$cantidadJugadores = [];
-			$incidencias       = [];
-			$estadisticas      = [];
-			
+			$nuevosFichajes    = $em->getRepository( 'AppBundle:ClubJugador' )->getCountAllNuevosFichajes();
+			$cantidadJugadores = $em->getRepository( 'AppBundle:ClubJugador' )->getCountAllJugadores();
+			$incidencias       = 0;
+			$estadisticas      = 0;
+
 		}
 
 		return $this->render( 'AppBundle:Default:index.html.twig',
 			[
-				'nuevosFichajes'    => count( $nuevosFichajes ),
-				'cantidadJugadores' => count( $cantidadJugadores ),
-				'incidencias'       => count( $incidencias ),
-				'estadisticas'      => count( $estadisticas ),
+				'nuevosFichajes'    => $nuevosFichajes,
+				'cantidadJugadores' => $cantidadJugadores,
+				'incidencias'       => $incidencias,
+				'estadisticas'      => $estadisticas,
 			] );
 
 	}

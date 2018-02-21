@@ -14,6 +14,7 @@ easy_admin:
         brand_color: '#3C8DBC'
         form_theme: ['AppBundle:Form:bootstrap_3_layout.html.twig']
         menu:
+            - { label: 'Administración', route: 'app_homepage' }
             - { label: 'Condición Jugador', entity: CondicionJugador , default: true}
             - { label: 'Posición Jugador', entity: PosicionJugador }
             - { label: 'Categoría', entity: Categoria }

@@ -43,16 +43,32 @@
                             {% endif %}
                         </td>
                         <td>
-                            {% if (is_granted('ROLE_CLUB') and not clubJugador.confirmadoClub) or
-                                is_granted('ROLE_ADMIN') and not clubJugador.confirmadoUnion %}
-
-                                {% if clubJugador.confirmado %}
+                            {% if (is_granted('ROLE_CLUB')) %}
+                                {% if clubJugador.confirmado and not clubJugador.confirmadoClub %}
                                     <a class="btn btn-default"
                                        href="{{ path('clubjugador_confirmar', { 'id': clubJugador.id }) }}">
                                         <i class="fa fa-check"></i>
                                     </a>
                                 {% endif %}
                             {% endif %}
+                            {% if (is_granted('ROLE_UNION')) %}
+                                {% if clubJugador.confirmado and clubJugador.confirmadoClub and not clubJugador.confirmadoUnion %}
+                                    <a class="btn btn-default"
+                                       href="{{ path('clubjugador_confirmar', { 'id': clubJugador.id }) }}">
+                                        <i class="fa fa-check"></i>
+                                    </a>
+                                {% endif %}
+                            {% endif %}
+                            {#{% if (is_granted('ROLE_CLUB') and not clubJugador.confirmadoClub) or#}
+                                {#is_granted('ROLE_ADMIN') and not clubJugador.confirmadoUnion %}#}
+
+                                {#{% if clubJugador.confirmado %}#}
+                                    {#<a class="btn btn-default"#}
+                                       {#href="{{ path('clubjugador_confirmar', { 'id': clubJugador.id }) }}">#}
+                                        {#<i class="fa fa-check"></i>#}
+                                    {#</a>#}
+                                {#{% endif %}#}
+                            {#{% endif %}#}
                         </td>
                     </tr>
                 {% endfor %}

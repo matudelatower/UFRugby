@@ -57,7 +57,7 @@ class ClubJugadorController extends Controller {
 	public function confirmarAction( Request $request, $id ) {
 		$em = $this->getDoctrine()->getManager();
 
-		$confirmarUnion = $this->getUser()->hasRole( 'ROLE_ADMIN' );
+		$confirmarUnion = $this->getUser()->hasRole( 'ROLE_UNION' );
 		$confirmarClub  = $this->getUser()->hasRole( 'ROLE_CLUB' );
 
 		$jugador = $em->getRepository( 'AppBundle:ClubJugador' )->find( $id );

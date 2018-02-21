@@ -30,4 +30,17 @@ class JugadorRepository extends \Doctrine\ORM\EntityRepository {
 
 		return $qb;
 	}
+
+	public function getJugadores(  ) {
+		$qb = $this->createQueryBuilder( 'j' );
+
+		$qb->join( 'j.clubJugador', 'cj' )
+		   ;
+
+		
+		$qb->andWhere('cj.confirmadoUnion = true');
+
+
+		return $qb;
+	}
 }

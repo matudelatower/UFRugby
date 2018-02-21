@@ -92,7 +92,7 @@ class Builder implements ContainerAwareInterface {
 
 				$menu[ $keyPersonal ]
 					->addChild(
-						'Administración',
+						'Parámetros',
 						array(
 							'route' => 'admin',
 						)

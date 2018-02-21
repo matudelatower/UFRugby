@@ -22,7 +22,8 @@ easy_admin:
                           { 'ROLE_USER': 'ROLE_USER',
                             'ROLE_ADMIN': 'ROLE_ADMIN',
                             'ROLE_CLUB': 'ROLE_CLUB',
-                            'ROLE_REFEREE': 'ROLE_REFEREE'
+                            'ROLE_REFEREE': 'ROLE_REFEREE',
+                            'ROLE_UNION': 'ROLE_UNION'
                           }
                         }
                       }

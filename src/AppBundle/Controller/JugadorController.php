@@ -28,7 +28,7 @@ class JugadorController extends Controller {
 		if ( $club ) {
 			$jugadors = $em->getRepository( 'AppBundle:Jugador' )->getJugadoresByClub($club);
 		} else {
-			$jugadors = $em->getRepository( 'AppBundle:Jugador' )->getQbAll();
+			$jugadors = $em->getRepository( 'AppBundle:Jugador' )->getJugadores();
 		}
 
 		$paginator = $this->get( 'knp_paginator' );

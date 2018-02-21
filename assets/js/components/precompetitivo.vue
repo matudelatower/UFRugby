@@ -54,6 +54,7 @@
             </tab-content>
             <tab-content title="7" icon="ti-settings" :before-change="()=>validateStep('step7')">
                 <precompetitivo-7 ref="step7" @on-validate="mergePartialModels"></precompetitivo-7>
+                <BlockUI message="Procesando..." v-show="cargando"></BlockUI>
             </tab-content>
         </template>
         <!--<tab-content title="Last step" icon="ti-check">-->
@@ -69,6 +70,7 @@
         data: function () {
             return {
                 finalModel: {},
+                cargando: false
             }
         },
         methods: {
@@ -85,12 +87,14 @@
             submit() {
                 console.log(this.finalModel)
 
+                this.cargando = true;
+
                 axios.post(baseUrl + '/ajax-public/precompetitivo', {
                     data: this.finalModel
                 })
-                    .then(function (response) {
+                    .then(response => {
                         console.log(response);
-
+                        this.cargando = false;
                         location.href = response.data;
 
                     })

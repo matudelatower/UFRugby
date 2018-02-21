@@ -21,6 +21,11 @@ class ClubJugadorRepository extends \Doctrine\ORM\EntityRepository {
 
 		$qb->where( 'cj.club = :club' );
 		$qb->andWhere( 'cj.anio = :anio' );
+
+		$qb->andWhere( 'cj.confirmado is null' )
+		   ->andWhere( 'cj.confirmadoClub = false' )
+		   ->andWhere( 'cj.confirmadoUnion = false' );
+
 //		$qb->andWhere( 'cj.confirmado = true' );
 //		$qb->andWhere( 'cj.confirmadoClub = false' );
 //		$qb->orWhere( 'cj.confirmadoUnion = false' );
@@ -49,6 +54,38 @@ class ClubJugadorRepository extends \Doctrine\ORM\EntityRepository {
 		return $qb->getQuery()->getResult();
 	}
 
+	public function getCountAllNuevosFichajes() {
+		$qb = $this->createQueryBuilder( 'cj' );
+		$qb->select( 'COUNT(cj.id)' );
+
+
+		$qb->andWhere( 'cj.anio = :anio' );
+//		$qb->andWhere( 'cj.confirmado = true' );
+//		$qb->andWhere( 'cj.confirmadoClub = false' );
+//		$qb->orWhere( 'cj.confirmadoUnion = false' );
+
+		$qb->setParameter( 'anio', date( 'Y' ) );
+
+
+		return $qb->getQuery()->getSingleScalarResult();
+	}
+
+	public function getCountAllJugadores() {
+		$qb = $this->createQueryBuilder( 'cj' );
+		$qb->select( 'COUNT(cj.id)' );
+
+
+		$qb->andWhere( 'cj.anio = :anio' );
+		$qb->andWhere( 'cj.confirmado = true' );
+		$qb->andWhere( 'cj.confirmadoClub = true' );
+		$qb->orWhere( 'cj.confirmadoUnion = true' );
+
+		$qb->setParameter( 'anio', date( 'Y' ) );
+
+
+		return $qb->getQuery()->getSingleScalarResult();
+	}
+
 	public function getCountJugadores( $club ) {
 		$qb = $this->createQueryBuilder( 'cj' );
 
@@ -70,8 +107,9 @@ class ClubJugadorRepository extends \Doctrine\ORM\EntityRepository {
 		$qb = $this->createQueryBuilder( 'cj' );
 
 		$qb->andWhere( 'cj.anio = :anio' );
-		$qb->andWhere( 'cj.confirmado = true' );
-		$qb->andWhere( 'cj.confirmadoClub = true' );
+		$qb->andWhere( 'cj.confirmado = true' )
+		->orWhere('cj.confirmado is null');
+		$qb->andWhere( 'cj.confirmadoClub = false' );
 		$qb->andWhere( 'cj.confirmadoUnion = false' );
 
 		$qb->setParameter( 'anio', date( 'Y' ) );
