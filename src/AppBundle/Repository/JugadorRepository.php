@@ -37,7 +37,7 @@ class JugadorRepository extends \Doctrine\ORM\EntityRepository {
 		$qb->join( 'j.clubJugador', 'cj' )
 		   ;
 
-		
+
 		$qb->andWhere('cj.confirmadoUnion = true');
 
 

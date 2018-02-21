@@ -70,28 +70,27 @@
                 <ul class="nav navbar-nav">
                     <!-- User Account: style can be found in dropdown.less -->
                     <li class="dropdown user user-menu">
+                        {% set fotoPerfil = asset('bundles/theme/img/avatar.png') %}
+                        {% set tipoPerfil = 'Unión' %}
+
+                        {% if app.user.club %}
+                            {% set tipoPerfil = 'Club' %}
+                            {% if app.user.club.imageName %}
+                                {% set fotoPerfil = asset('uploads/images/club/') ~ app.user.club.imageName %}
+                            {% endif %}
+                        {% endif %}
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <img src="{{ asset('bundles/theme/img/avatar.png') }}" class="user-image" alt="User Image">
+                            <img src="{{ fotoPerfil }}" class="user-image" alt="User Image">
                             <span class="hidden-xs">{{ app.user }}</span>
                         </a>
                         <ul class="dropdown-menu">
                             <!-- User image -->
                             <li class="user-header">
-                                {% set fotoPerfil = asset('bundles/theme/img/avatar.png') %}
-                                {% set tipoPerfil = 'Unión' %}
 
-                                {% if app.user.club %}
-                                    {% set tipoPerfil = 'Club' %}
-                                    {% if app.user.club.imageName %}
-                                        {% set tipoPerfil = asset('uploads/images/club/') ~ app.user.club.imageName %}
-                                    {% endif %}
-                                {% endif %}
 
                                 <img src="{{ fotoPerfil }}" class="img-circle"
                                      alt="User Image">
-
                                 <p>
-
                                     {{ app.user }} - {{ tipoPerfil }}
                                     {#<small>Activo desde - {{ app.user.cre }}</small>#}
                                 </p>

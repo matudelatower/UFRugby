@@ -88,7 +88,7 @@ class Builder implements ContainerAwareInterface {
 			     ->setExtra( 'icon', 'fa fa-folder-open-o' )
 			     ->setAttribute( 'class', 'treeview' );
 
-			if ($this->container->get( 'security.authorization_checker' )->isGranted( 'ROLE_ADMIN' )) {
+			if ( $this->container->get( 'security.authorization_checker' )->isGranted( 'ROLE_ADMIN' ) ) {
 
 				$menu[ $keyPersonal ]
 					->addChild(
@@ -103,6 +103,15 @@ class Builder implements ContainerAwareInterface {
 						'Clubs',
 						array(
 							'route' => 'club_index',
+						)
+					);
+			}
+			if ( $this->container->get( 'security.authorization_checker' )->isGranted( 'ROLE_UNION' ) ) {
+				$menu[ $keyPersonal ]
+					->addChild(
+						'Registro de Pagos',
+						array(
+							'route' => 'pagoclub_index',
 						)
 					);
 			}

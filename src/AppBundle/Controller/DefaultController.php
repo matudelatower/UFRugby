@@ -13,7 +13,7 @@ class DefaultController extends Controller {
 
 		if ( $club ) {
 			$nuevosFichajes    = count( $em->getRepository( 'AppBundle:ClubJugador' )->getCountNuevosFichajes( $club ) );
-			$cantidadJugadores = $em->getRepository( 'AppBundle:ClubJugador' )->getCountJugadores( $club );
+			$cantidadJugadores = count($em->getRepository( 'AppBundle:ClubJugador' )->getCountJugadores( $club ));
 			$incidencias       = 0;
 			$estadisticas      = 0;
 

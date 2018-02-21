@@ -1,0 +1,24 @@
+pagoclub_index:
+    path:     /
+    defaults: { _controller: "AppBundle:PagoClub:index" }
+    methods:  GET
+
+pagoclub_show:
+    path:     /{id}/show
+    defaults: { _controller: "AppBundle:PagoClub:show" }
+    methods:  GET
+
+pagoclub_new:
+    path:     /new
+    defaults: { _controller: "AppBundle:PagoClub:new" }
+    methods:  [GET, POST]
+
+pagoclub_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "AppBundle:PagoClub:edit" }
+    methods:  [GET, POST]
+
+pagoclub_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "AppBundle:PagoClub:delete" }
+    methods:  DELETE

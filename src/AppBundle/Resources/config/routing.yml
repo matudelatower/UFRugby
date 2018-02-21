@@ -1,3 +1,7 @@
+app_pagoclub:
+    resource: "@AppBundle/Resources/config/routing/pagoclub.yml"
+    prefix:   /pagoclub
+
 app_ajax:
     resource: "@AppBundle/Resources/config/routing/ajax.yml"
     prefix:   /ajax
