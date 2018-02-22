@@ -52,6 +52,11 @@ class Builder implements ContainerAwareInterface {
 						)
 					);
 
+			}
+
+			if ( $this->container->get( 'security.authorization_checker' )->isGranted( 'ROLE_ADMIN' ) ||
+			     $this->container->get( 'security.authorization_checker' )->isGranted( 'ROLE_UNION' ) ) {
+
 				$menu[ $keyPersonal ]
 					->addChild(
 						'Clubs',
@@ -60,6 +65,7 @@ class Builder implements ContainerAwareInterface {
 						)
 					);
 			}
+
 			if ( $this->container->get( 'security.authorization_checker' )->isGranted( 'ROLE_CLUB' ) ) {
 				$menu[ $keyPersonal ]
 					->addChild(
