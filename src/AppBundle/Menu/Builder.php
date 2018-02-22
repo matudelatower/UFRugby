@@ -64,6 +64,15 @@ class Builder implements ContainerAwareInterface {
 							'route' => 'club_index',
 						)
 					);
+
+				$menu[ $keyPersonal ]
+					->addChild(
+						'Registro de Pagos',
+						array(
+							'route' => 'pagoclub_index',
+						)
+					);
+
 			}
 
 			if ( $this->container->get( 'security.authorization_checker' )->isGranted( 'ROLE_CLUB' ) ) {
