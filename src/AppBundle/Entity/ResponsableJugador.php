@@ -25,7 +25,7 @@ class ResponsableJugador extends BaseClass
 	/**
 	 * @var
 	 *
-	 * @ORM\OneToOne(targetEntity="AppBundle\Entity\Persona", cascade={"persist"})
+	 * @ORM\OneToOne(targetEntity="AppBundle\Entity\Persona", cascade={"persist", "remove"})
 	 * @ORM\JoinColumn(name="persona_id", referencedColumnName="id")
 	 */
 	private $persona;

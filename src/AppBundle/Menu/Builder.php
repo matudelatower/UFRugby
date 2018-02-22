@@ -27,52 +27,6 @@ class Builder implements ContainerAwareInterface {
 			'MENU PRINCIPAL'
 		)->setAttribute( 'class', 'header' );
 
-		if ( $this->container->get( 'security.authorization_checker' )->isGranted( 'ROLE_MESA_ENTRADA' ) ) {
-
-			$keyEmpresa = 'MESA ENTRADA';
-			$menu->addChild(
-				$keyEmpresa,
-				array(
-					'childrenAttributes' => array(
-						'class' => 'treeview-menu',
-					),
-				)
-			)
-			     ->setUri( '#' )
-			     ->setExtra( 'icon', 'fa fa-exchange' )
-			     ->setAttribute( 'class', 'treeview' );
-
-			$menu[ $keyEmpresa ]
-				->addChild(
-					'Expedientes',
-					array(
-						'route' => 'expediente_index',
-					)
-				);
-		}
-		if ( $this->container->get( 'security.authorization_checker' )->isGranted( 'ROLE_PERSONAL' ) ) {
-
-			$keyPersonal = 'PERSONAL';
-			$menu->addChild(
-				$keyPersonal,
-				array(
-					'childrenAttributes' => array(
-						'class' => 'treeview-menu',
-					),
-				)
-			)
-			     ->setUri( '#' )
-			     ->setExtra( 'icon', 'fa fa-users' )
-			     ->setAttribute( 'class', 'treeview' );
-			$menu[ $keyPersonal ]
-				->addChild(
-					'Personas',
-					array(
-						'route' => 'persona_index',
-					)
-				);
-		}
-
 		if ( $this->container->get( 'security.authorization_checker' )->isGranted( 'ROLE_USER' ) ) {
 
 			$keyPersonal = 'ADMINISTRACIÓN';
@@ -106,12 +60,12 @@ class Builder implements ContainerAwareInterface {
 						)
 					);
 			}
-			if ( $this->container->get( 'security.authorization_checker' )->isGranted( 'ROLE_UNION' ) ) {
+			if ( $this->container->get( 'security.authorization_checker' )->isGranted( 'ROLE_CLUB' ) ) {
 				$menu[ $keyPersonal ]
 					->addChild(
 						'Registro de Pagos',
 						array(
-							'route' => 'pagoclub_index',
+							'route' => 'pagojugador_index',
 						)
 					);
 			}

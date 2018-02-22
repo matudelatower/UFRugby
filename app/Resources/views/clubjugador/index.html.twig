@@ -59,6 +59,11 @@
                                     </a>
                                 {% endif %}
                             {% endif %}
+                            <a class="btn btn-default"
+                               href="{{ path('clubjugador_rechazar', { 'id': clubJugador.id }) }}">
+                                <i class="fa fa-remove"></i>
+                            </a>
+
                             {#{% if (is_granted('ROLE_CLUB') and not clubJugador.confirmadoClub) or#}
                                 {#is_granted('ROLE_ADMIN') and not clubJugador.confirmadoUnion %}#}
 

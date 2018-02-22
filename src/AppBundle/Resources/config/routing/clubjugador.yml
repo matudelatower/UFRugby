@@ -13,3 +13,8 @@ clubjugador_confirmar:
     defaults: { _controller: "AppBundle:ClubJugador:confirmar" }
     methods:  [GET, POST]
 
+clubjugador_rechazar:
+    path:     /{id}/clubjugador_rechazar
+    defaults: { _controller: "AppBundle:ClubJugador:rechazar" }
+    methods:  [GET, POST]
+

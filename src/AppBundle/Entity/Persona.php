@@ -63,7 +63,7 @@ class Persona extends BaseClass {
 	/**
 	 * @var
 	 *
-	 * @ORM\OneToOne(targetEntity="AppBundle\Entity\Contacto", cascade={"persist"})
+	 * @ORM\OneToOne(targetEntity="AppBundle\Entity\Contacto", cascade={"persist", "remove"})
 	 * @ORM\JoinColumn(name="contacto_id", referencedColumnName="id")
 	 */
 	private $contacto;

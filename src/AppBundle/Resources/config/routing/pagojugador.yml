@@ -1,0 +1,24 @@
+pagojugador_index:
+    path:     /
+    defaults: { _controller: "AppBundle:PagoJugador:index" }
+    methods:  GET
+
+pagojugador_show:
+    path:     /{id}/show
+    defaults: { _controller: "AppBundle:PagoJugador:show" }
+    methods:  GET
+
+pagojugador_new:
+    path:     /new
+    defaults: { _controller: "AppBundle:PagoJugador:new" }
+    methods:  [GET, POST]
+
+pagojugador_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "AppBundle:PagoJugador:edit" }
+    methods:  [GET, POST]
+
+pagojugador_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "AppBundle:PagoJugador:delete" }
+    methods:  DELETE

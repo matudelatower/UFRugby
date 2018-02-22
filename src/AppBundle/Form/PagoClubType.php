@@ -14,7 +14,8 @@ class PagoClubType extends AbstractType {
 	 * {@inheritdoc}
 	 */
 	public function buildForm( FormBuilderInterface $builder, array $options ) {
-		$builder->add( 'fecha',
+		$builder
+			->add( 'fecha',
 			DateType::class,
 			array(
 				'widget' => 'single_text',

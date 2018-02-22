@@ -1,3 +1,7 @@
+app_pagojugador:
+    resource: "@AppBundle/Resources/config/routing/pagojugador.yml"
+    prefix:   /pagojugador
+
 app_pagoclub:
     resource: "@AppBundle/Resources/config/routing/pagoclub.yml"
     prefix:   /pagoclub

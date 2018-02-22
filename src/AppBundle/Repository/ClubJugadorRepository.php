@@ -22,15 +22,6 @@ class ClubJugadorRepository extends \Doctrine\ORM\EntityRepository {
 		$qb->where( 'cj.club = :club' );
 		$qb->andWhere( 'cj.anio = :anio' );
 
-//		$qb
-//			->orWhere( 'cj.confirmado = false' )
-//			->orWhere( 'cj.confirmadoClub = false' )
-//			->orWhere( 'cj.confirmadoUnion = false' )
-//		;
-
-//		$qb->andWhere( 'cj.confirmado = true' );
-//		$qb->andWhere( 'cj.confirmadoClub = false' );
-//		$qb->orWhere( 'cj.confirmadoUnion = false' );
 
 		$qb->setParameter( 'club', $club );
 		$qb->setParameter( 'anio', date( 'Y' ) );
@@ -62,9 +53,6 @@ class ClubJugadorRepository extends \Doctrine\ORM\EntityRepository {
 
 
 		$qb->andWhere( 'cj.anio = :anio' );
-//		$qb->andWhere( 'cj.confirmado = true' );
-//		$qb->andWhere( 'cj.confirmadoClub = false' );
-//		$qb->orWhere( 'cj.confirmadoUnion = false' );
 
 		$qb->setParameter( 'anio', date( 'Y' ) );
 

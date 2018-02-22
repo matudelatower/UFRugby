@@ -38,7 +38,7 @@ class Jugador extends BaseClass {
 	/**
 	 * @var
 	 *
-	 * @ORM\OneToOne(targetEntity="AppBundle\Entity\Persona", inversedBy="jugador", cascade={"persist"})
+	 * @ORM\OneToOne(targetEntity="AppBundle\Entity\Persona", inversedBy="jugador", cascade={"persist", "remove"})
 	 * @ORM\JoinColumn(name="persona_id", referencedColumnName="id")
 	 */
 	private $persona;
@@ -98,8 +98,9 @@ class Jugador extends BaseClass {
 	 */
 	private $clubJugador;
 
-
-
+	public function __toString() {
+		return $this->persona->__toString();
+	}
 
     
     /**

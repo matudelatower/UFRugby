@@ -104,4 +104,69 @@ class ClubJugadorController extends Controller {
 
 			] );
 	}
+
+	public function rechazarAction( Request $request, $id ) {
+
+		$em = $this->getDoctrine()->getManager();
+
+		$jugador = $em->getRepository( 'AppBundle:ClubJugador' )->find( $id );
+
+		$persona = $jugador->getJugador()->getPersona();
+
+		$em->remove( $jugador );
+		$responsable = $em->getRepository( 'AppBundle:ResponsableJugador' )->findOneByJugador( $jugador->getJugador() );
+		if ( $responsable ) {
+			$em->remove( $responsable );
+		}
+		$em->flush();
+
+		$this->enviarMailRechazo( $persona->getContacto()->getMail(), $persona );
+
+		$this->get( 'session' )->getFlashBag()->add( 'warning', 'El Fichaje fue rechazado!' );
+
+
+		return $this->redirectToRoute( 'clubjugador_index' );
+
+	}
+
+
+	public function enviarMailRechazo( $mail, $persona ) {
+		$mailer = $this->get( 'mailer' );
+
+
+		$asunto = $this->getParameter( 'site_name' ) . ' - Precompetitivo Rechazado';
+
+		$url = $this->get( 'router' )->generate( 'jugador_precompetitivo',
+			array(),
+			UrlGeneratorInterface::ABSOLUTE_URL );
+
+		$message = ( new \Swift_Message( $asunto ) )
+			->setFrom( $this->container->getParameter( 'mailer_user' ), $this->getParameter( 'union_name' ) )
+			->setTo( $mail )
+			->setBody(
+//				$body,
+				$this->renderView(
+				// app/Resources/views/Emails/registration.html.twig
+					'emails/rechazo.html.twig',
+					[
+						'nombre' => $persona->getNombre() . ' ' . $persona->getApellido(),
+						'url'    => $url
+					]
+				),
+				'text/html'
+			)/*
+                 * If you also want to include a plaintext version of the message
+                ->addPart(
+                    $this->renderView(
+                        'Emails/registration.txt.twig',
+                        array('name' => $name)
+                    ),
+                    'text/plain'
+                )
+                */
+		;
+
+		$mailer->send( $message );
+//		$this->get( 'session' )->getFlashBag()->add( 'info', 'El mail se envió con éxito!' );
+	}
 }

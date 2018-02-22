@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Pago jugador</h1>
+
+    <table>
+        <tbody>
+        <tr>
+            <th>Id</th>
+            <td>{{ pagoJugador.id }}</td>
+        </tr>
+        <tr>
+            <th>Fecha</th>
+            <td>{% if pagoJugador.fecha %}{{ pagoJugador.fecha|date('d/m/Y') }}{% endif %}</td>
+        </tr>
+        <tr>
+            <th>Monto</th>
+            <td>{{ pagoJugador.monto }}</td>
+        </tr>
+        <tr>
+            <th>Mes</th>
+            <td>{{ pagoJugador.mes }}</td>
+        </tr>
+
+        </tbody>
+    </table>
+
+
+    <a class="btn btn-default" href="{{ path('pagojugador_index') }}">Volver</a>
+
+    <a class="btn btn-default" href="{{ path('pagojugador_edit', { 'id': pagoJugador.id }) }}">Editar</a>
+
+
+{% endblock %}
