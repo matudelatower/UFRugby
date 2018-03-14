@@ -205,6 +205,7 @@
                 </div>
             </div>
         </div>
+        <BlockUI message="Buscando Persona..." v-show="cargando"></BlockUI>
 
     </div>
 </template>
@@ -233,7 +234,8 @@
                 tiposIdentificacion: [],
                 clubs: [],
                 posiciones: [],
-                disableFields: true
+                disableFields: true,
+                cargando: false
             }
         },
         validations: {
@@ -297,6 +299,7 @@
             },
             buscarPersona() {
                 console.log('buscando');
+                this.cargando = true;
                 if (this.numeroIdentificacion) {
                     let params = {
                         params: {
@@ -315,15 +318,20 @@
                             'id': response.data.sexo.id,
                             'nombre': response.data.sexo.nombre
                         };
-                        // this.tipoIdentificacion = response.data.tipoIdentificacion;
-                        // this.numeroIdentificacion = response.data.numeroIdentificacion;
                         this.fechaNacimiento = response.data.fechaNacimiento;
                         this.direccion = response.data.direccion;
                         this.telefono = response.data.telefono;
                         this.telefonoAlternativo = response.data.telefonoAlternativo;
                         this.mail = response.data.mail;
 
-                    })
+                        this.cargando = false;
+
+                    }).catch(error => {
+                        console.error(error);
+                        this.disableFields = false;
+                        this.cargando = false;
+
+                    });
                 }
             }
         },

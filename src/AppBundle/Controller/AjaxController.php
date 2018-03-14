@@ -383,19 +383,24 @@ class AjaxController extends Controller {
 		];
 		$persona            = $this->getDoctrine()->getRepository( 'AppBundle:Persona' )->findOneBy( $criteria );
 
-		$rta = [
-			'apellido'            => $persona->getApellido(),
-			'nombre'              => $persona->getNombre(),
-			'sexo'                => [ 'id'     => $persona->getSexo()->getId(),
-			                           'nombre' => $persona->getSexo()->getNombre()
-			],
-			'fechaNacimiento'     => $persona->getFechaNacimiento()->format( 'Y-m-d' ),
-			'direccion'           => $persona->getContacto()->getDireccion(),
-			'telefono'            => $persona->getContacto()->getTelefono(),
-			'telefonoAlternativo' => $persona->getContacto()->getTelefonoAlternativa(),
-			'mail'                => $persona->getContacto()->getMail(),
-		];
+		if ( $persona ) {
+			$rta = [
+				'apellido'            => $persona->getApellido(),
+				'nombre'              => $persona->getNombre(),
+				'sexo'                => [
+					'id'     => $persona->getSexo()->getId(),
+					'nombre' => $persona->getSexo()->getNombre()
+				],
+				'fechaNacimiento'     => $persona->getFechaNacimiento()->format( 'Y-m-d' ),
+				'direccion'           => $persona->getContacto()->getDireccion(),
+				'telefono'            => $persona->getContacto()->getTelefono(),
+				'telefonoAlternativo' => $persona->getContacto()->getTelefonoAlternativa(),
+				'mail'                => $persona->getContacto()->getMail(),
+			];
 
-		return new JsonResponse( $rta );
+			return new JsonResponse( $rta );
+		} else {
+			return new JsonResponse( 'No se encontró un jugador', 404 );
+		}
 	}
 }
