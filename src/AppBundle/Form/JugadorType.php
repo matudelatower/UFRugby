@@ -17,13 +17,6 @@ class JugadorType extends AbstractType {
 			->add( 'peso' )
 			->add( 'altura' )
 			->add( 'dadoDeBaja' )
-			->add( 'division',
-				EntityType::class,
-				[
-					'label'    => 'Categoría',
-					'class'    => 'AppBundle\Entity\Division',
-					'required' => false
-				] )
 			->add( 'posicionHabitual',
 				EntityType::class,
 				[

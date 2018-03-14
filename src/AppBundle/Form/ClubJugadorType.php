@@ -21,6 +21,13 @@ class ClubJugadorType extends AbstractType {
 				'placeholder' => 'Seleccionar Club',
 				'label'       => 'Club *'
 			] )
+		        ->add( 'division',
+			        EntityType::class,
+			        [
+				        'label'    => 'Categoría',
+				        'class'    => 'AppBundle\Entity\Division',
+				        'required' => false
+			        ] )
 		        ->add( 'consentimiento',
 			        CheckboxType::class,
 			        [

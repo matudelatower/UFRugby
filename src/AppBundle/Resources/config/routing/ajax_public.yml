@@ -42,3 +42,7 @@ post_precompetitivo:
     path:     /precompetitivo
     defaults: { _controller: "AppBundle:Ajax:postPrecompetitivo" }
     methods:  POST
+
+search-persona:
+    path: /search-persona
+    defaults: { _controller: "AppBundle:Ajax:getPersona" }

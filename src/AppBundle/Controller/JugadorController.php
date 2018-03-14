@@ -230,64 +230,9 @@ class JugadorController extends Controller {
 		// 1
 		$textoPresentacion = $em->getRepository( 'AppBundle:Texto' )->findOneBySlug( 'evaluacion-pre-competitiva' );
 
-		// 2
-		$persona     = new Persona();
-		$jugador     = new Jugador();
-		$clubJugador = new ClubJugador();
-		$jugador->addClubJugador( $clubJugador );
-		$persona->setJugador( $jugador );
-		$jugador->setPersona( $persona );
-
-		$form = $this->createForm( 'AppBundle\Form\PrecompetitivoType', $persona );
-
-		// 3
-		$textoFichaMedica = $em->getRepository( 'AppBundle:Texto' )->findOneBySlug( 'datos-ficha-medica' );
-
-		// 4
-		$fichaMedica     = new FichaMedica();
-		$formFichaMedica = $this->createForm( 'AppBundle\Form\FichaMedicaType', $fichaMedica );
-
-		// 5
-		$textoConsentimiento = $em->getRepository( 'AppBundle:Texto' )->findOneBySlug( 'precompetitivo-consentimiento' );
-
-		if ( $request->getMethod() == 'POST' ) {
-			$form->handleRequest( $request );
-
-			$form1Valid = $form2Valid = false;
-
-			if ( $form->isValid() ) {
-				$em->persist( $persona );
-				$form1Valid = true;
-			}
-			$formFichaMedica->handleRequest( $request );
-			if ( $formFichaMedica->isValid() ) {
-				$fichaMedica->setClubJugador( $clubJugador );
-				$em->persist( $fichaMedica );
-				$form2Valid = true;
-			}
-
-			if ( $form1Valid && $form2Valid ) {
-				$token = md5( uniqid( 'urp_' ) );
-
-				$clubJugador->setJugador( $persona->getJugador() );
-				$clubJugador->setTokenConfirmacion( $token );
-				$clubJugador->setAnio( date( "Y" ) );
-
-				$em->flush();
-				$this->enviarMailPrecompetitivo( $token, $persona->getContacto()->getMail(), $persona );
-
-				return $this->render( ':jugador:precompetitivo_ok.html.twig' );
-			}
-		}
-
-//		return $this->render( 'jugador/precompetitivo2.html.twig',
-		return $this->render( 'jugador/precompetitivo3.html.twig',
+		return $this->render( ':jugador:precompetitivo.html.twig',
 			array(
 				'texto_presentacion'   => $textoPresentacion,
-				'form'                 => $form->createView(),
-				'texto_ficha_medica'   => $textoFichaMedica,
-				'formFichaMedica'      => $formFichaMedica->createView(),
-				'texto_consentimiento' => $textoConsentimiento,
 
 			) );
 	}

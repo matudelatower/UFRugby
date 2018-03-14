@@ -6,40 +6,6 @@
 
         <div class="row">
             <div class="col-md-4">
-                <div class="form-group" v-bind:class="{ 'has-error': $v.apellido.$error }">
-                    <label
-                            class="control-label required" for="appbundle_precompetitivo_apellido">Apellido</label>
-                    <input v-model="apellido"
-                           id="appbundle_precompetitivo_apellido" name="appbundle_precompetitivo[apellido]"
-                           required="required" maxlength="255" class="form-control" type="text">
-                    <span class="help-block" v-if="$v.apellido.$error && !$v.apellido.required">Campo Requerido</span>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="form-group" v-bind:class="{ 'has-error': $v.nombre.$error }"><label
-                        class="control-label required" for="appbundle_precompetitivo_nombre">Nombre</label>
-                    <input v-model="nombre"
-                           id="appbundle_precompetitivo_nombre" name="appbundle_precompetitivo[nombre]"
-                           required="required"
-                           maxlength="255" class="form-control" type="text">
-                    <span class="help-block" v-if="$v.nombre.$error && !$v.nombre.required">Campo Requerido</span>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="form-group" v-bind:class="{ 'has-error': $v.sexo.$error }"><label
-                        class="control-label required" for="appbundle_precompetitivo_sexo">Sexo
-                    *</label>
-                    <select v-model="sexo" id="appbundle_precompetitivo_sexo" name="appbundle_precompetitivo[sexo]"
-                            required="required" class="form-control">
-                        <option value="" selected="selected">Seleccionar</option>
-                        <option :value="s" v-for="s in sexos">{{ s.nombre }}</option>
-                    </select>
-                    <span class="help-block" v-if="$v.sexo.$error && !$v.sexo.required">Campo Requerido</span>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-4">
                 <div class="form-group" v-bind:class="{ 'has-error': $v.tipoIdentificacion.$error }"><label
                         class="control-label required"
                         for="appbundle_precompetitivo_tipoIdentificacion">Tipo de Identificación
@@ -61,9 +27,46 @@
                     identificación</label>
                     <input v-model="numeroIdentificacion" id="appbundle_precompetitivo_numeroIdentificacion"
                            name="appbundle_precompetitivo[numeroIdentificacion]"
-                           required="required" class="form-control" type="text">
+                           required="required" class="form-control" type="text" @blur="buscarPersona">
 
                     <span class="help-block" v-if="$v.numeroIdentificacion.$error && !$v.numeroIdentificacion.required">Campo Requerido</span>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group" v-bind:class="{ 'has-error': $v.sexo.$error }"><label
+                        class="control-label required" for="appbundle_precompetitivo_sexo">Sexo
+                    *</label>
+                    <select v-model="sexo" id="appbundle_precompetitivo_sexo" name="appbundle_precompetitivo[sexo]"
+                            :disabled="disableFields"
+                            required="required" class="form-control">
+                        <option value="" selected="selected">Seleccionar</option>
+                        <option :value="s" v-for="s in sexos">{{ s.nombre }}</option>
+                    </select>
+                    <span class="help-block" v-if="$v.sexo.$error && !$v.sexo.required">Campo Requerido</span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group" v-bind:class="{ 'has-error': $v.apellido.$error }">
+                    <label
+                            class="control-label required" for="appbundle_precompetitivo_apellido">Apellido</label>
+                    <input v-model="apellido"
+                           :disabled="disableFields"
+                           id="appbundle_precompetitivo_apellido" name="appbundle_precompetitivo[apellido]"
+                           required="required" maxlength="255" class="form-control" type="text">
+                    <span class="help-block" v-if="$v.apellido.$error && !$v.apellido.required">Campo Requerido</span>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group" v-bind:class="{ 'has-error': $v.nombre.$error }"><label
+                        class="control-label required" for="appbundle_precompetitivo_nombre">Nombre</label>
+                    <input v-model="nombre"
+                           :disabled="disableFields"
+                           id="appbundle_precompetitivo_nombre" name="appbundle_precompetitivo[nombre]"
+                           required="required"
+                           maxlength="255" class="form-control" type="text">
+                    <span class="help-block" v-if="$v.nombre.$error && !$v.nombre.required">Campo Requerido</span>
                 </div>
             </div>
             <div class="col-md-4">
@@ -72,9 +75,10 @@
                         for="appbundle_precompetitivo_fechaNacimiento">Fecha
                     nacimiento</label>
                     <input v-model="fechaNacimiento" id="appbundle_precompetitivo_fechaNacimiento"
+                           :disabled="disableFields"
                            autocomplete="off"
                            name="appbundle_precompetitivo[fechaNacimiento]" required="required"
-                           class="datepicker form-control" type="text">
+                           class="form-control" type="date">
 
                     <span class="help-block" v-if="$v.fechaNacimiento.$error && !$v.fechaNacimiento.required">Campo Requerido</span>
                 </div>
@@ -86,6 +90,7 @@
                         class="control-label required"
                         for="appbundle_precompetitivo_contacto_direccion">Direccion</label>
                     <input v-model="direccion"
+                           :disabled="disableFields"
                            id="appbundle_precompetitivo_contacto_direccion"
                            name="appbundle_precompetitivo[contacto][direccion]" required="required" maxlength="255"
                            class="form-control" type="text">
@@ -100,6 +105,7 @@
                         class="control-label required"
                         for="appbundle_precompetitivo_contacto_telefono">Telefono</label>
                     <input v-model="telefono"
+                           :disabled="disableFields"
                            id="appbundle_precompetitivo_contacto_telefono"
                            name="appbundle_precompetitivo[contacto][telefono]" required="required" maxlength="255"
                            class="form-control" type="text">
@@ -111,6 +117,7 @@
                     <label class="control-label"
                            for="appbundle_precompetitivo_contacto_telefonoAlternativo">Teléfono alternativo</label>
                     <input v-model="telefonoAlternativo" id="appbundle_precompetitivo_contacto_telefonoAlternativo"
+                           :disabled="disableFields"
                            name="appbundle_precompetitivo[contacto][telefonoAlternativo]"
                            maxlength="255" class="form-control" type="text">
 
@@ -124,6 +131,7 @@
                         class="control-label required"
                         for="appbundle_precompetitivo_contacto_mail">Mail</label>
                     <input v-model="mail"
+                           :disabled="disableFields"
                            id="appbundle_precompetitivo_contacto_mail" name="appbundle_precompetitivo[contacto][mail]"
                            required="required" class="form-control" type="email">
 
@@ -225,6 +233,7 @@
                 tiposIdentificacion: [],
                 clubs: [],
                 posiciones: [],
+                disableFields: true
             }
         },
         validations: {
@@ -285,6 +294,37 @@
                     this.posiciones = response.data;
 
                 });
+            },
+            buscarPersona() {
+                console.log('buscando');
+                if (this.numeroIdentificacion) {
+                    let params = {
+                        params: {
+                            tipo: this.tipoIdentificacion,
+                            numero: this.numeroIdentificacion
+                        }
+                    }
+                    axios.get(baseUrl + '/ajax-public/search-persona', params).then(response => {
+                        console.log('response', response);
+
+                        this.disableFields = false;
+
+                        this.apellido = response.data.apellido;
+                        this.nombre = response.data.nombre;
+                        this.sexo = {
+                            'id': response.data.sexo.id,
+                            'nombre': response.data.sexo.nombre
+                        };
+                        // this.tipoIdentificacion = response.data.tipoIdentificacion;
+                        // this.numeroIdentificacion = response.data.numeroIdentificacion;
+                        this.fechaNacimiento = response.data.fechaNacimiento;
+                        this.direccion = response.data.direccion;
+                        this.telefono = response.data.telefono;
+                        this.telefonoAlternativo = response.data.telefonoAlternativo;
+                        this.mail = response.data.mail;
+
+                    })
+                }
             }
         },
         mounted() {

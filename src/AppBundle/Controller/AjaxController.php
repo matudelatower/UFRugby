@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\ClubJugador;
 use AppBundle\Entity\Contacto;
+use AppBundle\Entity\Division;
 use AppBundle\Entity\FichaMedica;
 use AppBundle\Entity\Jugador;
 use AppBundle\Entity\Persona;
@@ -214,7 +215,7 @@ class AjaxController extends Controller {
 			$persona->setTipoIdentificacion( $tipoIdentificacion );
 
 			$persona->setNumeroIdentificacion( $data['numeroIdentificacion'] );
-			$fechaNacimiento = \DateTime::createFromFormat( 'd/m/Y', $data['fechaNacimiento'] );
+			$fechaNacimiento = \DateTime::createFromFormat( 'Y-m-d', $data['fechaNacimiento'] );
 			$persona->setFechaNacimiento( $fechaNacimiento );
 
 			$contacto = new Contacto();
@@ -266,14 +267,12 @@ class AjaxController extends Controller {
 				$em->persist( $responsableJugador );
 			}
 
-//			$jugador->setDivision();
-
 			$clubJugador = new ClubJugador();
 			$cub         = $em->getRepository( 'AppBundle:Club' )->find( $data['club']['id'] );
 			$clubJugador->setClub( $cub );
-			$clubJugador->setConfirmado(false);
-			$clubJugador->setConfirmadoClub(false);
-			$clubJugador->setConfirmadoUnion(false);
+			$clubJugador->setConfirmado( false );
+			$clubJugador->setConfirmadoClub( false );
+			$clubJugador->setConfirmadoUnion( false );
 			$clubJugador->setConsentimiento( true );
 
 			$jugador->addClubJugador( $clubJugador );
@@ -289,6 +288,18 @@ class AjaxController extends Controller {
 			$fichaMedica->setNumeroAfiliado( $data['numeroAfiliado'] );
 			$fichaMedica->setTieneCobertura( $data['tieneCobertura'] ? true : false );
 			$em->persist( $fichaMedica );
+
+			// division
+			$anios = date_diff( date_create( $data['fechaNacimiento'] ), date_create( 'today' ) )->y;
+
+			if ( $anios >= 19 ) {
+				$division = $em->getRepository( 'AppBundle:Division' )->findOneBy( [ 'slug' => 'mayores' ] );
+			} elseif ( $anios > 5 && $anios < 19 ) {
+				$division = $em->getRepository( 'AppBundle:Division' )->findOneBy( [ 'slug' => 'm' . $anios - 1 ] );
+			} elseif ( $anios <= 5 ) {
+				$division = $em->getRepository( 'AppBundle:Division' )->findOneBy( [ 'slug' => 'infantiles' ] );
+			}
+			$clubJugador->setDivision( $division );
 
 
 			$token = md5( uniqid( 'urp_' ) );
@@ -355,5 +366,36 @@ class AjaxController extends Controller {
 
 		$mailer->send( $message );
 //		$this->get( 'session' )->getFlashBag()->add( 'info', 'El mail se envió con éxito!' );
+	}
+
+	public function getPersonaAction( Request $request ) {
+
+
+		$tipoIdentificacionId = json_decode( $request->get( 'tipo' ), true );
+		$numeroDocumento      = $request->get( 'numero' );
+
+
+		$tipoIdentificacion = $this->getDoctrine()->getRepository( 'AppBundle:TipoIdentificacion' )->findOneById( $tipoIdentificacionId );
+		$criteria           = [
+			'tipoIdentificacion'   => $tipoIdentificacion,
+			'numeroIdentificacion' => $numeroDocumento,
+
+		];
+		$persona            = $this->getDoctrine()->getRepository( 'AppBundle:Persona' )->findOneBy( $criteria );
+
+		$rta = [
+			'apellido'            => $persona->getApellido(),
+			'nombre'              => $persona->getNombre(),
+			'sexo'                => [ 'id'     => $persona->getSexo()->getId(),
+			                           'nombre' => $persona->getSexo()->getNombre()
+			],
+			'fechaNacimiento'     => $persona->getFechaNacimiento()->format( 'Y-m-d' ),
+			'direccion'           => $persona->getContacto()->getDireccion(),
+			'telefono'            => $persona->getContacto()->getTelefono(),
+			'telefonoAlternativo' => $persona->getContacto()->getTelefonoAlternativa(),
+			'mail'                => $persona->getContacto()->getMail(),
+		];
+
+		return new JsonResponse( $rta );
 	}
 }

@@ -102,6 +102,14 @@ class ClubJugador extends BaseClass {
 	private $fichaMedica;
 
 	/**
+	 * @var
+	 *
+	 * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Division")
+	 * @ORM\JoinColumn(name="division_id", referencedColumnName="id")
+	 */
+	private $division;
+
+	/**
 	 * Get id
 	 *
 	 * @return int
@@ -441,5 +449,29 @@ class ClubJugador extends BaseClass {
     public function getFichaMedica()
     {
         return $this->fichaMedica;
+    }
+
+    /**
+     * Set division
+     *
+     * @param \AppBundle\Entity\Division $division
+     *
+     * @return ClubJugador
+     */
+    public function setDivision(\AppBundle\Entity\Division $division = null)
+    {
+        $this->division = $division;
+
+        return $this;
+    }
+
+    /**
+     * Get division
+     *
+     * @return \AppBundle\Entity\Division
+     */
+    public function getDivision()
+    {
+        return $this->division;
     }
 }

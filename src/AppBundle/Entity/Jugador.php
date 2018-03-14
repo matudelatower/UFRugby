@@ -43,14 +43,6 @@ class Jugador extends BaseClass {
 	 */
 	private $persona;
 
-	/**
-	 * @var
-	 *
-	 * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Division")
-	 * @ORM\JoinColumn(name="division_id", referencedColumnName="id")
-	 */
-	private $division;
-
 
 	/**
 	 * @var
@@ -102,328 +94,280 @@ class Jugador extends BaseClass {
 		return $this->persona->__toString();
 	}
 
-    
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->clubJugador = new \Doctrine\Common\Collections\ArrayCollection();
-    }
 
-    /**
-     * Get id
-     *
-     * @return integer
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
+	/**
+	 * Constructor
+	 */
+	public function __construct() {
+		$this->clubJugador = new \Doctrine\Common\Collections\ArrayCollection();
+	}
 
-    /**
-     * Set peso
-     *
-     * @param string $peso
-     *
-     * @return Jugador
-     */
-    public function setPeso($peso)
-    {
-        $this->peso = $peso;
+	/**
+	 * Get id
+	 *
+	 * @return integer
+	 */
+	public function getId() {
+		return $this->id;
+	}
 
-        return $this;
-    }
+	/**
+	 * Set peso
+	 *
+	 * @param string $peso
+	 *
+	 * @return Jugador
+	 */
+	public function setPeso( $peso ) {
+		$this->peso = $peso;
 
-    /**
-     * Get peso
-     *
-     * @return string
-     */
-    public function getPeso()
-    {
-        return $this->peso;
-    }
+		return $this;
+	}
 
-    /**
-     * Set altura
-     *
-     * @param string $altura
-     *
-     * @return Jugador
-     */
-    public function setAltura($altura)
-    {
-        $this->altura = $altura;
+	/**
+	 * Get peso
+	 *
+	 * @return string
+	 */
+	public function getPeso() {
+		return $this->peso;
+	}
 
-        return $this;
-    }
+	/**
+	 * Set altura
+	 *
+	 * @param string $altura
+	 *
+	 * @return Jugador
+	 */
+	public function setAltura( $altura ) {
+		$this->altura = $altura;
 
-    /**
-     * Get altura
-     *
-     * @return string
-     */
-    public function getAltura()
-    {
-        return $this->altura;
-    }
+		return $this;
+	}
 
-    /**
-     * Set dadoDeBaja
-     *
-     * @param boolean $dadoDeBaja
-     *
-     * @return Jugador
-     */
-    public function setDadoDeBaja($dadoDeBaja)
-    {
-        $this->dadoDeBaja = $dadoDeBaja;
+	/**
+	 * Get altura
+	 *
+	 * @return string
+	 */
+	public function getAltura() {
+		return $this->altura;
+	}
 
-        return $this;
-    }
+	/**
+	 * Set dadoDeBaja
+	 *
+	 * @param boolean $dadoDeBaja
+	 *
+	 * @return Jugador
+	 */
+	public function setDadoDeBaja( $dadoDeBaja ) {
+		$this->dadoDeBaja = $dadoDeBaja;
 
-    /**
-     * Get dadoDeBaja
-     *
-     * @return boolean
-     */
-    public function getDadoDeBaja()
-    {
-        return $this->dadoDeBaja;
-    }
+		return $this;
+	}
 
-    /**
-     * Set fechaCreacion
-     *
-     * @param \DateTime $fechaCreacion
-     *
-     * @return Jugador
-     */
-    public function setFechaCreacion($fechaCreacion)
-    {
-        $this->fechaCreacion = $fechaCreacion;
+	/**
+	 * Get dadoDeBaja
+	 *
+	 * @return boolean
+	 */
+	public function getDadoDeBaja() {
+		return $this->dadoDeBaja;
+	}
 
-        return $this;
-    }
+	/**
+	 * Set fechaCreacion
+	 *
+	 * @param \DateTime $fechaCreacion
+	 *
+	 * @return Jugador
+	 */
+	public function setFechaCreacion( $fechaCreacion ) {
+		$this->fechaCreacion = $fechaCreacion;
 
-    /**
-     * Set fechaActualizacion
-     *
-     * @param \DateTime $fechaActualizacion
-     *
-     * @return Jugador
-     */
-    public function setFechaActualizacion($fechaActualizacion)
-    {
-        $this->fechaActualizacion = $fechaActualizacion;
+		return $this;
+	}
 
-        return $this;
-    }
+	/**
+	 * Set fechaActualizacion
+	 *
+	 * @param \DateTime $fechaActualizacion
+	 *
+	 * @return Jugador
+	 */
+	public function setFechaActualizacion( $fechaActualizacion ) {
+		$this->fechaActualizacion = $fechaActualizacion;
 
-    /**
-     * Set persona
-     *
-     * @param \AppBundle\Entity\Persona $persona
-     *
-     * @return Jugador
-     */
-    public function setPersona(\AppBundle\Entity\Persona $persona = null)
-    {
-        $this->persona = $persona;
+		return $this;
+	}
 
-        return $this;
-    }
+	/**
+	 * Set persona
+	 *
+	 * @param \AppBundle\Entity\Persona $persona
+	 *
+	 * @return Jugador
+	 */
+	public function setPersona( \AppBundle\Entity\Persona $persona = null ) {
+		$this->persona = $persona;
 
-    /**
-     * Get persona
-     *
-     * @return \AppBundle\Entity\Persona
-     */
-    public function getPersona()
-    {
-        return $this->persona;
-    }
+		return $this;
+	}
 
-    /**
-     * Set division
-     *
-     * @param \AppBundle\Entity\Division $division
-     *
-     * @return Jugador
-     */
-    public function setDivision(\AppBundle\Entity\Division $division = null)
-    {
-        $this->division = $division;
+	/**
+	 * Get persona
+	 *
+	 * @return \AppBundle\Entity\Persona
+	 */
+	public function getPersona() {
+		return $this->persona;
+	}
 
-        return $this;
-    }
+	/**
+	 * Set posicionHabitual
+	 *
+	 * @param \AppBundle\Entity\PosicionJugador $posicionHabitual
+	 *
+	 * @return Jugador
+	 */
+	public function setPosicionHabitual( \AppBundle\Entity\PosicionJugador $posicionHabitual = null ) {
+		$this->posicionHabitual = $posicionHabitual;
 
-    /**
-     * Get division
-     *
-     * @return \AppBundle\Entity\Division
-     */
-    public function getDivision()
-    {
-        return $this->division;
-    }
+		return $this;
+	}
 
-    /**
-     * Set posicionHabitual
-     *
-     * @param \AppBundle\Entity\PosicionJugador $posicionHabitual
-     *
-     * @return Jugador
-     */
-    public function setPosicionHabitual(\AppBundle\Entity\PosicionJugador $posicionHabitual = null)
-    {
-        $this->posicionHabitual = $posicionHabitual;
+	/**
+	 * Get posicionHabitual
+	 *
+	 * @return \AppBundle\Entity\PosicionJugador
+	 */
+	public function getPosicionHabitual() {
+		return $this->posicionHabitual;
+	}
 
-        return $this;
-    }
+	/**
+	 * Set posicionAlternativa
+	 *
+	 * @param \AppBundle\Entity\PosicionJugador $posicionAlternativa
+	 *
+	 * @return Jugador
+	 */
+	public function setPosicionAlternativa( \AppBundle\Entity\PosicionJugador $posicionAlternativa = null ) {
+		$this->posicionAlternativa = $posicionAlternativa;
 
-    /**
-     * Get posicionHabitual
-     *
-     * @return \AppBundle\Entity\PosicionJugador
-     */
-    public function getPosicionHabitual()
-    {
-        return $this->posicionHabitual;
-    }
+		return $this;
+	}
 
-    /**
-     * Set posicionAlternativa
-     *
-     * @param \AppBundle\Entity\PosicionJugador $posicionAlternativa
-     *
-     * @return Jugador
-     */
-    public function setPosicionAlternativa(\AppBundle\Entity\PosicionJugador $posicionAlternativa = null)
-    {
-        $this->posicionAlternativa = $posicionAlternativa;
+	/**
+	 * Get posicionAlternativa
+	 *
+	 * @return \AppBundle\Entity\PosicionJugador
+	 */
+	public function getPosicionAlternativa() {
+		return $this->posicionAlternativa;
+	}
 
-        return $this;
-    }
+	/**
+	 * Set segundaPosicionAlternativa
+	 *
+	 * @param \AppBundle\Entity\PosicionJugador $segundaPosicionAlternativa
+	 *
+	 * @return Jugador
+	 */
+	public function setSegundaPosicionAlternativa( \AppBundle\Entity\PosicionJugador $segundaPosicionAlternativa = null
+	) {
+		$this->segundaPosicionAlternativa = $segundaPosicionAlternativa;
 
-    /**
-     * Get posicionAlternativa
-     *
-     * @return \AppBundle\Entity\PosicionJugador
-     */
-    public function getPosicionAlternativa()
-    {
-        return $this->posicionAlternativa;
-    }
+		return $this;
+	}
 
-    /**
-     * Set segundaPosicionAlternativa
-     *
-     * @param \AppBundle\Entity\PosicionJugador $segundaPosicionAlternativa
-     *
-     * @return Jugador
-     */
-    public function setSegundaPosicionAlternativa(\AppBundle\Entity\PosicionJugador $segundaPosicionAlternativa = null)
-    {
-        $this->segundaPosicionAlternativa = $segundaPosicionAlternativa;
+	/**
+	 * Get segundaPosicionAlternativa
+	 *
+	 * @return \AppBundle\Entity\PosicionJugador
+	 */
+	public function getSegundaPosicionAlternativa() {
+		return $this->segundaPosicionAlternativa;
+	}
 
-        return $this;
-    }
+	/**
+	 * Set condicionJugador
+	 *
+	 * @param \AppBundle\Entity\CondicionJugador $condicionJugador
+	 *
+	 * @return Jugador
+	 */
+	public function setCondicionJugador( \AppBundle\Entity\CondicionJugador $condicionJugador = null ) {
+		$this->condicionJugador = $condicionJugador;
 
-    /**
-     * Get segundaPosicionAlternativa
-     *
-     * @return \AppBundle\Entity\PosicionJugador
-     */
-    public function getSegundaPosicionAlternativa()
-    {
-        return $this->segundaPosicionAlternativa;
-    }
+		return $this;
+	}
 
-    /**
-     * Set condicionJugador
-     *
-     * @param \AppBundle\Entity\CondicionJugador $condicionJugador
-     *
-     * @return Jugador
-     */
-    public function setCondicionJugador(\AppBundle\Entity\CondicionJugador $condicionJugador = null)
-    {
-        $this->condicionJugador = $condicionJugador;
+	/**
+	 * Get condicionJugador
+	 *
+	 * @return \AppBundle\Entity\CondicionJugador
+	 */
+	public function getCondicionJugador() {
+		return $this->condicionJugador;
+	}
 
-        return $this;
-    }
+	/**
+	 * Add clubJugador
+	 *
+	 * @param \AppBundle\Entity\ClubJugador $clubJugador
+	 *
+	 * @return Jugador
+	 */
+	public function addClubJugador( \AppBundle\Entity\ClubJugador $clubJugador ) {
+		$this->clubJugador[] = $clubJugador;
 
-    /**
-     * Get condicionJugador
-     *
-     * @return \AppBundle\Entity\CondicionJugador
-     */
-    public function getCondicionJugador()
-    {
-        return $this->condicionJugador;
-    }
+		return $this;
+	}
 
-    /**
-     * Add clubJugador
-     *
-     * @param \AppBundle\Entity\ClubJugador $clubJugador
-     *
-     * @return Jugador
-     */
-    public function addClubJugador(\AppBundle\Entity\ClubJugador $clubJugador)
-    {
-        $this->clubJugador[] = $clubJugador;
+	/**
+	 * Remove clubJugador
+	 *
+	 * @param \AppBundle\Entity\ClubJugador $clubJugador
+	 */
+	public function removeClubJugador( \AppBundle\Entity\ClubJugador $clubJugador ) {
+		$this->clubJugador->removeElement( $clubJugador );
+	}
 
-        return $this;
-    }
+	/**
+	 * Get clubJugador
+	 *
+	 * @return \Doctrine\Common\Collections\Collection
+	 */
+	public function getClubJugador() {
+		return $this->clubJugador;
+	}
 
-    /**
-     * Remove clubJugador
-     *
-     * @param \AppBundle\Entity\ClubJugador $clubJugador
-     */
-    public function removeClubJugador(\AppBundle\Entity\ClubJugador $clubJugador)
-    {
-        $this->clubJugador->removeElement($clubJugador);
-    }
+	/**
+	 * Set creadoPor
+	 *
+	 * @param \UsuariosBundle\Entity\Usuario $creadoPor
+	 *
+	 * @return Jugador
+	 */
+	public function setCreadoPor( \UsuariosBundle\Entity\Usuario $creadoPor = null ) {
+		$this->creadoPor = $creadoPor;
 
-    /**
-     * Get clubJugador
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getClubJugador()
-    {
-        return $this->clubJugador;
-    }
+		return $this;
+	}
 
-    /**
-     * Set creadoPor
-     *
-     * @param \UsuariosBundle\Entity\Usuario $creadoPor
-     *
-     * @return Jugador
-     */
-    public function setCreadoPor(\UsuariosBundle\Entity\Usuario $creadoPor = null)
-    {
-        $this->creadoPor = $creadoPor;
+	/**
+	 * Set actualizadoPor
+	 *
+	 * @param \UsuariosBundle\Entity\Usuario $actualizadoPor
+	 *
+	 * @return Jugador
+	 */
+	public function setActualizadoPor( \UsuariosBundle\Entity\Usuario $actualizadoPor = null ) {
+		$this->actualizadoPor = $actualizadoPor;
 
-        return $this;
-    }
-
-    /**
-     * Set actualizadoPor
-     *
-     * @param \UsuariosBundle\Entity\Usuario $actualizadoPor
-     *
-     * @return Jugador
-     */
-    public function setActualizadoPor(\UsuariosBundle\Entity\Usuario $actualizadoPor = null)
-    {
-        $this->actualizadoPor = $actualizadoPor;
-
-        return $this;
-    }
+		return $this;
+	}
 }
