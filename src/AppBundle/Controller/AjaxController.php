@@ -339,7 +339,7 @@ class AjaxController extends Controller {
 			UrlGeneratorInterface::ABSOLUTE_URL );
 
 		$message = ( new \Swift_Message( $asunto ) )
-			->setFrom( $this->container->getParameter( 'mailer_user' ), $this->getParameter( 'union_name' ) )
+			->setFrom( $this->container->getParameter( 'mailer_sender_as' ), $this->getParameter( 'union_name' ) )
 			->setTo( $mail )
 			->setBody(
 //				$body,
