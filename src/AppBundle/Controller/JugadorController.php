@@ -26,7 +26,7 @@ class JugadorController extends Controller {
 		$club = $this->getUser()->getClub();
 
 		if ( $club ) {
-			$jugadors = $em->getRepository( 'AppBundle:Jugador' )->getJugadoresByClub($club);
+			$jugadors = $em->getRepository( 'AppBundle:Jugador' )->getJugadoresByClub( $club );
 		} else {
 			$jugadors = $em->getRepository( 'AppBundle:Jugador' )->getJugadores();
 		}
@@ -80,7 +80,7 @@ class JugadorController extends Controller {
 
 		return $this->render( 'jugador/show.html.twig',
 			array(
-				'jugador'     => $jugador,
+				'jugador' => $jugador,
 //				'delete_form' => $deleteForm->createView(),
 			) );
 	}
@@ -216,11 +216,20 @@ class JugadorController extends Controller {
 			) );
 	}
 
-	public function precompetitivoOkAction( Request $request ) {
+	public function precompetitivoOkAction( Request $request, $id ) {
 
+		$em = $this->getDoctrine()->getManager();
+
+		$clubJugador = $em->getRepository( 'AppBundle:ClubJugador' )->findOneById( $id );
+		$from        = $clubJugador->getJugador()->getPersona()->getFechaNacimiento();
+		$to          = new \DateTime( 'today' );
+		$edad        = $from->diff( $to )->y;
 
 		return $this->render( 'jugador/precompetitivo_ok.html.twig',
-			array() );
+			[
+				'clubJugador' => $clubJugador,
+				'edad'        => $edad
+			] );
 	}
 
 	public function preCompetitivoAction( Request $request ) {
@@ -232,7 +241,7 @@ class JugadorController extends Controller {
 
 		return $this->render( ':jugador:precompetitivo.html.twig',
 			array(
-				'texto_presentacion'   => $textoPresentacion,
+				'texto_presentacion' => $textoPresentacion,
 
 			) );
 	}
@@ -304,8 +313,13 @@ class JugadorController extends Controller {
 	}
 
 	public function fichaPrecompetitivaAction( $clubJugadorId ) {
-		$em               = $this->getDoctrine()->getManager();
-		$clubJugador      = $em->getRepository( 'AppBundle:ClubJugador' )->findOneById( $clubJugadorId );
+		$em          = $this->getDoctrine()->getManager();
+		$clubJugador = $em->getRepository( 'AppBundle:ClubJugador' )->findOneById( $clubJugadorId );
+
+		$from = $clubJugador->getJugador()->getPersona()->getFechaNacimiento();
+		$to   = new \DateTime( 'today' );
+		$edad = $from->diff( $to )->y;
+
 		$title            = 'Evaluación PreCompetitiva';
 		$textoFichaMedica = $em->getRepository( 'AppBundle:Texto' )->findOneBySlug( 'datos-ficha-medica' );
 
@@ -313,7 +327,8 @@ class JugadorController extends Controller {
 			[
 				'clubJugador'        => $clubJugador,
 				'title'              => $title,
-				'texto_ficha_medica' => $textoFichaMedica
+				'texto_ficha_medica' => $textoFichaMedica,
+				'edad'               => $edad
 			]
 		);
 

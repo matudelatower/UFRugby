@@ -204,27 +204,39 @@ class AjaxController extends Controller {
 		$data = json_decode( $data, true )['data'];
 
 		if ( $data ) {
-			$persona = new Persona();
 
-			$persona->setNombre( $data['nombre'] );
-			$persona->setApellido( $data['apellido'] );
-			$sexo = $em->getRepository( 'AppBundle:Sexo' )->find( $data['sexo']['id'] );
-			$persona->setSexo( $sexo );
+			$tipoIdentificacion = $this->getDoctrine()->getRepository( 'AppBundle:TipoIdentificacion' )->findOneById( $data['tipoIdentificacion']['id'] );
+			$criteria           = [
+				'tipoIdentificacion'   => $tipoIdentificacion,
+				'numeroIdentificacion' => $data['numeroIdentificacion'],
 
-			$tipoIdentificacion = $em->getRepository( 'AppBundle:TipoIdentificacion' )->find( $data['tipoIdentificacion']['id'] );
-			$persona->setTipoIdentificacion( $tipoIdentificacion );
+			];
+			$persona            = $this->getDoctrine()->getRepository( 'AppBundle:Persona' )->findOneBy( $criteria );
 
-			$persona->setNumeroIdentificacion( $data['numeroIdentificacion'] );
-			$fechaNacimiento = \DateTime::createFromFormat( 'Y-m-d', $data['fechaNacimiento'] );
-			$persona->setFechaNacimiento( $fechaNacimiento );
+			if ( ! $persona ) {
+				$persona = new Persona();
 
-			$contacto = new Contacto();
-			$contacto->setDireccion( $data['direccion'] );
-			$contacto->setTelefono( $data['telefono'] );
-			$contacto->setTelefonoAlternativa( $data['telefonoAlternativo'] );
-			$contacto->setMail( $data['mail'] );
+				$persona->setNombre( $data['nombre'] );
+				$persona->setApellido( $data['apellido'] );
+				$sexo = $em->getRepository( 'AppBundle:Sexo' )->find( $data['sexo']['id'] );
+				$persona->setSexo( $sexo );
 
-			$persona->setContacto( $contacto );
+				$tipoIdentificacion = $em->getRepository( 'AppBundle:TipoIdentificacion' )->find( $data['tipoIdentificacion']['id'] );
+				$persona->setTipoIdentificacion( $tipoIdentificacion );
+
+				$persona->setNumeroIdentificacion( $data['numeroIdentificacion'] );
+				$fechaNacimiento = \DateTime::createFromFormat( 'Y-m-d', $data['fechaNacimiento'] );
+				$persona->setFechaNacimiento( $fechaNacimiento );
+
+				$contacto = new Contacto();
+				$contacto->setDireccion( $data['direccion'] );
+				$contacto->setTelefono( $data['telefono'] );
+				$contacto->setTelefonoAlternativa( $data['telefonoAlternativo'] );
+				$contacto->setMail( $data['mail'] );
+
+				$persona->setContacto( $contacto );
+			}
+
 
 			$jugador = new Jugador();
 			$jugador->setAltura( $data['altura'] );
@@ -245,19 +257,29 @@ class AjaxController extends Controller {
 //			si es menor
 
 			if ( strtoupper( $data['categoria'] ) == 'INFANTIL' ) {
-				$responsable = new Persona();
-				$responsable->setNombre( $data['responsableNombre'] );
-				$responsable->setApellido( $data['responsableApellido'] );
-				$tipoIdentificacionResponsable = $em->getRepository( 'AppBundle:TipoIdentificacion' )->find( $data['responsableTipoIdentificacion']['id'] );
-				$responsable->setTipoIdentificacion( $tipoIdentificacionResponsable );
-				$responsable->setNumeroIdentificacion( $data['responsableNumeroIdentificacion'] );
 
-				$contactoResponsable = new Contacto();
-				$contactoResponsable->setMail( $data['responsableMail'] );
-				$contactoResponsable->setTelefono( $data['responsableTelefono'] );
-				$contactoResponsable->setDireccion( $data['direccion'] );
+				$tipoIdentificacion = $this->getDoctrine()->getRepository( 'AppBundle:TipoIdentificacion' )->findOneById( $data['responsableTipoIdentificacion']['id'] );
+				$criteria           = [
+					'tipoIdentificacion'   => $tipoIdentificacion,
+					'numeroIdentificacion' => $data['responsableNumeroIdentificacion'],
 
-				$responsable->setContacto( $contactoResponsable );
+				];
+				$responsable        = $this->getDoctrine()->getRepository( 'AppBundle:Persona' )->findOneBy( $criteria );
+
+				if ( ! $responsable ) {
+					$responsable = new Persona();
+					$responsable->setNombre( $data['responsableNombre'] );
+					$responsable->setApellido( $data['responsableApellido'] );
+					$tipoIdentificacionResponsable = $em->getRepository( 'AppBundle:TipoIdentificacion' )->find( $data['responsableTipoIdentificacion']['id'] );
+					$responsable->setTipoIdentificacion( $tipoIdentificacionResponsable );
+					$responsable->setNumeroIdentificacion( $data['responsableNumeroIdentificacion'] );
+
+					$contactoResponsable = new Contacto();
+					$contactoResponsable->setMail( $data['responsableMail'] );
+					$contactoResponsable->setTelefono( $data['responsableTelefono'] );
+					$contactoResponsable->setDireccion( $data['direccion'] );
+					$responsable->setContacto( $contactoResponsable );
+				}
 
 				$responsableJugador = new ResponsableJugador();
 				$responsableJugador->setJugador( $jugador );
@@ -317,8 +339,7 @@ class AjaxController extends Controller {
 				$this->enviarMailPrecompetitivo( $token, $persona->getContacto()->getMail(), $persona );
 			}
 
-
-			$urlOk = $this->generateUrl( 'jugador_precompetitivo_ok' );
+			$urlOk = $this->generateUrl( 'jugador_precompetitivo_ok', [ 'id' => $clubJugador->getId() ] );
 
 			return new JsonResponse( $urlOk );
 		} else {

@@ -59,7 +59,7 @@ jugador_precompetitivo_consentimiento:
     methods:  [GET]
 
 jugador_precompetitivo_ok:
-    path:     /precompetitivo_ok
+    path:     /precompetitivo_ok/{id}
     defaults: { _controller: "AppBundle:Jugador:precompetitivoOk" }
     methods:  [GET]
 

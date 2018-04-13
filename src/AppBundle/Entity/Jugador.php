@@ -38,7 +38,7 @@ class Jugador extends BaseClass {
 	/**
 	 * @var
 	 *
-	 * @ORM\OneToOne(targetEntity="AppBundle\Entity\Persona", inversedBy="jugador", cascade={"persist"})
+	 * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Persona", inversedBy="jugador", cascade={"persist"})
 	 * @ORM\JoinColumn(name="persona_id", referencedColumnName="id")
 	 */
 	private $persona;

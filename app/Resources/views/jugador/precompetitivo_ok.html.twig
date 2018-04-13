@@ -19,6 +19,23 @@
             <div class="row text-center">
                 <h2>Muchas Gracias</h2>
                 <p>
+                    Se presentó una solicitud para el jugador {{ clubJugador.jugador.persona.nombre }}
+                    {{ clubJugador.jugador.persona.apellido }}, con N° de identificación
+                    {{ clubJugador.jugador.persona.numeroIdentificacion }}
+                </p>
+                <p>
+                    La misma será confirmada por el responsable del club.
+                </p>
+                {% if edad < 5 %}
+                    <p>
+                        Recordá acercarle un apto físico pediátrico.
+                    </p>
+                {% else %}
+                    <p>
+                        Recordá acercarle un apto físico.
+                    </p>
+                {% endif %}
+                <p>
                     Te hemos enviado un mail con la dirección que indicaste.
                 </p>
                 <p>

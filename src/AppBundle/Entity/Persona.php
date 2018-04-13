@@ -56,7 +56,7 @@ class Persona extends BaseClass {
 
 	/**
 	 *
-	 * @ORM\OneToOne(targetEntity="AppBundle\Entity\Jugador", mappedBy="persona", cascade={"persist", "remove"})
+	 * @ORM\OneToMany(targetEntity="AppBundle\Entity\Jugador", mappedBy="persona", cascade={"persist", "remove"})
 	 */
 	private $jugador;
 

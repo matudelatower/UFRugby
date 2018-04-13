@@ -7,9 +7,10 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>{{ title }}</title>
     <style>
-        body{
+        body {
             font-size: small;
         }
+
         label {
             margin-right: 15%;
         }
@@ -25,7 +26,8 @@
             width: 30%;
             text-align: center;
         }
-        .page-break{
+
+        .page-break {
             page-break-after: always;
         }
     </style>
@@ -61,7 +63,8 @@
     {{ texto_ficha_medica.cuerpo | raw }}
 
     <p>
-        SI ALGÚN ELEMENTO DE LA HISTORIA CLÍNICA ES POSITIVO, EL PROFESIONAL INDICARÁ TODOS LOS ESTUDIOS Y CONSULTAS QUE
+        SI ALGÚN ELEMENTO DE LA HISTORIA CLÍNICA ES POSITIVO, EL PROFESIONAL INDICARÁ TODOS LOS ESTUDIOS Y CONSULTAS
+        QUE
         CREA CONVINIENTE PARA PODER EVALUAR ADECUADAMENTE AL JUGADOR.
     </p>
 
@@ -83,26 +86,86 @@
 
     {#<hr class="page-break">#}
 
-    <h2>CONSENTIMIENTO (mayores de 18)</h2>
+    {% if edad >= 18 %}
+        <h2>CONSENTIMIENTO (mayores de 18)</h2>
 
-    <p>
-        Yo <b>{{ clubJugador.jugador.persona.nombre }} {{ clubJugador.jugador.persona.apellido }} </b>, con N° de
-        identificación
-        <b>{{ clubJugador.jugador.persona.numeroIdentificacion }}</b>,
-        manifiesto formal aceptación a los fines de integrar equipos representativos del club
-        <b>{{ clubJugador.club }}</b> y/o seleccionados provinciales y/o regionales y/o nacionales, tanto para actuar
-        como
-        jugador titular y/o suplente, así como para realizar todas las actividades relacionadas con tal participación.
-        Asimismo declaro conocer y aceptar que el rugby es un deporte con contacto entre aquellos que participan de la
-        competencia, lo que implica que aun cumpliendo con las leyes del juego y los reglamentos dictados por los
-        organismos rectores pertinentes, tanto en materia de seguridad como de juego en general, puedan igualmente
-        presentarse situaciones de riesgo para los participantes, acontecimientos estos que a su vez podrían derivar en
-        accidentes y, eventualmente, en daños a la persona. Concorde con ello, rati co conocer y aceptar los riesgos
-        que
-        implica la práctica del rugby, asumiéndolos libre y voluntariamente, relevando a la Unión Argentina de Rugby
-        de
-        toda responsabilidad por hechos que pudieren originarse con motivo de la práctica del rugby.
-    </p>
+        <p>
+            Yo <b>{{ clubJugador.jugador.persona.nombre }} {{ clubJugador.jugador.persona.apellido }} </b>, con N° de
+            identificación <b>{{ clubJugador.jugador.persona.numeroIdentificacion }}</b>, manifiesto formal aceptación
+            a los fines de
+            integrar equipos representativos del club <b>{{ clubJugador.club }}</b> y/o seleccionados provinciales y/o
+            regionales y/o nacionales, tanto para actuar como jugador titular y/o suplente, así como para realizar
+            todas
+            las actividades relacionadas con tal participación.
+        </p>
+        <p>
+            Asimismo declaro conocer y aceptar que el rugby es un deporte con contacto entre aquellos que participan de
+            la competencia, lo que implica que aun cumpliendo con las leyes del juego y los reglamentos dictados por los
+            organismos rectores pertinentes, tanto en materia de seguridad como de juego en general, puedan igualmente
+            presentarse situaciones de riesgo para los participantes, acontecimientos estos que a su vez podrían
+            derivar en accidentes y, eventualmente, en daños a la persona. Concorde con ello, rati co conocer y aceptar
+            los riesgos que implica la práctica del rugby, asumiéndolos libre y voluntariamente, relevando a la Unión
+            de Rugby del Paraguay de toda responsabilidad por hechos que pudieren originarse con motivo de la práctica
+            del rugby.
+        </p>
+    {% elseif edad < 18 and edad >=5 %}
+        <h2>CONSENTIMIENTO (menores de 18)</h2>
+
+        <p> Nosotros
+            .........................................................................................................................................,<br/>
+            con DNI N°
+            .......................................................................................................................................
+            <br/>
+            en nuestro carácter de padres del menor
+            <b>{{ clubJugador.jugador.persona.nombre }} {{ clubJugador.jugador.persona.apellido }} </b>,
+            con N° de identificación <b>{{ clubJugador.jugador.persona.numeroIdentificacion }}</b>, manifestamos formal
+            consentimiento
+            y aceptación a los fines de que nuestro hijo integre equipos representativos del club
+            <b>{{ clubJugador.club }}</b>
+            y/o seleccionados provinciales y/o regionales y/o nacionales, tanto para actuar como jugador titular y/o
+            suplente, así como para realizar todas las actividades relacionadas con tal participación.
+        </p>
+        <p>
+            Asimismo declaramos conocer y aceptar que el rugby es un deporte con contacto entre aquellos que participan
+            de la competencia, lo que implica que aun cumpliendo con las leyes del juego y los reglamentos dictados por
+            los organismos rectores pertinentes, tanto en materia de seguridad como de juego en general, puedan
+            igualmente presentarse situaciones de riesgo para los participantes, acontecimientos estos que a su vez
+            podrían derivar en accidentes y, eventualmente, en daños a la persona. Concorde con ello, ratificamos
+            conocer y aceptar los riesgos que implica la práctica del rugby, asumiéndolos libre y voluntariamente,
+            tanto en nombre propio como de nuestro hijo menor, relevando a la Unión de Rugby del Paraguay de toda
+            responsabilidad por hechos que pudieren originarse con motivo de la práctica del rugby.
+            Finalmente declaramos, bajo juramento de ley, que la información vertida precedentemente, y en relación a
+            la aptitud física de nuestro hijo, para la práctica del rugby, se ajusta a la verdad real.
+        </p>
+    {% elseif edad < 5 %}
+        <h2>CONSENTIMIENTO (infantiles)</h2>
+
+        <p> Nosotros
+            .........................................................................................................................................,<br/>
+            con DNI N°
+            .......................................................................................................................................
+            <br/>
+            en nuestro carácter de padres / tutores del menor
+            <b>{{ clubJugador.jugador.persona.nombre }} {{ clubJugador.jugador.persona.apellido }} </b>,
+            con N° de identificación <b>{{ clubJugador.jugador.persona.numeroIdentificacion }}</b>, manifestamos formal
+            consentimiento y aceptación a los fines de que el menor a nuestro cargo integre equipos representativos del
+            club <b>{{ clubJugador.club }}</b> y/o seleccionados provinciales y/o regionales y/o nacionales, tanto para
+            actuar como jugador titular y/o suplente, así como para realizar todas las actividades relacionadas con tal
+            participación.
+        </p>
+        <p>
+            Asimismo declaramos conocer y aceptar que el rugby es un deporte con contacto entre aquellos que participan
+            de la competencia, lo que implica que aun cumpliendo con las leyes del juego y los reglamentos dictados por
+            los organismos rectores pertinentes, tanto en materia de seguridad como de juego en general, puedan
+            igualmente presentarse situaciones de riesgo para os participantes, acontecimientos estos que a su vez
+            podrían derivar en accidentes y, eventualmente, en daños a la persona. Concorde con ello, ratificamos
+            conocer y aceptar los riesgos que implica la práctica del rugby, asumiéndolos libre y voluntariamente,
+            tanto en nombre propio como de nuestro hijo menor, relevando a la Unión de Rugby del Paraguay de toda
+            responsabilidad por hechos que pudieren originarse con motivo de la práctica del rugby.
+            Finalmente declaramos, bajo juramento de ley, que la información vertida precedentemente, y en relación a
+            la aptitud física de nuestro hijo, para la práctica del rugby, se ajusta a la verdad real.
+        </p>
+    {% endif %}
 
     <p>
         Lugar y fecha: <br>
