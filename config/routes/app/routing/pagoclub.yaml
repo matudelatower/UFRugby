@@ -1,0 +1,24 @@
+pagoclub_index:
+    path:     /
+    controller: App\Controller\PagoClubController::indexAction
+#    methods:  GET
+
+pagoclub_show:
+    path:     /{id}/show
+    controller: App\Controller\PagoClubController::showAction
+#    methods:  GET
+
+pagoclub_new:
+    path:     /new
+    controller: App\Controller\PagoClubController::newAction
+#    methods:  [GET, POST]
+
+pagoclub_edit:
+    path:     /{id}/edit
+    controller: App\Controller\PagoClubController::editAction
+#    methods:  [GET, POST]
+
+pagoclub_delete:
+    path:     /{id}/delete
+    controller: App\Controller\PagoClubController::deleteAction
+#    methods:  DELETE

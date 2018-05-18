@@ -1,0 +1,20 @@
+clubjugador_index:
+    path:     /
+    controller: App\Controller\ClubJugadorController::indexAction
+#    methods:  GET
+
+clubjugador_show:
+    path:     /{id}/show
+    controller: App\Controller\ClubJugadorController::showAction
+#    methods:  GET
+
+clubjugador_confirmar:
+    path:     /{id}/clubjugador_confirmar
+    controller: App\Controller\ClubJugadorController::confirmarAction
+#    methods:  [GET, POST]
+
+clubjugador_rechazar:
+    path:     /{id}/clubjugador_rechazar
+    controller: App\Controller\ClubJugadorController::rechazarAction
+#    methods:  [GET, POST]
+

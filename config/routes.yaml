@@ -1,0 +1,36 @@
+#index:
+#    path: /
+#    controller: App\Controller\DefaultController::index
+app:
+    resource: "routes/app/routes.yaml"
+    prefix:   /
+
+fos_user_security:
+    resource: "@FOSUserBundle/Resources/config/routing/security.xml"
+
+fos_user_profile:
+    resource: "@FOSUserBundle/Resources/config/routing/profile.xml"
+    prefix: /profile
+
+fos_user_resetting:
+    resource: "@FOSUserBundle/Resources/config/routing/resetting.xml"
+    prefix: /resetting
+
+fos_user_change_password:
+    resource: "@FOSUserBundle/Resources/config/routing/change_password.xml"
+    prefix: /profile
+
+confirmacion_precompetitivo:
+    path:     /confirmacion_precompetitivo/{token}
+    controller: App\Controller\JugadorController::precompetitivoConfirmacion
+#    methods:  GET
+
+jugador_ficha_precompetitiva:
+    path:     /ficha_precompetitiva/{clubJugadorId}
+    controller: App\Controller\JugadorController::fichaPrecompetitiva
+#    methods:  [GET]
+
+jugador_registro:
+    path:     /registro
+    controller: App\Controller\JugadorController::precompetitivo
+#    methods:  [GET, POST]

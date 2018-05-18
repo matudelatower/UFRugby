@@ -1,0 +1,24 @@
+persona_index:
+    path:     /
+    controller: App\Controller\PersonaController::indexAction
+#    methods:  GET
+
+persona_show:
+    path:     /{id}/show
+    controller: App\Controller\PersonaController::showAction
+#    methods:  GET
+
+persona_new:
+    path:     /new
+    controller: App\Controller\PersonaController::newAction
+#    methods:  [GET, POST]
+
+persona_edit:
+    path:     /{id}/edit
+    controller: App\Controller\PersonaController::editAction
+#    methods:  [GET, POST]
+
+persona_delete:
+    path:     /{id}/delete
+    controller: App\Controller\PersonaController::deleteAction
+#    methods:  DELETE

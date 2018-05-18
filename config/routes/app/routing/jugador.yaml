@@ -1,0 +1,69 @@
+jugador_index:
+    path:     /
+    controller: App\Controller\JugadorController::indexAction
+#    methods:  GET
+
+jugador_show:
+    path:     /{id}/show
+    controller: App\Controller\JugadorController::showAction
+#    methods:  GET
+
+jugador_new:
+    path:     /new
+    controller: App\Controller\JugadorController::newAction
+#    methods:  [GET, POST]
+
+jugador_edit:
+    path:     /{id}/edit
+    controller: App\Controller\JugadorController::editAction
+#    methods:  [GET, POST]
+
+jugador_delete:
+    path:     /{id}/delete
+    controller: App\Controller\JugadorController::deleteAction
+#    methods:  DELETE
+
+jugador_precompetitivo_presentacion:
+    path:     /precompetitivo_presentacion
+    controller: App\Controller\JugadorController::precompetitivoPresentacionAction
+#    methods:  [GET]
+
+jugador_precompetitivo_categoria:
+    path:     /precompetitivo_categoria
+    controller: App\Controller\JugadorController::precompetitivoCategoriaAction
+#    methods:  [GET]
+
+jugador_precompetitivo_datos_personales:
+    path:     /precompetitivo_datos_personales
+    controller: App\Controller\JugadorController::precompetitivoDatosPersonalesAction
+#    methods:  [GET, POST]
+
+jugador_precompetitivo_datos_medicos_presentacion:
+    path:     /precompetitivo_datos_medicos_presentacion
+    controller: App\Controller\JugadorController::precompetitivoDatosMedicosPresentacionAction
+#    methods:  [GET]
+
+jugador_precompetitivo_datos_medicos:
+    path:     /precompetitivo_datos_medicos
+    controller: App\Controller\JugadorController::precompetitivoDatosMedicosAction
+#    methods:  [GET]
+
+jugador_precompetitivo_resumen:
+    path:     /precompetitivo_resumen
+    controller: App\Controller\JugadorController::precompetitivoResumenAction
+#    methods:  [GET]
+
+jugador_precompetitivo_consentimiento:
+    path:     /precompetitivo_consentimiento
+    controller: App\Controller\JugadorController::precompetitivoConsentimientoAction
+#    methods:  [GET]
+
+jugador_precompetitivo_ok:
+    path:     /precompetitivo_ok/{id}
+    controller: App\Controller\JugadorController::precompetitivoOkAction
+#    methods:  [GET]
+
+jugador_precompetitivo:
+    path:     /precompetitivo
+    controller: App\Controller\JugadorController::precompetitivoAction
+#    methods:  [GET, POST]

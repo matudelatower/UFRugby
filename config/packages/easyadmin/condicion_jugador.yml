@@ -1,0 +1,9 @@
+easy_admin:
+    entities:
+        CondicionJugador:
+            label: "Condición Jugador"
+            class: App\Entity\CondicionJugador
+            disabled_actions: ['delete']
+            form:
+                fields:
+                - { property: 'nombre' }

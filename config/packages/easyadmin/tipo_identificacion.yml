@@ -1,0 +1,10 @@
+easy_admin:
+    entities:
+        TipoIdentificacion:
+            label: "Tipo Identificación"
+            class: App\Entity\TipoIdentificacion
+            disabled_actions: ['delete']
+            form:
+                fields:
+                - { property: 'nombre' }
+                - { property: 'siglas' }

@@ -1,0 +1,35 @@
+app_pagojugador:
+    resource: "routing/pagojugador.yaml"
+    prefix:   /pagojugador
+
+app_pagoclub:
+    resource: "routing/pagoclub.yaml"
+    prefix:   /pagoclub
+
+app_ajax:
+    resource: "routing/ajax.yaml"
+    prefix:   /ajax
+
+app_ajax_public:
+    resource: "routing/ajax_public.yaml"
+    prefix:   /ajax-public
+
+app_clubjugador:
+    resource: "routing/clubjugador.yaml"
+    prefix:   /clubjugador
+
+app_persona:
+    resource: "routing/persona.yaml"
+    prefix:   /persona
+
+app_jugador:
+    resource: "routing/jugador.yaml"
+    prefix:   /jugador
+
+app_club:
+    resource: "routing/club.yaml"
+    prefix:   /club
+
+app_homepage:
+    path:     /
+    controller: App\Controller\DefaultController::indexAction

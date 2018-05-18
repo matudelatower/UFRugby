@@ -1,0 +1,10 @@
+easy_admin:
+    entities:
+        Division:
+            label: "División"
+            class: App\Entity\Division
+            disabled_actions: ['delete']
+            form:
+                fields:
+                - { property: 'nombre' }
+                - { property: 'descripcion' }

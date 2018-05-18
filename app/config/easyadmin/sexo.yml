@@ -1,9 +1,0 @@
-easy_admin:
-    entities:
-        Sexo:
-            label: "Sexo"
-            class: AppBundle\Entity\Sexo
-            disabled_actions: ['delete']
-            form:
-                fields:
-                - { property: 'nombre' }

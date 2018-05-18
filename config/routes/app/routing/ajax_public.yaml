@@ -1,0 +1,48 @@
+get_sexos:
+    path:     /sexos
+    controller: App\Controller\AjaxController::getSexos
+#    methods:  GET
+
+get_tipos_identificacion:
+    path:     /tipos-identificacion
+    controller: App\Controller\AjaxController::getTiposIdentificacion
+#    methods:  GET
+
+get_club:
+    path:     /club
+    controller: App\Controller\AjaxController::getClub
+#    methods:  GET
+
+get_posicion:
+    path:     /posicion
+    controller: App\Controller\AjaxController::getPosicion
+#    methods:  GET
+
+get_texto_ficha_medica:
+    path:     /texto-ficha-medica
+    controller: App\Controller\AjaxController::getTextoFichaMedica
+#    methods:  GET
+
+get_texto_consentimiento:
+    path:     /texto-consentimiento
+    controller: App\Controller\AjaxController::getTextoConsentimientoAction
+#    methods:  GET
+
+get_grupo_sanguineo:
+    path:     /grupo-sanguineo
+    controller: App\Controller\AjaxController::getGrupoSanguineoAction
+#    methods:  GET
+
+get_tipo_relacion:
+    path:     /tipo-relacion
+    controller: App\Controller\AjaxController::getTipoRelacionAction
+#    methods:  GET
+
+post_precompetitivo:
+    path:     /precompetitivo
+    controller: App\Controller\AjaxController::postPrecompetitivoAction
+#    methods:  POST
+
+search-persona:
+    path: /search-persona
+    controller: App\Controller\AjaxController::getPersonaAction

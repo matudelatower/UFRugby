@@ -1,0 +1,10 @@
+easy_admin:
+    entities:
+        PosicionJugador:
+            label: "Posición Jugador"
+            class: App\Entity\PosicionJugador
+            disabled_actions: ['delete']
+            form:
+                fields:
+                - { property: 'numero' }
+                - { property: 'nombre' }

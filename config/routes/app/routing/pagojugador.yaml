@@ -1,0 +1,24 @@
+pagojugador_index:
+    path:     /
+    controller: App\Controller\PagoJugadorController::indexAction
+#    methods:  GET
+
+pagojugador_show:
+    path:     /{id}/show
+    controller: App\Controller\PagoJugadorController::showAction
+#    methods:  GET
+
+pagojugador_new:
+    path:     /new
+    controller: App\Controller\PagoJugadorController::newAction
+#    methods:  [GET, POST]
+
+pagojugador_edit:
+    path:     /{id}/edit
+    controller: App\Controller\PagoJugadorController::editAction
+#    methods:  [GET, POST]
+
+pagojugador_delete:
+    path:     /{id}/delete
+    controller: App\Controller\PagoJugadorController::deleteAction
+#    methods:  DELETE
