@@ -322,7 +322,14 @@ class Jugador extends BaseClass {
 	 * @return Jugador
 	 */
 	public function addClubJugador( \App\Entity\ClubJugador $clubJugador ) {
-		$this->clubJugador[] = $clubJugador;
+//		$this->clubJugador[] = $clubJugador;
+//
+//		return $this;
+
+		if (!$this->clubJugador->contains($clubJugador)) {
+			$this->clubJugador[] = $clubJugador;
+			$clubJugador->setJugador($this);
+		}
 
 		return $this;
 	}

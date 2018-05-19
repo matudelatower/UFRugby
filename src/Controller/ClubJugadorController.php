@@ -135,14 +135,14 @@ class ClubJugadorController extends Controller {
 		$mailer = $this->get( 'mailer' );
 
 
-		$asunto = $this->getParameter( 'site_name' ) . ' - Precompetitivo Rechazado';
+		$asunto = getenv( 'APP_SITE_NAME' ) . ' - Precompetitivo Rechazado';
 
 		$url = $this->get( 'router' )->generate( 'jugador_precompetitivo',
 			array(),
 			UrlGeneratorInterface::ABSOLUTE_URL );
 
 		$message = ( new \Swift_Message( $asunto ) )
-			->setFrom( $this->container->getParameter( 'mailer_user' ), $this->getParameter( 'union_name' ) )
+			->setFrom( getenv( 'MAILER_USER' ), getenv( 'APP_UNION_NAME' ) )
 			->setTo( $mail )
 			->setBody(
 //				$body,

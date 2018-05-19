@@ -1,14 +1,12 @@
 {
-    "devDependencies": {
-        "@symfony/webpack-encore": "^0.19.0",
-        "bootstrap-sass": "^3.3.7",
-        "jquery": "^3.3.1",
-        "node-sass": "^4.9.0",
-        "sass-loader": "^7.0.1",
-        "vue": "^2.5.16",
-        "vue-loader": "^15.0.11",
-        "vue-template-compiler": "^2.5.16"
+    "name": "ufrugby",
+    "version": "1.0.0",
+    "description": "Uniones de rugby",
+    "main": "webpack.config.js",
+    "directories": {
+        "test": "tests"
     },
+    "author": "Matias Solis de la Torre",
     "license": "MIT",
     "private": true,
     "scripts": {
@@ -17,8 +15,24 @@
         "watch": "encore dev --watch",
         "build": "encore production"
     },
+    "devDependencies": {
+        "@symfony/webpack-encore": "^0.19.0",
+        "bootstrap-sass": "^3.3.7",
+        "copy-webpack-plugin": "^4.5.1",
+        "jquery": "^3.3.1",
+        "node-sass": "^4.9.0",
+        "sass-loader": "^7.0.1",
+        "vue": "^2.5.16",
+        "vue-loader": "^14.2.2",
+        "vue-template-compiler": "^2.5.16",
+        "webpack-notifier": "^1.6.0"
+    },
     "dependencies": {
         "admin-lte": "^2.4.3",
-        "dotenv": "^5.0.1"
+        "axios": "^0.18.0",
+        "dotenv": "^5.0.1",
+        "vue-blockui": "^1.1.7",
+        "vue-form-wizard": "^0.8.4",
+        "vuelidate": "^0.6.2"
     }
 }

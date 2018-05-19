@@ -3,23 +3,12 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <link rel="icon" type="image/x-icon" href="{{ asset('bundles/app/img/logo_urp.jpg') }}"/>
+    <link rel="icon" type="image/x-icon" href="{{ asset('build/img/logo_urp.jpg') }}"/>
     <title>{{ site_name }} </title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <!-- Bootstrap 3.3.6 -->
-    <link rel="stylesheet" href="{{ asset('bundles/theme/bootstrap/css/bootstrap.min.css') }}">
-    <!-- Font Awesome -->
-    {#<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">#}
-    <!-- Ionicons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
-    <!-- Theme style -->
-    <link rel="stylesheet" href="{{ asset('bundles/theme/admin-lte/css/AdminLTE.min.css') }}">
-    <!-- iCheck -->
-    <link rel="stylesheet" href="{{ asset('bundles/theme/plugins/iCheck/flat/blue.css') }}">
 
-    {# datepicker #}
-    <link rel="stylesheet" href="{{ asset('bundles/theme/plugins/datepicker/datepicker3.css') }}">
+    <link rel="stylesheet" href="{{ asset('build/css/adminlte.css') }}">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -28,8 +17,10 @@
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 
-    <link rel="stylesheet" href="{{ asset('build/global.css') }}">
-    <link rel="stylesheet" href="{{ asset('build/app.css') }}">
+    {#<link rel="stylesheet" href="{{ asset('build/global.css') }}">#}
+
+    <link rel="stylesheet" href="{{ asset('build/css/app.css') }}">
+    <link rel="stylesheet" href="{{ asset('build/js/app.css') }}">
 
     <style>
         .public-box {
@@ -65,33 +56,9 @@
 </div>
 <!-- /.register-box -->
 
-<script src="{{ asset('build/app.js') }}"></script>
+<script src="{{ asset('build/js/adminlte.js') }}"></script>
+<script src="{{ asset('build/js/app.js') }}"></script>
 
-<!-- iCheck -->
-<script src="{{ asset('bundles/theme/plugins/iCheck/icheck.min.js') }}"></script>
-
-{# datepicker #}
-<script src="{{ asset('bundles/theme/plugins/datepicker/bootstrap-datepicker.js') }}"></script>
-<script src="{{ asset('bundles/theme/plugins/datepicker/locales/bootstrap-datepicker.es.js') }}"></script>
-
-
-<script>
-    $(function () {
-//        $('input').iCheck({
-//            checkboxClass: 'icheckbox_square-blue',
-//            radioClass: 'iradio_square-blue',
-//            increaseArea: '20%' // optional
-//        });
-        $('.datepicker').datepicker({
-            format: "dd/mm/yyyy",
-            language: "es",
-            autoclose: true
-        });
-        $(document).on('change','.datepicker', function () {
-            this.dispatchEvent( new Event('input'));
-        })
-    });
-</script>
 {% block javascript %}
 {% endblock javascript %}
 </body>

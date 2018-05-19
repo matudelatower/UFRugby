@@ -299,7 +299,8 @@ class AjaxController extends Controller {
 
 			$jugador->addClubJugador( $clubJugador );
 
-			$persona->setJugador( $jugador );
+//			$persona->setJugador( $jugador );
+			$persona->addJugador( $jugador );
 			$jugador->setPersona( $persona );
 
 			$fichaMedica = new FichaMedica();
@@ -326,13 +327,14 @@ class AjaxController extends Controller {
 
 			$token = md5( uniqid( 'urp_' ) );
 
-			$clubJugador->setJugador( $persona->getJugador() );
+//			$clubJugador->setJugador( $persona->getJugador()->first() );
 			$clubJugador->setTokenConfirmacion( $token );
 			$clubJugador->setAnio( date( "Y" ) );
 
 			$em->persist( $persona );
 
 			$em->flush();
+
 			if ( strtoupper( $data['categoria'] ) == 'INFANTIL' ) {
 				$this->enviarMailPrecompetitivo( $token, $responsable->getContacto()->getMail(), $persona );
 			} else {
@@ -353,14 +355,14 @@ class AjaxController extends Controller {
 
 //		$body   = $request->get( 'cuerpo' );
 
-		$asunto = $this->getParameter( 'site_name' ) . ' - Confirmación Precompetitivo';
+		$asunto = getenv( 'APP_SITE_NAME' ) . ' - Confirmación Precompetitivo';
 
 		$url = $this->get( 'router' )->generate( 'confirmacion_precompetitivo',
 			array( 'token' => $token ),
 			UrlGeneratorInterface::ABSOLUTE_URL );
 
 		$message = ( new \Swift_Message( $asunto ) )
-			->setFrom( $this->container->getParameter( 'mailer_user' ), $this->getParameter( 'union_name' ) )
+			->setFrom( getenv( 'MAILER_USER' ), getenv( 'APP_UNION_NAME' ) )
 			->setTo( $mail )
 			->setBody(
 //				$body,

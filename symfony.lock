@@ -83,6 +83,9 @@
     "fig/link-util": {
         "version": "1.0.0"
     },
+    "friendsofsymfony/ckeditor-bundle": {
+        "version": "1.0.0"
+    },
     "friendsofsymfony/user-bundle": {
         "version": "v2.1.2"
     },
@@ -95,11 +98,29 @@
     "jms/metadata": {
         "version": "1.6.0"
     },
+    "knplabs/knp-components": {
+        "version": "1.3.8"
+    },
     "knplabs/knp-menu": {
         "version": "2.3.0"
     },
     "knplabs/knp-menu-bundle": {
         "version": "v2.2.1"
+    },
+    "knplabs/knp-paginator-bundle": {
+        "version": "v2.8.0"
+    },
+    "knplabs/knp-snappy": {
+        "version": "v1.0.4"
+    },
+    "knplabs/knp-snappy-bundle": {
+        "version": "1.5",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "1.5",
+            "ref": "c81bdcf4a9d4e7b1959071457f9608631865d381"
+        }
     },
     "monolog/monolog": {
         "version": "1.23.0"

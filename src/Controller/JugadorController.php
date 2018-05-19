@@ -239,7 +239,7 @@ class JugadorController extends Controller {
 		// 1
 		$textoPresentacion = $em->getRepository( 'App:Texto' )->findOneBySlug( 'evaluacion-pre-competitiva' );
 
-		return $this->render( ':jugador:precompetitivo.html.twig',
+		return $this->render( 'jugador/precompetitivo.html.twig',
 			array(
 				'texto_presentacion' => $textoPresentacion,
 
@@ -305,7 +305,7 @@ class JugadorController extends Controller {
 			}
 		}
 
-		return $this->render( ':jugador:precompetitivo_mensaje.html.twig',
+		return $this->render( 'jugador/precompetitivo_mensaje.html.twig',
 			array(
 				'mensaje'     => $mensaje,
 				'clubJugador' => $fichaje
@@ -323,7 +323,7 @@ class JugadorController extends Controller {
 		$title            = 'Evaluación PreCompetitiva';
 		$textoFichaMedica = $em->getRepository( 'App:Texto' )->findOneBySlug( 'datos-ficha-medica' );
 
-		$html = $this->renderView( ':jugador:evaluacion_precompetitiva.pdf.twig',
+		$html = $this->renderView( 'jugador/evaluacion_precompetitiva.pdf.twig',
 			[
 				'clubJugador'        => $clubJugador,
 				'title'              => $title,

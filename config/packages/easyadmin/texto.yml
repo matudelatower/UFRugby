@@ -8,4 +8,5 @@ easy_admin:
                 fields:
                 - { property: 'titulo' }
                 - { property: 'descripcion' }
-                - { property: 'cuerpo', type: 'ckeditor' }
+                - { property: 'cuerpo', type: 'FOS\CKEditorBundle\Form\Type\CKEditorType' }
+#                - { property: 'cuerpo', type: 'fos_ckeditor' }

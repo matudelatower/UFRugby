@@ -1,26 +1,26 @@
 get_sexos:
     path:     /sexos
-    controller: App\Controller\AjaxController::getSexos
+    controller: App\Controller\AjaxController::getSexosAction
 #    methods:  GET
 
 get_tipos_identificacion:
     path:     /tipos-identificacion
-    controller: App\Controller\AjaxController::getTiposIdentificacion
+    controller: App\Controller\AjaxController::getTiposIdentificacionAction
 #    methods:  GET
 
 get_club:
     path:     /club
-    controller: App\Controller\AjaxController::getClub
+    controller: App\Controller\AjaxController::getClubAction
 #    methods:  GET
 
 get_posicion:
     path:     /posicion
-    controller: App\Controller\AjaxController::getPosicion
+    controller: App\Controller\AjaxController::getPosicionAction
 #    methods:  GET
 
 get_texto_ficha_medica:
     path:     /texto-ficha-medica
-    controller: App\Controller\AjaxController::getTextoFichaMedica
+    controller: App\Controller\AjaxController::getTextoFichaMedicaAction
 #    methods:  GET
 
 get_texto_consentimiento:

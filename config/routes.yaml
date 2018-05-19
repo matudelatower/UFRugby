@@ -22,15 +22,15 @@ fos_user_change_password:
 
 confirmacion_precompetitivo:
     path:     /confirmacion_precompetitivo/{token}
-    controller: App\Controller\JugadorController::precompetitivoConfirmacion
+    controller: App\Controller\JugadorController::precompetitivoConfirmacionAction
 #    methods:  GET
 
 jugador_ficha_precompetitiva:
     path:     /ficha_precompetitiva/{clubJugadorId}
-    controller: App\Controller\JugadorController::fichaPrecompetitiva
+    controller: App\Controller\JugadorController::fichaPrecompetitivaAction
 #    methods:  [GET]
 
 jugador_registro:
     path:     /registro
-    controller: App\Controller\JugadorController::precompetitivo
+    controller: App\Controller\JugadorController::precompetitivoAction
 #    methods:  [GET, POST]

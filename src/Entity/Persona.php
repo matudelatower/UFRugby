@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use App\Entity\Base\BaseClass;
 use Symfony\Component\HttpFoundation\File\File;
@@ -150,6 +151,10 @@ class Persona extends BaseClass {
 
 	public function __toString() {
 		return $this->nombre . ' ' . $this->apellido;
+	}
+
+	public function __construct() {
+		$this->jugador = new ArrayCollection();
 	}
 
 	/**
@@ -306,6 +311,16 @@ class Persona extends BaseClass {
 	 */
 	public function setJugador( \App\Entity\Jugador $jugador = null ) {
 		$this->jugador = $jugador;
+
+		return $this;
+	}
+
+	public function addJugador(\App\Entity\Jugador $jugador): self
+	{
+		if (!$this->jugador->contains($jugador)) {
+			$this->jugador[] = $jugador;
+			$jugador->setPersona($this);
+		}
 
 		return $this;
 	}
