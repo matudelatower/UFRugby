@@ -353,7 +353,6 @@ class AjaxController extends Controller {
 	public function enviarMailPrecompetitivo( $token, $mail, $persona ) {
 		$mailer = $this->get( 'mailer' );
 
-//		$body   = $request->get( 'cuerpo' );
 
 		$asunto = getenv( 'APP_SITE_NAME' ) . ' - Confirmación Precompetitivo';
 
@@ -365,9 +364,7 @@ class AjaxController extends Controller {
 			->setFrom( getenv( 'MAILER_USER' ), getenv( 'APP_UNION_NAME' ) )
 			->setTo( $mail )
 			->setBody(
-//				$body,
 				$this->renderView(
-				// app/Resources/views/Emails/registration.html.twig
 					'emails/precompetitivo.html.twig',
 					[
 						'nombre' => $persona->getNombre() . ' ' . $persona->getApellido(),
@@ -375,20 +372,11 @@ class AjaxController extends Controller {
 					]
 				),
 				'text/html'
-			)/*
-                 * If you also want to include a plaintext version of the message
-                ->addPart(
-                    $this->renderView(
-                        'Emails/registration.txt.twig',
-                        array('name' => $name)
-                    ),
-                    'text/plain'
-                )
-                */
+			)
 		;
 
 		$mailer->send( $message );
-//		$this->get( 'session' )->getFlashBag()->add( 'info', 'El mail se envió con éxito!' );
+
 	}
 
 	public function getPersonaAction( Request $request ) {
