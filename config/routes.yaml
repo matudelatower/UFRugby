@@ -1,12 +1,14 @@
-#index:
-#    path: /
-#    controller: App\Controller\DefaultController::index
 app:
     resource: "routes/app/routes.yaml"
     prefix:   /
 
 fos_user_security:
     resource: "@FOSUserBundle/Resources/config/routing/security.xml"
+
+fos_user_security_login:
+    path:     /login
+    controller: App\Controller\SecurityController::loginAction
+
 
 fos_user_profile:
     resource: "@FOSUserBundle/Resources/config/routing/profile.xml"

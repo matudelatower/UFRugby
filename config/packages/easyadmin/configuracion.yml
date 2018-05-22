@@ -1,0 +1,12 @@
+easy_admin:
+    entities:
+        Configuracion:
+            label: "Configuración"
+            class: App\Entity\Configuracion
+            disabled_actions: ['delete']
+            form:
+                fields:
+                - { property: 'nombreUnion' }
+                - { property: 'siglas' }
+                - { property: 'imageFile', label: 'Logo', type: 'vich_image' }
+

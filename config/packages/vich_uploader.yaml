@@ -1,6 +1,10 @@
 vich_uploader:
     db_driver: orm
     mappings:
+        union_image:
+            uri_prefix:         /uploads/images/union
+            upload_destination: '%kernel.root_dir%/../public/uploads/images/union'
+            namer: vich_uploader.namer_uniqid
         club_image:
             uri_prefix:         /uploads/images/club
             upload_destination: '%kernel.root_dir%/../public/uploads/images/club'
