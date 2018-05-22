@@ -4,8 +4,8 @@
 /public/bundles/
 /public/uploads/images/club/*
 !/public/uploads/images/club/.gitkeep
-/public/uploads/union/club/*
-!/public/uploads/union/club/.gitkeep
+/public/uploads/images/union/*
+!/public/uploads/images/union/.gitkeep
 /var/
 /vendor/
 ###< symfony/framework-bundle ###
