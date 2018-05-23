@@ -5,7 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     {% set logoUnion = asset('uploads/images/union/logo_union.png') %}
     {% if logoUnion %}
-        {% set logoUnion = asset('build/img/logo_generico.png') %}
+        {#TODO cambiar cuando se instale en bolivia#}
+        {% set logoUnion = asset('build/img/logo_urp.jpg') %}
     {% endif %}
     <link rel="icon" type="image/x-icon" href="{{ logoUnion }}"/>
     <title>{% block title %}Bienvenido!{% endblock %} | {{ site_name }}</title>
