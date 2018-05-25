@@ -98,8 +98,10 @@
                         location.href = response.data;
 
                     })
-                    .catch(function (error) {
+                    .catch(error => {
+                        this.cargando = false;
                         console.log(error);
+
                     });
             }
         },
