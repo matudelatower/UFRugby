@@ -12,19 +12,20 @@
         </div>
 
         <div class="public-box-body">
-            <h1 class="text-center">EVALUACIÓN PRE-COMPETITIVA {{ "now" | date('Y') }}</h1>
+            <h1 class="text-center">INSCRIPCIÓN REFEREE</h1>
+
 
             <div class="row text-center">
                 <h2>Muchas Gracias</h2>
                 <p>
-                    {{ mensaje }}
+                    Se presentó una solicitud para el referee {{ referee.persona.nombre }}
+                    {{ referee.persona.apellido }}, con C.I. N°
+                    {{ referee.persona.numeroIdentificacion }}
+                </p>
+                <p>
+                    Te hemos enviado un mail con la dirección que indicaste.
                 </p>
 
-                {% if clubJugador %}
-                    <a class="btn btn-primary"
-                       href="{{ path('jugador_ficha_precompetitiva', {'clubJugadorId': clubJugador.id}) }}"> Imprimir
-                        Ficha Pre-Competitiva</a>
-                {% endif %}
             </div>
 
 

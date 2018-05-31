@@ -1,49 +1,67 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-Clubs
+    Clubs
 {% endblock title %}
 {% block body %}
-<div class="box">
-    <div class="box-header">
-        <h3 class="box-title">Listado de Clubes</h3>
+    <div class="box">
+        <div class="box-header">
+            <h3 class="box-title">Listado de Clubes</h3>
+        </div>
+        <div class="box-body">
+            <table class="table table-bordered table-striped data-table">
+                <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Nombre</th>
+                    <th>Foto</th>
+                    <th>Activo</th>
+                    <th>Fecha creacion</th>
+                    <th>Fecha actualizacion</th>
+                    <th>Acciones</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for club in clubs %}
+                    <tr>
+                        <td><a href="{{ path('club_show', { 'id': club.id }) }}">{{ club.id }}</a></td>
+                        <td>{{ club.nombre }}</td>
+                        <td>{{ club.imageName }}</td>
+                        <td>{% if club.activo %}
+                                <small class="label bg-green">Si</small>
+                            {% else %}
+                                <small class="label bg-red">No</small>
+                            {% endif %}
+                        </td>
+                        <td>{% if club.fechaCreacion %}{{ club.fechaCreacion|date('d/m/Y H:i:s') }}{% endif %}</td>
+                        <td>{% if club.fechaActualizacion %}{{ club.fechaActualizacion|date('d/m/Y H:i:s') }}{% endif %}</td>
+                        <td>
+                            <a class="btn btn-default" href="{{ path('club_show', { 'id': club.id }) }}">
+                                <i class="fa fa-eye"></i>
+                            </a>
+                            <a class="btn btn-default" href="{{ path('club_edit', { 'id': club.id }) }}">
+                                <i class="fa fa-edit"></i>
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
-    <div class="box-body">
-        <table class="table table-bordered table-striped data-table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Nombre</th>
-                <th>Foto</th>
-                <th>Activo</th>
-                <th>Fecha creacion</th>
-                <th>Fecha actualizacion</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for club in clubs %}
-            <tr>
-                <td><a href="{{ path('club_show', { 'id': club.id }) }}">{{ club.id }}</a></td>
-                <td>{{ club.nombre }}</td>
-                <td>{{ club.imageName }}</td>
-                <td>{% if club.activo %}Si{% else %}No{% endif %}</td>
-                <td>{% if club.fechaCreacion %}{{ club.fechaCreacion|date('d/m/Y H:i:s') }}{% endif %}</td>
-                <td>{% if club.fechaActualizacion %}{{ club.fechaActualizacion|date('d/m/Y H:i:s') }}{% endif %}</td>
-                <td>
-                        <a class="btn btn-default" href="{{ path('club_show', { 'id': club.id }) }}">
-                            <i class="fa fa-eye"></i>
-                                                    </a>
-                        <a class="btn btn-default" href="{{ path('club_edit', { 'id': club.id }) }}">
-                            <i class="fa fa-edit"></i>
-                                                    </a>
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-        </table>
+    <div class="row">
+        <div class="col-md-12">
+            <a class="btn btn-primary" href="{{ path('club_new') }}">Nuevo club</a>
+        </div>
     </div>
-</div>
 
-    <a class="btn btn-primary" href="{{ path('club_new') }}">Nuevo club</a>
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <div class="navigation">
+                {{ knp_pagination_render(clubs) }}
+            </div>
+        </div>
+    </div>
+
+
 {% endblock %}

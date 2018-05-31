@@ -132,6 +132,19 @@ class Builder {
 //				);
 		}
 
+		if ( $this->authorizationChecker->isGranted( 'ROLE_ADMIN' ) ||
+		     $this->authorizationChecker->isGranted( 'ROLE_UNION' ) ) {
+
+			$menu[ $keyPersonal ]
+				->addChild(
+					'Referees',
+					array(
+						'route' => 'referee_index',
+					)
+				);
+
+		}
+
 
 		return $menu;
 	}

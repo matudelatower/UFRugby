@@ -1,0 +1,11 @@
+referee_inscripcion_ok:
+    path:     /inscripcion-ok/{id}
+    controller: App\Controller\RefereeController::inscripcionOk
+
+referee_index:
+    path:     /index
+    controller: App\Controller\RefereeController::index
+
+referee_show:
+    path:     /show/{id}
+    controller: App\Controller\RefereeController::show

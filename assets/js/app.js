@@ -6,14 +6,6 @@ global.axios = require('axios');
 
 global.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
-// global.baseUrl = `${process.env.APP_PUBLIC_URL}`
-
-// global.axios = require('axios');
-
-// global.axios.defaults.headers.common = {
-//     // 'X-CSRF-TOKEN': '',
-//     'X-Requested-With': 'XMLHttpRequest'
-// };
 
 // Fastclick prevents the 300ms touch delay on touch devices
 // var attachFastClick = require('fastclick');

@@ -11,8 +11,17 @@
             font-size: small;
         }
 
-        label {
-            margin-right: 15%;
+        .datos-personales {
+            display: table;
+            width: 100%;
+        }
+
+        .datos-personales span {
+            /*margin-bottom: 5px;*/
+            display: table-cell;
+            width: 50%;
+            padding-bottom: 2%;
+            /*padding: 5px;*/
         }
 
         .firma {
@@ -28,54 +37,202 @@
         }
 
         .page-break {
-            page-break-after: always;
+            page-break-before: always;
+        }
+
+        h1, h2, h3 {
+            text-align: center;
+        }
+
+        h1 {
+            text-decoration: underline;
+        }
+
+        .tabla {
+            margin-top: 5%;
+        }
+
+        .table {
+            border-collapse: collapse;
+        }
+
+        .table, .table th, .table td {
+            border: 1px solid black;
         }
     </style>
 </head>
 <body>
 <section>
-    <h1>EVALUACIÓN PRE-COMPETITIVA {{ date('now') |date('Y') }}</h1>
+    <h1>EVALUACIÓN PRE COMPETITIVA</h1>
 </section>
 <section>
-    <h2>Datos Personales</h2>
 
-    <label>Nombre y apellido: <b>{{ clubJugador.jugador.persona.nombre }} {{ clubJugador.jugador.persona.apellido }}</b>
-    </label><br>
-    <label>Fecha de Nacimiento: <b>{{ clubJugador.jugador.persona.fechaNacimiento | date('d/m/Y') }}</b> </label><br>
-    <label>Nº de identificación: <b>{{ clubJugador.jugador.persona.numeroIdentificacion }}</b></label><br>
-    <label>Tel: <b>{{ clubJugador.jugador.persona.contacto.telefono }}</b> </label> <label>Tel alternativo:
-        <b>{{ clubJugador.jugador.persona.contacto.telefonoAlternativa }}</b></label><br>
-    <label>Email: <b>{{ clubJugador.jugador.persona.contacto.mail }}</b></label><br>
-    <hr>
-    <label>Cobertura Médica: <b>{{ clubJugador.fichaMedica.first.prestador }}</b> </label><label>Grupo sanguíneo:
-        <b>{{ clubJugador.fichaMedica.first.grupoSanguineo }}</b></label><br>
-    <label>Peso: <b>{{ clubJugador.jugador.peso }} Kg</b></label> <label>Altura: <b>{{ clubJugador.jugador.altura }}
-            mts</b></label><br>
-    <hr>
+    <div class="datos-personales">
+        <span>Nombre y Apellido:
+            <b>{{ clubJugador.jugador.persona.nombre }} {{ clubJugador.jugador.persona.apellido }}</b>
+        </span>
+    </div>
+    <div class="datos-personales">
+        <span>Fecha de Nacimiento: <b>{{ clubJugador.jugador.persona.fechaNacimiento | date('d/m/Y') }}</b> </span>
+        <span>C.I.: <b>{{ clubJugador.jugador.persona.numeroIdentificacion }}</b></span>
 
-    <label>Club: <b>{{ clubJugador.club }}</b></label><br>
-    <label>Posición en la que juega: <b>{{ clubJugador.jugador.posicionHabitual }}</b></label><br>
+    </div>
+    <div class="datos-personales">
+        <span>Dirección: <b>{{ clubJugador.jugador.persona.contacto.direccion }}</b></span>
 
-    <hr>
+    </div>
+    <div class="datos-personales">
+        <span>Cel: <b>{{ clubJugador.jugador.persona.contacto.telefono }}</b> </span>
+        <span>Tel: <b>{{ clubJugador.jugador.persona.contacto.telefonoAlternativa }}</b></span>
 
-    <h2>Datos Médicos</h2>
+    </div>
+    <div class="datos-personales">
+        <span>Mail: <b>{{ clubJugador.jugador.persona.contacto.mail }}</b></span>
 
-    {{ texto_ficha_medica.cuerpo | raw }}
+
+    </div>
+    <div class="datos-personales">
+        <span>Pre Paga / Seguro medico / IPS: <b>{{ clubJugador.fichaMedica.first.prestador }}</b> </span>
+    </div>
+    <div class="datos-personales">
+        <span>Nombre de contacto en caso de urgencia: </span>
+        ..............................................................................................
+    </div>
+    <div class="datos-personales">
+        <span>Cel. del contacto: ........................</span>
+        ................................................................................................................
+
+    </div>
+    <div class="datos-personales">
+        <span>Grupo sanguíneo: <b>{{ clubJugador.fichaMedica.first.grupoSanguineo }}</b></span>
+    </div>
+
+    <div class="tabla">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>ANTECEDENTES DE ENFERMEDAD</th>
+                <th style="width: 10%">SI</th>
+                <th style="width: 10%">NO</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>Fue operado en los últimos 4 meses?</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Toma regularmente alguna medicación?</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Estuvo internado en el ultimo año?</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Sufre de hormigueo en las manos?</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Es diabético?</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Es asmático?</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Es alérgico?</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Tiene antecedentes de epilepsia o convulsiones?</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Tiene algún problema de columna?</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Tiene dolor de cintura después de realizar ejercicios físicos?</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Ha tenido fracturas, luxaciones o lesiones ligamentarias en los últimos 4 meses?</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Tiene dolores articulares?</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Alguna vez experimento excesiva falta de aire mientras realizaba ejercicios físicos?</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Ha tenido traumatismos de cráneo con perdida del conocimiento en los últimos 4 meses?</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Alguna vez sintió dolor en el pecho mientras realizaba ejercicios físicos o inmediatamente
+                    después?
+                </td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Alguna vez perdió el conocimiento mientras realizaba ejercicios fisicios o inmediatamente después?
+                </td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Le han detectado alguna vez presión arterial alta?</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Alguien de la familia ha sufrido una muerte súbita antes de los 50 años?</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Algun familiar directo tiene alguna enfermedad cardiaca?</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Le ha detectado alguna vez soplo cadiaco?</td>
+                <td></td>
+                <td></td>
+            </tr>
+
+            </tbody>
+        </table>
+    </div>
+
+    <div class="page-break"></div>
 
     <p>
-        SI ALGÚN ELEMENTO DE LA HISTORIA CLÍNICA ES POSITIVO, EL PROFESIONAL INDICARÁ TODOS LOS ESTUDIOS Y CONSULTAS
-        QUE
-        CREA CONVINIENTE PARA PODER EVALUAR ADECUADAMENTE AL JUGADOR.
-    </p>
+        El/La Sr/Srta. <b>{{ clubJugador.jugador.persona.nombre }} {{ clubJugador.jugador.persona.apellido }} </b>
+        con C.I. N° <b>{{ clubJugador.jugador.persona.numeroIdentificacion }}</b>
+        es apto para la practica de deportes, habiendo tomado conocimiento de los "antecedentes de la enfermedad"
+        y los estudios realizados.
 
-    <hr>
-
-    <p>
-        El/La Sr/Srta. <b>{{ clubJugador.jugador.persona.nombre }} {{ clubJugador.jugador.persona.apellido }} </b>,
-        N° de identificación <b>{{ clubJugador.jugador.persona.numeroIdentificacion }}</b>,
-        es apto para la práctica federada de Rugby, habiendo tomado conocimiento de los
-        "Antecedentes de Enfermedad" que acompañan el presente.
-    </p>
 
     <table class="firma">
         <tr>
@@ -83,97 +240,54 @@
             <td>Firma y sello del Médico</td>
         </tr>
     </table>
+    </p>
 
     {#<hr class="page-break">#}
 
     {% if edad >= 18 %}
-        <h2>CONSENTIMIENTO (mayores de 18)</h2>
+        <h2>CONSENTIMIENTO</h2>
+        <h3>(para mayores de 18 años)</h3>
 
         <p>
-            Yo <b>{{ clubJugador.jugador.persona.nombre }} {{ clubJugador.jugador.persona.apellido }} </b>, C.I. N°
-            <b>{{ clubJugador.jugador.persona.numeroIdentificacion }}</b>, manifiesto formal aceptación
-            a los fines de
-            integrar equipos representativos del club <b>{{ clubJugador.club }}</b> y/o seleccionados provinciales y/o
-            regionales y/o nacionales, tanto para actuar como jugador titular y/o suplente, así ́ como para realizar todas
-            las actividades relacionadas con tal participación. Asimismo declaro conocer y aceptar que el rugby es un
-            deporte con contacto entre aquellos que participan de la competencia, lo que implica que aun cumpliendo con
-            las leyes del juego y los reglamentos dictados por los organismos rectores pertinentes, tanto en materia de
-            seguridad como de juego en general, puedan igualmente presentarse situaciones de riesgo para los participantes,
-            acontecimientos estos que a su vez podrían derivar en accidentes y, eventualmente, en daños a la persona.
-            Concorde con ello, ratifico conocer y aceptar los riesgos que implica la práctica del rugby,
-            asumiéndolos libre y voluntariamente, relevando a la Unión de Rugby de Paraguay de toda responsabilidad por
-            hechos que pudieren originarse con motivo de la práctica del rugby.
+            Yo <b>{{ clubJugador.jugador.persona.nombre }} {{ clubJugador.jugador.persona.apellido }} </b> con C.I. N°
+            <b>{{ clubJugador.jugador.persona.numeroIdentificacion }}</b>, acepto integrar equipos representativos del
+            Club
+            <b>{{ clubJugador.club }}</b>, y realizar actividades relacionadas con tal participación,
+            responsabilizándome
+            por la veracidad de la información vertida en el presente formulario.
         </p>
-    {% elseif edad < 18 and edad >=5 %}
-        <h2>CONSENTIMIENTO (menores de 18)</h2>
+        <table class="firma">
+            <tr>
+                <td>Fecha</td>
+                <td>Firma</td>
+            </tr>
+        </table>
+    {% elseif edad < 18 %}
+        <h2>CONSENTIMIENTO</h2>
+        <h3>(para menores de 18 años)</h3>
 
-        <p> Nosotros
+        <p> Yo
             .........................................................................................................................................,<br/>
             con CI N°
             .......................................................................................................................................
             <br/>
-            en nuestro carácter de padres del menor
+            en mi carácter de padre/madre (o tutor), autorizo a mi hijo
             <b>{{ clubJugador.jugador.persona.nombre }} {{ clubJugador.jugador.persona.apellido }} </b>,
-            con CI N° <b>{{ clubJugador.jugador.persona.numeroIdentificacion }}</b>, manifestamos formal
-            consentimiento
-            y aceptación a los fines de que nuestro hijo integre equipos representativos del club
-            <b>{{ clubJugador.club }}</b>
-            y/o seleccionados provinciales y/o regionales y/o nacionales, tanto para actuar como jugador titular y/o
-            suplente, así como para realizar todas las actividades relacionadas con tal participación.
+            con CI N° <b>{{ clubJugador.jugador.persona.numeroIdentificacion }}</b>, a integrar equipos representativos
+            del Club
+            <b>{{ clubJugador.club }}</b>, y realizar actividades relacionadas con tal participación,
+            responsabilizándome
+            por la veracidad de la información vertida en el presente formulario.
         </p>
-        <p>
-            Asimismo declaramos conocer y aceptar que el rugby es un deporte con contacto entre aquellos que participan
-            de la competencia, lo que implica que aun cumpliendo con las leyes del juego y los reglamentos dictados por
-            los organismos rectores pertinentes, tanto en materia de seguridad como de juego en general, puedan igualmente
-            presentarse situaciones de riesgo para los participantes, acontecimientos estos que a su vez podrían derivar
-            en accidentes y, eventualmente, en daños a la persona. Concorde con ello, ratificamos conocer y aceptar los
-            riesgos que implica la práctica del rugby, asumiéndolos libre y voluntariamente, tanto en nombre propio como
-            de nuestro hijo menor, relevando a la Unión de Rugby del Paraguay de toda responsabilidad por hechos que
-            pudieren originarse con motivo de la práctica del rugby.
-        </p>
-        <p>
-            Finalmente declaramos, bajo juramento de ley, que la información vertida precedentemente, y en relación a la
-            aptitud física de nuestro hijo, para la práctica del rugby, se ajusta a la verdad real.
-        </p>
-    {% elseif edad < 5 %}
-        <h2>CONSENTIMIENTO (infantiles)</h2>
-
-        <p> Nosotros
-            .........................................................................................................................................,<br/>
-            con CI N°
-            .......................................................................................................................................
-            <br/>
-            en nuestro carácter de padres / tutores del menor
-            <b>{{ clubJugador.jugador.persona.nombre }} {{ clubJugador.jugador.persona.apellido }} </b>,
-            con CI N° <b>{{ clubJugador.jugador.persona.numeroIdentificacion }}</b>, manifestamos formal
-            consentimiento y aceptación a los fines de que el menor a nuestro cargo integre equipos representativos del
-            club <b>{{ clubJugador.club }}</b> y/o seleccionados provinciales y/o regionales y/o nacionales, tanto para
-            actuar como jugador titular y/o suplente, así como para realizar todas las actividades relacionadas con tal
-            participación.
-        </p>
-        <p>
-            Asimismo declaramos conocer y aceptar que el rugby es un deporte con contacto entre aquellos que participan
-            de la competencia, lo que implica que aun cumpliendo con las leyes del juego y los reglamentos dictados por
-            los organismos rectores pertinentes, tanto en materia de seguridad como de juego en general, puedan igualmente
-            presentarse situaciones de riesgo para los participantes, acontecimientos estos que a su vez podrían derivar en
-            accidentes y, eventualmente, en daños a la persona. Concorde con ello, ratificamos conocer y aceptar los riesgos
-            que implica la práctica del rugby, asumiéndolos libre y voluntariamente, tanto en nombre propio como de nuestro
-            hijo menor, relevando a la Unión de Rugby de Paraguay de toda responsabilidad por hechos que pudieren originarse
-            con motivo de la práctica del rugby.
-        </p>
-        <p>
-            Finalmente declaramos, bajo juramento de ley, que la información vertida precedentemente, y en relación a la
-            aptitud física de nuestro hijo, para la práctica del rugby, se ajusta a la verdad real.
-        </p>
+        <table class="firma">
+            <tr>
+                <td>Fecha</td>
+                <td>Firma</td>
+            </tr>
+        </table>
     {% endif %}
 
-    <p>
-        Lugar y fecha: <br>
-        Domicilio: <br>
-        N° de identificación: <br>
-        FIRMA: <br>
-        Aclaración: <br>
-    </p>
+    <b>(*) Dicho formulario debe adjuntarse a la evaluación médica realizada con los correspondientes estudios.</b>
 
 </section>
 </body>

@@ -30,6 +30,10 @@ app_club:
     resource: "routing/club.yaml"
     prefix:   /club
 
+app_referee:
+    resource: "routing/referee.yaml"
+    prefix:   /referee
+
 app_homepage:
     path:     /
     controller: App\Controller\DefaultController::indexAction

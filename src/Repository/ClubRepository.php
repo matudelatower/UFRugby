@@ -10,4 +10,8 @@ namespace App\Repository;
  */
 class ClubRepository extends \Doctrine\ORM\EntityRepository
 {
+
+	public function findQbAll(  ) {
+		return $this->createQueryBuilder('c');
+	}
 }

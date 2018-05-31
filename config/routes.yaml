@@ -36,3 +36,8 @@ jugador_registro:
     path:     /registro
     controller: App\Controller\JugadorController::precompetitivoAction
 #    methods:  [GET, POST]
+
+#referee
+confirmacion_referee:
+    path:     /confirmacion-referee/{token}
+    controller: App\Controller\RefereeController::confirmacionInscripcion

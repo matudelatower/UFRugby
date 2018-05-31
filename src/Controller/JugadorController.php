@@ -320,14 +320,12 @@ class JugadorController extends Controller {
 		$to   = new \DateTime( 'today' );
 		$edad = $from->diff( $to )->y;
 
-		$title            = 'Evaluación PreCompetitiva';
-		$textoFichaMedica = $em->getRepository( 'App:Texto' )->findOneBySlug( 'datos-ficha-medica' );
+		$title            = 'Evaluación Pre Competitiva';
 
 		$html = $this->renderView( 'jugador/evaluacion_precompetitiva.pdf.twig',
 			[
 				'clubJugador'        => $clubJugador,
 				'title'              => $title,
-				'texto_ficha_medica' => $textoFichaMedica,
 				'edad'               => $edad
 			]
 		);

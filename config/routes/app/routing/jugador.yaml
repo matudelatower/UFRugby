@@ -67,3 +67,4 @@ jugador_precompetitivo:
     path:     /precompetitivo
     controller: App\Controller\JugadorController::precompetitivoAction
 #    methods:  [GET, POST]
+

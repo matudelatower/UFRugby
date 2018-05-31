@@ -1,5 +1,5 @@
 swiftmailer:
-#    url: '%env(MAILER_URL)%'
+#    url: '%env(resolve:MAILER_URL)%'
     transport: '%env(MAILER_TRANSPORT)%'
     host: '%env(MAILER_HOST)%'
     username: '%env(MAILER_USERNAME)%'

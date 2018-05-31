@@ -1,42 +1,73 @@
 {% extends 'base.html.twig' %}
 
-{% block body %}
-    <h1>Club</h1>
 
-    <table>
-        <tbody>
-        <tr>
-            <th>Id</th>
-            <td>{{ club.id }}</td>
-        </tr>
-        <tr>
-            <th>Nombre</th>
-            <td>{{ club.nombre }}</td>
-        </tr>
-        <tr>
-            <th>Imagen</th>
-            <td>{{ club.imageName }}</td>
-        </tr>
-        <tr>
-            <th>Activo</th>
-            <td>{% if club.activo %}Yes{% else %}No{% endif %}</td>
-        </tr>
-        <tr>
-            <th>Fecha creacion</th>
-            <td>{% if club.fechaCreacion %}{{ club.fechaCreacion|date('d/m/Y H:i:s') }}{% endif %}</td>
-        </tr>
-        <tr>
-            <th>Fecha actualizacion</th>
-            <td>{% if club.fechaActualizacion %}{{ club.fechaActualizacion|date('d/m/Y H:i:s') }}{% endif %}</td>
-        </tr>
-        </tbody>
-    </table>
+    {% block body %}
+        <div class="row">
+            <div class="col-md-3">
+
+                <!-- Profile Image -->
+                <div class="box box-primary">
+                    <div class="box-body box-profile">
+                        {% set avatar =  asset('build/img/avatar.png') %}
+                        {% if club.imageName %}
+                            {% set avatar = club.imageName %}
+                        {% endif %}
+                        <img class="profile-user-img img-responsive img-circle" src="{{ avatar }}"
+                             alt="User profile picture">
+
+                        <h3 class="profile-username text-center">{{ club.nombre }}</h3>
+
+                        <ul class="list-group list-group-unbordered">
+                            <li class="list-group-item">
+                                <b>Jugadores</b> <a class="pull-right">{{ jugadores| length }}</a>
+                            </li>
+                            {#<li class="list-group-item">#}
+                            {#<b>Altura</b> <a class="pull-right">{{ jugador.altura }} Mts</a>#}
+                            {#</li>#}
+                            {#<li class="list-group-item">#}
+                            {#<b>Friends</b> <a class="pull-right">13,287</a>#}
+                            {#</li>#}
+                        </ul>
+
+                        {#<a href="#" class="btn btn-primary btn-block"><b>Follow</b></a>#}
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+                <!-- /.box -->
+
+            </div>
+            <!-- /.col -->
+            <div class="col-md-9">
+                <div class="nav-tabs-custom">
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a href="#activity" data-toggle="tab">Pagos</a></li>
+                        <li><a href="#pases" data-toggle="tab">Historial de Pases</a></li>
+
+                    </ul>
+                    <div class="tab-content">
+                        <div class="active tab-pane" id="activity">
 
 
-    <a class="btn btn-default" href="{{ path('club_index') }}">Volver</a>
+                        </div>
+                        <!-- /.tab-pane -->
+                        <div class="tab-pane" id="pases">
 
-    <a class="btn btn-default" href="{{ path('club_edit', { 'id': club.id }) }}">Editar</a>
+                        </div>
+                        <!-- The timeline -->
+
+                    </div>
+                    <!-- /.tab-content -->
+                </div>
+                <!-- /.nav-tabs-custom -->
+            </div>
+            <!-- /.col -->
+        </div>
+
+
+        <a class="btn btn-default" href="{{ path('club_index') }}">Volver</a>
+
+        <a class="btn btn-default" href="{{ path('club_edit', { 'id': club.id }) }}">Editar</a>
 
 
 
-{% endblock %}
+    {% endblock %}

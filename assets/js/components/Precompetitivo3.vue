@@ -143,68 +143,72 @@
             <div class="col-md-6"></div>
         </div>
 
-        <h3>Datos de Juego</h3>
+        <template v-if="finalModel.categoria !== 'referee'">
 
-        <div class="row">
-            <div class="col-md-6">
-                <div class="form-group" v-bind:class="{ 'has-error': $v.club.$error }"><label
-                        class="control-label required"
-                        for="appbundle_precompetitivo_jugador_clubJugador_0_club">Club
-                    *</label>
-                    <select v-model="club" id="appbundle_precompetitivo_jugador_clubJugador_0_club"
-                            name="appbundle_precompetitivo[jugador][clubJugador][0][club]" required="required"
-                            class="form-control">
-                        <option value="" selected="selected">Seleccionar Club</option>
-                        <option :value="c" v-for="c in clubs">{{ c.nombre }}</option>
-                    </select>
+            <h3>Datos de Juego</h3>
 
-                    <span class="help-block" v-if="$v.club.$error && !$v.club.required">Campo Requerido</span>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group" v-bind:class="{ 'has-error': $v.club.$error }"><label
+                            class="control-label required"
+                            for="appbundle_precompetitivo_jugador_clubJugador_0_club">Club
+                        *</label>
+                        <select v-model="club" id="appbundle_precompetitivo_jugador_clubJugador_0_club"
+                                name="appbundle_precompetitivo[jugador][clubJugador][0][club]" required="required"
+                                class="form-control">
+                            <option value="" selected="selected">Seleccionar Club</option>
+                            <option :value="c" v-for="c in clubs">{{ c.nombre }}</option>
+                        </select>
+
+                        <span class="help-block" v-if="$v.club.$error && !$v.club.required">Campo Requerido</span>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-md-4">
-                <div class="form-group" v-bind:class="{ 'has-error': $v.posicionHabitual.$error }"><label
-                        class="control-label required"
-                        for="appbundle_precompetitivo_jugador_posicionHabitual">Posición Habitual
-                    *</label>
-                    <select v-model="posicionHabitual" id="appbundle_precompetitivo_jugador_posicionHabitual"
-                            name="appbundle_precompetitivo[jugador][posicionHabitual]" required="required"
-                            class="form-control">
-                        <option value="" selected="selected">Seleccionar Posición</option>
-                        <option :value="p" v-for="p in posiciones">{{ p.nombre }}</option>
-                    </select>
-                    <span class="help-block" v-if="$v.posicionHabitual.$error && !$v.posicionHabitual.required">Campo Requerido</span>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group" v-bind:class="{ 'has-error': $v.posicionHabitual.$error }"><label
+                            class="control-label required"
+                            for="appbundle_precompetitivo_jugador_posicionHabitual">Posición Habitual
+                        *</label>
+                        <select v-model="posicionHabitual" id="appbundle_precompetitivo_jugador_posicionHabitual"
+                                name="appbundle_precompetitivo[jugador][posicionHabitual]" required="required"
+                                class="form-control">
+                            <option value="" selected="selected">Seleccionar Posición</option>
+                            <option :value="p" v-for="p in posiciones">{{ p.numero }} - {{ p.nombre }}</option>
+                        </select>
+                        <span class="help-block" v-if="$v.posicionHabitual.$error && !$v.posicionHabitual.required">Campo Requerido</span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group"><label
+                            class="control-label"
+                            for="appbundle_precompetitivo_jugador_posicionAlternativa">Posicion
+                        alternativa</label>
+                        <select v-model="posicionAlternativa" id="appbundle_precompetitivo_jugador_posicionAlternativa"
+                                name="appbundle_precompetitivo[jugador][posicionAlternativa]"
+                                class="form-control">
+                            <option value=""></option>
+                            <option :value="p" v-for="p in posiciones">{{ p.numero }} - {{ p.nombre }}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="control-label"
+                               for="appbundle_precompetitivo_jugador_segundaPosicionAlternativa">Segunda
+                            posicion alternativa</label>
+                        <select v-model="segundaPosicionAlternativa"
+                                id="appbundle_precompetitivo_jugador_segundaPosicionAlternativa"
+                                name="appbundle_precompetitivo[jugador][segundaPosicionAlternativa]"
+                                class="form-control">
+                            <option value=""></option>
+                            <option :value="p" v-for="p in posiciones">{{ p.numero }} - {{ p.nombre }}</option>
+                        </select>
+                    </div>
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="form-group"><label
-                        class="control-label"
-                        for="appbundle_precompetitivo_jugador_posicionAlternativa">Posicion
-                    alternativa</label>
-                    <select v-model="posicionAlternativa" id="appbundle_precompetitivo_jugador_posicionAlternativa"
-                            name="appbundle_precompetitivo[jugador][posicionAlternativa]"
-                            class="form-control">
-                        <option value=""></option>
-                        <option :value="p" v-for="p in posiciones">{{ p.nombre }}</option>
-                    </select>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="form-group">
-                    <label class="control-label"
-                           for="appbundle_precompetitivo_jugador_segundaPosicionAlternativa">Segunda
-                        posicion alternativa</label>
-                    <select v-model="segundaPosicionAlternativa"
-                            id="appbundle_precompetitivo_jugador_segundaPosicionAlternativa"
-                            name="appbundle_precompetitivo[jugador][segundaPosicionAlternativa]"
-                            class="form-control">
-                        <option value=""></option>
-                        <option :value="p" v-for="p in posiciones">{{ p.nombre }}</option>
-                    </select>
-                </div>
-            </div>
-        </div>
+        </template>
+
         <BlockUI message="Buscando Persona..." v-show="cargando"></BlockUI>
 
     </div>
@@ -214,6 +218,9 @@
     import {required, email} from 'vuelidate/lib/validators'
 
     export default {
+        props: [
+            'finalModel'
+        ],
         data: function () {
             return {
                 apellido: null,
@@ -238,32 +245,60 @@
                 cargando: false
             }
         },
-        validations: {
-            apellido: {required},
-            nombre: {required},
-            sexo: {required},
-            tipoIdentificacion: {required},
-            numeroIdentificacion: {required},
-            fechaNacimiento: {required},
-            direccion: {required},
-            telefono: {required},
-            mail: {required, email},
-            club: {required},
-            posicionHabitual: {required},
+        validations() {
+            if (this.finalModel.categoria !== 'referee') {
+                return {
+                    apellido: {required},
+                    nombre: {required},
+                    sexo: {required},
+                    tipoIdentificacion: {required},
+                    numeroIdentificacion: {required},
+                    fechaNacimiento: {required},
+                    direccion: {required},
+                    telefono: {required},
+                    mail: {required, email},
+                    club: {required},
+                    posicionHabitual: {required},
 
-            form: [
-                'apellido',
-                'nombre',
-                'sexo',
-                'tipoIdentificacion',
-                'numeroIdentificacion',
-                'fechaNacimiento',
-                'direccion',
-                'telefono',
-                'mail',
-                'club',
-                'posicionHabitual',
-            ]
+                    form: [
+                        'apellido',
+                        'nombre',
+                        'sexo',
+                        'tipoIdentificacion',
+                        'numeroIdentificacion',
+                        'fechaNacimiento',
+                        'direccion',
+                        'telefono',
+                        'mail',
+                        'club',
+                        'posicionHabitual',
+                    ]
+                }
+            }else {
+                return {
+                    apellido: {required},
+                    nombre: {required},
+                    sexo: {required},
+                    tipoIdentificacion: {required},
+                    numeroIdentificacion: {required},
+                    fechaNacimiento: {required},
+                    direccion: {required},
+                    telefono: {required},
+                    mail: {required, email},
+
+                    form: [
+                        'apellido',
+                        'nombre',
+                        'sexo',
+                        'tipoIdentificacion',
+                        'numeroIdentificacion',
+                        'fechaNacimiento',
+                        'direccion',
+                        'telefono',
+                        'mail',
+                    ]
+                }
+            }
         },
         methods: {
             validate() {

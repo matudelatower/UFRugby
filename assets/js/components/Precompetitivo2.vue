@@ -39,9 +39,6 @@
                 </label>
             </div>
 
-            <!--<div class="mensaje-aviso hidden">-->
-            <!--<label class="text-red">* Debe elegir una opcion</label>-->
-            <!--</div>-->
             <span class="help-block"
                   v-if="$v.categoria.$error && !$v.categoria.required">* Debe elegir una opcion</span>
         </div>

@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+{% block title %}
+    Referees
+{% endblock title %}
+{% block body %}
+    <h1>Referee</h1>
+
+    <table>
+        <tbody>
+        <tr>
+            <th>Id</th>
+            <td>{{ referee.id }}</td>
+        </tr>
+        <tr>
+            <th>Nombre</th>
+            <td>{{ referee.persona.nombre }} {{ referee.persona.apellido }}</td>
+        </tr>
+
+        <tr>
+            <th>Activo</th>
+            <td>{% if referee.activo %}Yes{% else %}No{% endif %}</td>
+        </tr>
+        <tr>
+            <th>Fecha creacion</th>
+            <td>{% if referee.fechaCreacion %}{{ referee.fechaCreacion|date('d/m/Y H:i:s') }}{% endif %}</td>
+        </tr>
+        <tr>
+            <th>Fecha actualizacion</th>
+            <td>{% if referee.fechaActualizacion %}{{ referee.fechaActualizacion|date('d/m/Y H:i:s') }}{% endif %}</td>
+        </tr>
+        </tbody>
+    </table>
+
+
+    <a class="btn btn-default" href="{{ path('referee_index') }}">Volver</a>
+
+    {#<a class="btn btn-default" href="{{ path('club_edit', { 'id': referee.id }) }}">Editar</a>#}
+
+
+
+{% endblock %}

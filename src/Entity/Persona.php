@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use App\Entity\Base\BaseClass;
 use Symfony\Component\HttpFoundation\File\File;
@@ -60,6 +61,12 @@ class Persona extends BaseClass {
 	 * @ORM\OneToMany(targetEntity="App\Entity\Jugador", mappedBy="persona", cascade={"persist", "remove"})
 	 */
 	private $jugador;
+
+	/**
+	 *
+	 * @ORM\OneToMany(targetEntity="App\Entity\Referee", mappedBy="persona", cascade={"persist", "remove"})
+	 */
+	private $referee;
 
 	/**
 	 * @var
@@ -155,6 +162,7 @@ class Persona extends BaseClass {
 
 	public function __construct() {
 		$this->jugador = new ArrayCollection();
+		$this->referee = new ArrayCollection();
 	}
 
 	/**
@@ -315,11 +323,10 @@ class Persona extends BaseClass {
 		return $this;
 	}
 
-	public function addJugador(\App\Entity\Jugador $jugador): self
-	{
-		if (!$this->jugador->contains($jugador)) {
+	public function addJugador( \App\Entity\Jugador $jugador ): self {
+		if ( ! $this->jugador->contains( $jugador ) ) {
 			$this->jugador[] = $jugador;
-			$jugador->setPersona($this);
+			$jugador->setPersona( $this );
 		}
 
 		return $this;
@@ -402,5 +409,36 @@ class Persona extends BaseClass {
 		$this->actualizadoPor = $actualizadoPor;
 
 		return $this;
+	}
+
+	/**
+	 * Set referee
+	 *
+	 * @param \App\Entity\Referee $referee
+	 *
+	 * @return Persona
+	 */
+	public function setReferee( \App\Entity\Referee $referee = null ) {
+		$this->referee = $referee;
+
+		return $this;
+	}
+
+	public function addReferee( \App\Entity\Referee $referee ): self {
+		if ( ! $this->referee->contains( $referee ) ) {
+			$this->referee[] = $referee;
+			$referee->setPersona( $this );
+		}
+
+		return $this;
+	}
+
+	/**
+	 * Get referee
+	 *
+	 * @return \App\Entity\Referee
+	 */
+	public function getReferee() {
+		return $this->referee;
 	}
 }

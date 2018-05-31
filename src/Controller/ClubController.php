@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Club;
+use App\Entity\Jugador;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -10,115 +11,125 @@ use Symfony\Component\HttpFoundation\Request;
  * Club controller.
  *
  */
-class ClubController extends Controller
-{
-    /**
-     * Lists all club entities.
-     *
-     */
-    public function indexAction()
-    {
-        $em = $this->getDoctrine()->getManager();
+class ClubController extends Controller {
+	/**
+	 * Lists all club entities.
+	 *
+	 */
+	public function indexAction( Request $request ) {
+		$em = $this->getDoctrine()->getManager();
 
-        $clubs = $em->getRepository('App:Club')->findAll();
 
-        return $this->render('club/index.html.twig', array(
-            'clubs' => $clubs,
-        ));
-    }
+		$clubs = $em->getRepository( Club::class )->findQbAll();
 
-    /**
-     * Creates a new club entity.
-     *
-     */
-    public function newAction(Request $request)
-    {
-        $club = new Club();
-        $form = $this->createForm('App\Form\ClubType', $club);
-        $form->handleRequest($request);
+		$paginator = $this->get( 'knp_paginator' );
+		$clubs     = $paginator->paginate(
+			$clubs, /* query NOT result */
+			$request->query->getInt( 'page', 1 )/*page number*/,
+			10/*limit per page*/
+		);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($club);
-            $em->flush();
+		return $this->render( 'club/index.html.twig',
+			array(
+				'clubs' => $clubs,
+			) );
+	}
 
-            return $this->redirectToRoute('club_show', array('id' => $club->getId()));
-        }
+	/**
+	 * Creates a new club entity.
+	 *
+	 */
+	public function newAction( Request $request ) {
+		$club = new Club();
+		$form = $this->createForm( 'App\Form\ClubType', $club );
+		$form->handleRequest( $request );
 
-        return $this->render('club/new.html.twig', array(
-            'club' => $club,
-            'form' => $form->createView(),
-        ));
-    }
+		if ( $form->isSubmitted() && $form->isValid() ) {
+			$em = $this->getDoctrine()->getManager();
+			$em->persist( $club );
+			$em->flush();
 
-    /**
-     * Finds and displays a club entity.
-     *
-     */
-    public function showAction(Club $club)
-    {
-        $deleteForm = $this->createDeleteForm($club);
+			return $this->redirectToRoute( 'club_show', array( 'id' => $club->getId() ) );
+		}
 
-        return $this->render('club/show.html.twig', array(
-            'club' => $club,
-            'delete_form' => $deleteForm->createView(),
-        ));
-    }
+		return $this->render( 'club/new.html.twig',
+			array(
+				'club' => $club,
+				'form' => $form->createView(),
+			) );
+	}
 
-    /**
-     * Displays a form to edit an existing club entity.
-     *
-     */
-    public function editAction(Request $request, Club $club)
-    {
-        $deleteForm = $this->createDeleteForm($club);
-        $editForm = $this->createForm('App\Form\ClubType', $club);
-        $editForm->handleRequest($request);
+	/**
+	 * Finds and displays a club entity.
+	 *
+	 */
+	public function showAction( Club $club ) {
 
-        if ($editForm->isSubmitted() && $editForm->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+		$em = $this->getDoctrine()->getManager();
 
-            return $this->redirectToRoute('club_edit', array('id' => $club->getId()));
-        }
+		$jugadors = $em->getRepository( Jugador::class )->getJugadoresByClub( $club );
 
-        return $this->render('club/edit.html.twig', array(
-            'club' => $club,
-            'edit_form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        ));
-    }
+		$jugadores = $jugadors->getQuery()->getResult();
 
-    /**
-     * Deletes a club entity.
-     *
-     */
-    public function deleteAction(Request $request, Club $club)
-    {
-        $form = $this->createDeleteForm($club);
-        $form->handleRequest($request);
+		return $this->render( 'club/show.html.twig',
+			array(
+				'club'      => $club,
+				'jugadores' => $jugadores
+//				'delete_form' => $deleteForm->createView(),
+			) );
+	}
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($club);
-            $em->flush();
-        }
+	/**
+	 * Displays a form to edit an existing club entity.
+	 *
+	 */
+	public function editAction( Request $request, Club $club ) {
+		$deleteForm = $this->createDeleteForm( $club );
+		$editForm   = $this->createForm( 'App\Form\ClubType', $club );
+		$editForm->handleRequest( $request );
 
-        return $this->redirectToRoute('club_index');
-    }
+		if ( $editForm->isSubmitted() && $editForm->isValid() ) {
+			$this->getDoctrine()->getManager()->flush();
 
-    /**
-     * Creates a form to delete a club entity.
-     *
-     * @param Club $club The club entity
-     *
-     * @return \Symfony\Component\Form\Form The form
-     */
-    private function createDeleteForm(Club $club)
-    {
-        return $this->createFormBuilder()
-            ->setAction($this->generateUrl('club_delete', array('id' => $club->getId())))
-            ->setMethod('DELETE')
-            ->getForm()
-        ;
-    }
+			return $this->redirectToRoute( 'club_edit', array( 'id' => $club->getId() ) );
+		}
+
+		return $this->render( 'club/edit.html.twig',
+			array(
+				'club'        => $club,
+				'edit_form'   => $editForm->createView(),
+				'delete_form' => $deleteForm->createView(),
+			) );
+	}
+
+	/**
+	 * Deletes a club entity.
+	 *
+	 */
+	public function deleteAction( Request $request, Club $club ) {
+		$form = $this->createDeleteForm( $club );
+		$form->handleRequest( $request );
+
+		if ( $form->isSubmitted() && $form->isValid() ) {
+			$em = $this->getDoctrine()->getManager();
+			$em->remove( $club );
+			$em->flush();
+		}
+
+		return $this->redirectToRoute( 'club_index' );
+	}
+
+	/**
+	 * Creates a form to delete a club entity.
+	 *
+	 * @param Club $club The club entity
+	 *
+	 * @return \Symfony\Component\Form\Form The form
+	 */
+	private function createDeleteForm( Club $club ) {
+		return $this->createFormBuilder()
+		            ->setAction( $this->generateUrl( 'club_delete', array( 'id' => $club->getId() ) ) )
+		            ->setMethod( 'DELETE' )
+		            ->getForm();
+	}
 }

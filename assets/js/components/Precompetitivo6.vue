@@ -14,18 +14,20 @@
                 <label>Mail:</label><span> {{ finalModel.mail }}</span><br>
             </div>
         </div>
+        <template v-if="finalModel.categoria == 'menor' || finalModel.categoria == 'mayor'">
+            <h3>Datos Médicos</h3>
 
-        <h3>Datos Médicos</h3>
-
-        <div class="row">
-            <div class="col-md-6">
-                <label>Cobertura Médica:</label><span> {{ finalModel.prestador }}</span><br>
-                <label>Grupo sanguíneo:</label><span> {{ finalModel.grupoSanguineo ? finalModel.grupoSanguineo.nombre : '' }}</span><br>
-                <label>Peso:</label><span> {{ finalModel.peso }}</span><br>
-                <label>Altura:</label><span> {{ finalModel.altura }}</span><br>
+            <div class="row">
+                <div class="col-md-6">
+                    <label>Cobertura Médica:</label><span> {{ finalModel.prestador }}</span><br>
+                    <label>Grupo sanguíneo:</label><span> {{ finalModel.grupoSanguineo ? finalModel.grupoSanguineo.nombre : '' }}</span><br>
+                    <label>Peso:</label><span> {{ finalModel.peso }}</span><br>
+                    <label>Altura:</label><span> {{ finalModel.altura }}</span><br>
+                </div>
             </div>
-        </div>
+        </template>
 
+        <template v-if="finalModel.categoria !== 'referee'">
         <h3>Datos de Juego</h3>
 
         <div class="row">
@@ -34,6 +36,7 @@
                 <label>Posición en la que juega:</label><span> {{ finalModel.posicionHabitual? finalModel.posicionHabitual.nombre: '' }} | {{ finalModel.posicionAlternativa? finalModel.posicionAlternativa.nombre:'' }} | {{ finalModel.segundaPosicionAlternativa? finalModel.segundaPosicionAlternativa.nombre:'' }}</span><br>
             </div>
         </div>
+        </template>
 
         <template v-if="finalModel.responsableApellido">
             <h3>Responsable</h3>

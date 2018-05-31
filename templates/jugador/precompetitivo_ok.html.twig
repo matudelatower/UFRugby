@@ -12,7 +12,6 @@
         </div>
 
         <div class="public-box-body">
-            {#<p class="login-box-msg">Register a new membership</p>#}
             <h1 class="text-center">EVALUACIÓN PRE-COMPETITIVA {{ "now" | date('Y') }}</h1>
 
 
@@ -20,17 +19,13 @@
                 <h2>Muchas Gracias</h2>
                 <p>
                     Se presentó una solicitud para el jugador {{ clubJugador.jugador.persona.nombre }}
-                    {{ clubJugador.jugador.persona.apellido }}, con N° de identificación
+                    {{ clubJugador.jugador.persona.apellido }}, con C.I. N°
                     {{ clubJugador.jugador.persona.numeroIdentificacion }}
                 </p>
                 <p>
                     La misma será confirmada por el responsable del club.
                 </p>
-                {% if edad < 5 %}
-                    <p>
-                        Recordá acercarle un apto físico pediátrico.
-                    </p>
-                {% else %}
+                {% if edad > 5 %}
                     <p>
                         Recordá acercarle un apto físico.
                     </p>
