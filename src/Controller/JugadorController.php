@@ -6,6 +6,7 @@ use App\Entity\ClubJugador;
 use App\Entity\FichaMedica;
 use App\Entity\Jugador;
 use App\Entity\Persona;
+use App\Form\Filter\BuscarJugadorFilterType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -320,13 +321,13 @@ class JugadorController extends Controller {
 		$to   = new \DateTime( 'today' );
 		$edad = $from->diff( $to )->y;
 
-		$title            = 'Evaluación Pre Competitiva';
+		$title = 'Evaluación Pre Competitiva';
 
 		$html = $this->renderView( 'jugador/evaluacion_precompetitiva.pdf.twig',
 			[
-				'clubJugador'        => $clubJugador,
-				'title'              => $title,
-				'edad'               => $edad
+				'clubJugador' => $clubJugador,
+				'title'       => $title,
+				'edad'        => $edad
 			]
 		);
 
@@ -347,5 +348,38 @@ class JugadorController extends Controller {
 			)
 		);
 
+	}
+
+	public function buscarJugador( Request $request ) {
+		$em = $this->getDoctrine()->getManager();
+
+		$filterType = $this->createForm( BuscarJugadorFilterType::class,
+			null,
+			[
+				'method' => 'GET'
+			] );
+
+		$filterType->handleRequest( $request );
+
+		$jugadors = [];
+
+		if ( $filterType->isSubmitted() && $filterType->get( 'buscar' )->isClicked() ) {
+
+			$jugadors = $em->getRepository( Jugador::class )->getQbBuscarJugadores( $filterType->getData() );
+
+		}
+
+		$paginator = $this->get( 'knp_paginator' );
+		$jugadors  = $paginator->paginate(
+			$jugadors, /* query NOT result */
+			$request->query->getInt( 'page', 1 )/*page number*/,
+			10/*limit per page*/
+		);
+
+		return $this->render( 'jugador/buscar_jugador_index.html.twig',
+			array(
+				'jugadors'    => $jugadors,
+				'filter_type' => $filterType->createView()
+			) );
 	}
 }

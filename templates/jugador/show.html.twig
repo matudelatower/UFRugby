@@ -106,50 +106,55 @@
                     <div class="tab-pane" id="timeline">
                         <!-- The timeline -->
                         <ul class="timeline timeline-inverse">
-                            <!-- timeline time label -->
-                            <li class="time-label">
-                        <span class="bg-red">
-                          10 Feb. 2014
-                        </span>
-                            </li>
-                            <!-- /.timeline-label -->
 
-                            <!-- timeline item -->
-                            <li>
-                                <i class="fa fa-refresh bg-aqua"></i>
+                            {% for clubJugador in jugador.clubJugador %}
+                                <!-- timeline time label -->
+                                <li class="time-label">
+                                    <span class="bg-red">
+                                      {{ clubJugador.fechaCreacion | date('d/m/Y') }}
+                                    </span>
+                                </li>
+                                <!-- /.timeline-label -->
 
-                                <div class="timeline-item">
-                                    <span class="time"><i class="fa fa-clock-o"></i> 5 mins ago</span>
+                                <!-- timeline item -->
+                                <li>
+                                    <i class="fa fa-refresh bg-aqua"></i>
 
-                                    <h3 class="timeline-header no-border"><a href="#">Encarnación Rugby Club</a> Pase
-                                    </h3>
-                                </div>
-                            </li>
-                            <!-- END timeline item -->
+                                    <div class="timeline-item">
+                                        <span class="time"><i class="fa fa-clock-o"></i> {{ clubJugador.anio }}</span>
 
-                            <!-- timeline time label -->
-                            <li class="time-label">
-                        <span class="bg-green">
-                          3 Jan. 2014
-                        </span>
-                            </li>
-                            <!-- /.timeline-label -->
-                            <!-- timeline item -->
-                            <!-- timeline item -->
-                            <li>
-                                <i class="fa fa-refresh bg-aqua"></i>
+                                        <h3 class="timeline-header no-border"><a href="#">{{ clubJugador.club }}</a> ({{ clubJugador.division }})
+                                        </h3>
+                                    </div>
+                                </li>
+                                <!-- END timeline item -->
+                            {% endfor %}
 
-                                <div class="timeline-item">
-                                    <span class="time"><i class="fa fa-clock-o"></i> 5 mins ago</span>
 
-                                    <h3 class="timeline-header no-border"><a href="#">Asunción Rugby Club</a> Pase
-                                    </h3>
-                                </div>
-                            </li>
-                            <!-- END timeline item -->
-                            <li>
-                                <i class="fa fa-clock-o bg-gray"></i>
-                            </li>
+
+                            {#<!-- timeline time label -->#}
+                            {#<li class="time-label">#}
+                        {#<span class="bg-green">#}
+                          {#3 Jan. 2014#}
+                        {#</span>#}
+                            {#</li>#}
+                            {#<!-- /.timeline-label -->#}
+                            {#<!-- timeline item -->#}
+                            {#<!-- timeline item -->#}
+                            {#<li>#}
+                                {#<i class="fa fa-refresh bg-aqua"></i>#}
+
+                                {#<div class="timeline-item">#}
+                                    {#<span class="time"><i class="fa fa-clock-o"></i> 5 mins ago</span>#}
+
+                                    {#<h3 class="timeline-header no-border"><a href="#">Asunción Rugby Club</a> Pase#}
+                                    {#</h3>#}
+                                {#</div>#}
+                            {#</li>#}
+                            {#<!-- END timeline item -->#}
+                            {#<li>#}
+                                {#<i class="fa fa-clock-o bg-gray"></i>#}
+                            {#</li>#}
                         </ul>
                     </div>
                     <!-- /.tab-pane -->

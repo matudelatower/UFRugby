@@ -96,6 +96,14 @@ class Builder {
 							'route' => 'pagojugador_index',
 						)
 					);
+
+				$menu[ $keyPersonal ]
+					->addChild(
+						'Buscar Jugadores',
+						array(
+							'route' => 'buscar_jugador',
+						)
+					);
 			}
 
 			$menu[ $keyPersonal ]
@@ -108,28 +116,11 @@ class Builder {
 
 			$menu[ $keyPersonal ]
 				->addChild(
-					'Pases',
-					array(
-//						'route' => 'jugador_index',
-						'uri' => '#',
-					)
-				);
-
-			$menu[ $keyPersonal ]
-				->addChild(
 					'Jugadores',
 					array(
 						'route' => 'jugador_index',
 					)
 				);
-
-//			$menu[ $keyPersonal ]
-//				->addChild(
-//					'Personas',
-//					array(
-//						'route' => 'persona_index',
-//					)
-//				);
 		}
 
 		if ( $this->authorizationChecker->isGranted( 'ROLE_ADMIN' ) ||

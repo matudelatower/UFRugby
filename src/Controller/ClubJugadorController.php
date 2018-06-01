@@ -23,9 +23,9 @@ class ClubJugadorController extends Controller {
 		$club = $this->getUser()->getClub();
 
 		if ( $club ) {
-			$clubJugadors = $em->getRepository( 'App:ClubJugador' )->getQbByClub( $club );
+			$clubJugadors = $em->getRepository( ClubJugador::class )->getQbRegistroJugadores( $club );
 		} elseif ( $this->getUser()->hasRole( 'ROLE_ADMIN' ) ) {
-			$clubJugadors = $em->getRepository( 'App:ClubJugador' )->getQbByUnion();
+			$clubJugadors = $em->getRepository( ClubJugador::class )->getQbByUnion();
 		} else {
 			$clubJugadors = [];
 		}
@@ -97,7 +97,7 @@ class ClubJugadorController extends Controller {
 			return $this->redirectToRoute( 'clubjugador_index' );
 		}
 
-		return $this->render( ':clubjugador:confirmar.html.twig',
+		return $this->render( 'clubjugador/confirmar.html.twig',
 			[
 				'form'        => $form->createView(),
 				'jugador'     => $jugador,

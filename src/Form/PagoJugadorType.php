@@ -23,10 +23,7 @@ class PagoJugadorType extends AbstractType {
 				DateType::class,
 				array(
 					'widget' => 'single_text',
-					'format' => 'dd/MM/yyyy',
-					'attr'   => array(
-						'class' => 'datepicker',
-					),
+					'html5'  => true
 				) )
 			->add( 'monto' )
 			->add( 'mes',

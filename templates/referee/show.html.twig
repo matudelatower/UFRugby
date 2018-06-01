@@ -1,41 +1,118 @@
 {% extends 'base.html.twig' %}
+
 {% block title %}
-    Referees
+    Referee
 {% endblock title %}
-{% block body %}
-    <h1>Referee</h1>
 
-    <table>
-        <tbody>
-        <tr>
-            <th>Id</th>
-            <td>{{ referee.id }}</td>
-        </tr>
-        <tr>
-            <th>Nombre</th>
-            <td>{{ referee.persona.nombre }} {{ referee.persona.apellido }}</td>
-        </tr>
+    {% block body %}
+        <div class="row">
+            <div class="col-md-3">
 
-        <tr>
-            <th>Activo</th>
-            <td>{% if referee.activo %}Yes{% else %}No{% endif %}</td>
-        </tr>
-        <tr>
-            <th>Fecha creacion</th>
-            <td>{% if referee.fechaCreacion %}{{ referee.fechaCreacion|date('d/m/Y H:i:s') }}{% endif %}</td>
-        </tr>
-        <tr>
-            <th>Fecha actualizacion</th>
-            <td>{% if referee.fechaActualizacion %}{{ referee.fechaActualizacion|date('d/m/Y H:i:s') }}{% endif %}</td>
-        </tr>
-        </tbody>
-    </table>
+                <!-- Profile Image -->
+                <div class="box box-primary">
+                    <div class="box-body box-profile">
+                        {% set avatar =  asset('build/img/avatar.png') %}
+
+                        <img class="profile-user-img img-responsive img-circle" src="{{ avatar }}"
+                             alt="User profile picture">
+
+                        <h3 class="profile-username text-center">{{ referee.persona.nombre }} {{ referee.persona.apellido }}</h3>
+
+                        <ul class="list-group list-group-unbordered">
+                            {#<li class="list-group-item">#}
+                                {#<b>Jugadores</b> <a class="pull-right">{{ jugadores| length }}</a>#}
+                            {#</li>#}
+                            {#<li class="list-group-item">#}
+                                {#<b>Jugadores (No Competitivos)</b> <a class="pull-right">{{ jugadores| length }}</a>#}
+                            {#</li>#}
+                            {#<li class="list-group-item">#}
+                            {#<b>Altura</b> <a class="pull-right">{{ jugador.altura }} Mts</a>#}
+                            {#</li>#}
+                            {#<li class="list-group-item">#}
+                            {#<b>Friends</b> <a class="pull-right">13,287</a>#}
+                            {#</li>#}
+                        </ul>
+
+                        {#<a href="#" class="btn btn-primary btn-block"><b>Follow</b></a>#}
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+                <!-- /.box -->
+
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Datos Personales</h3>
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body">
+
+                        {#<strong><i class="fa fa-pencil margin-r-5"></i> Skills</strong>#}
+
+                        <p class="text-muted">
+                            <strong>Fecha de Nacimiento:</strong> {{ referee.persona.fechaNacimiento | date('d/m/Y') }}<br>
+                            <strong>Identificación:</strong> {{ referee.persona.tipoIdentificacion }} {{ referee.persona.numeroIdentificacion }}
+                            <br>
+                        </p>
+
+                        <hr>
+
+                        <strong><i class="fa fa-phone margin-r-5"></i> Contacto</strong>
+
+                        <p class="text-muted">
+                            <strong>Mail:</strong> {{ referee.persona.contacto.mail }}<br>
+                            <strong>Tel:</strong> {{ referee.persona.contacto.telefono }}<br>
+                            <strong>Tel alt:</strong> {{ referee.persona.contacto.telefonoAlternativa }}<br>
+                        </p>
+
+                        <hr>
+
+                        <strong><i class="fa fa-map-marker margin-r-5"></i> Dirección</strong>
+
+                        <p class="text-muted">
+                            {{ referee.persona.contacto.provincia }}
+                            {{ referee.persona.contacto.localidad }}
+                            {{ referee.persona.contacto.direccion }}
+                        </p>
+
+                        <hr>
+
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+
+            </div>
+            <!-- /.col -->
+            {#<div class="col-md-9">#}
+                {#<div class="nav-tabs-custom">#}
+                    {#<ul class="nav nav-tabs">#}
+                        {#<li class="active"><a href="#activity" data-toggle="tab">Pagos</a></li>#}
+                        {#<li><a href="#pases" data-toggle="tab">Historial de Pases</a></li>#}
+
+                    {#</ul>#}
+                    {#<div class="tab-content">#}
+                        {#<div class="active tab-pane" id="activity">#}
 
 
-    <a class="btn btn-default" href="{{ path('referee_index') }}">Volver</a>
+                        {#</div>#}
+                        {#<!-- /.tab-pane -->#}
+                        {#<div class="tab-pane" id="pases">#}
 
-    {#<a class="btn btn-default" href="{{ path('club_edit', { 'id': referee.id }) }}">Editar</a>#}
+                        {#</div>#}
+                        {#<!-- The timeline -->#}
+
+                    {#</div>#}
+                    {#<!-- /.tab-content -->#}
+                {#</div>#}
+                {#<!-- /.nav-tabs-custom -->#}
+            {#</div>#}
+            <!-- /.col -->
+        </div>
+
+
+        <a class="btn btn-default" href="{{ path('referee_index') }}">Volver</a>
+
+        {#<a class="btn btn-default" href="{{ path('refer', { 'id': club.id }) }}">Editar</a>#}
 
 
 
-{% endblock %}
+    {% endblock %}

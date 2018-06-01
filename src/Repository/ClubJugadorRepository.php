@@ -30,6 +30,23 @@ class ClubJugadorRepository extends \Doctrine\ORM\EntityRepository {
 		return $qb;
 	}
 
+	public function getQbRegistroJugadores( $club ) {
+		$qb = $this->createQueryBuilder( 'cj' );
+
+		$qb->where( 'cj.club = :club' );
+		$qb->andWhere( 'cj.anio = :anio' );
+
+		$qb->andWhere('cj.confirmadoClub = true');
+		$qb->andWhere('cj.confirmadoUnion = false');
+
+
+		$qb->setParameter( 'club', $club );
+		$qb->setParameter( 'anio', date( 'Y' ) );
+
+
+		return $qb;
+	}
+
 	public function getCountNuevosFichajes( $club ) {
 		$qb = $this->createQueryBuilder( 'cj' );
 

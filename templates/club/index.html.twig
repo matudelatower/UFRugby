@@ -1,52 +1,79 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-    Clubs
+    Clubes
 {% endblock title %}
 {% block body %}
-    <div class="box">
-        <div class="box-header">
-            <h3 class="box-title">Listado de Clubes</h3>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box">
+                <div class="box-header">
+                    <h3 class="box-title">Filtros</h3>
+
+                </div>
+                {{ form_start(filter_type) }}
+                <div class="box-body">
+                    <div class="col-md-6">
+                        {{ form_row(filter_type.nombre) }}
+                    </div>
+
+                </div>
+                <div class="box-footer">
+                    {{ form_widget(filter_type.buscar) }}
+                    {{ form_widget(filter_type.limpiar) }}
+                </div>
+                {{ form_end(filter_type) }}
+            </div>
         </div>
-        <div class="box-body">
-            <table class="table table-bordered table-striped data-table">
-                <thead>
-                <tr>
-                    <th>Id</th>
-                    <th>Nombre</th>
-                    <th>Foto</th>
-                    <th>Activo</th>
-                    <th>Fecha creacion</th>
-                    <th>Fecha actualizacion</th>
-                    <th>Acciones</th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for club in clubs %}
-                    <tr>
-                        <td><a href="{{ path('club_show', { 'id': club.id }) }}">{{ club.id }}</a></td>
-                        <td>{{ club.nombre }}</td>
-                        <td>{{ club.imageName }}</td>
-                        <td>{% if club.activo %}
-                                <small class="label bg-green">Si</small>
-                            {% else %}
-                                <small class="label bg-red">No</small>
-                            {% endif %}
-                        </td>
-                        <td>{% if club.fechaCreacion %}{{ club.fechaCreacion|date('d/m/Y H:i:s') }}{% endif %}</td>
-                        <td>{% if club.fechaActualizacion %}{{ club.fechaActualizacion|date('d/m/Y H:i:s') }}{% endif %}</td>
-                        <td>
-                            <a class="btn btn-default" href="{{ path('club_show', { 'id': club.id }) }}">
-                                <i class="fa fa-eye"></i>
-                            </a>
-                            <a class="btn btn-default" href="{{ path('club_edit', { 'id': club.id }) }}">
-                                <i class="fa fa-edit"></i>
-                            </a>
-                        </td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box">
+                <div class="box-header">
+                    <h3 class="box-title">Listado de Clubes</h3>
+                </div>
+                <div class="box-body">
+                    <table class="table table-bordered table-striped data-table">
+                        <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Nombre</th>
+                            {#<th>Foto</th>#}
+                            <th>Activo</th>
+                            <th>Fecha creación</th>
+                            <th>Fecha actualización</th>
+                            <th>Acciones</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for club in clubs %}
+                            <tr>
+                                <td><a href="{{ path('club_show', { 'id': club.id }) }}">{{ club.id }}</a></td>
+                                <td>{{ club.nombre }}</td>
+                                {#<td>{{ club.imageName }}</td>#}
+                                <td>{% if club.activo %}
+                                        <small class="label bg-green">Si</small>
+                                    {% else %}
+                                        <small class="label bg-red">No</small>
+                                    {% endif %}
+                                </td>
+                                <td>{% if club.fechaCreacion %}{{ club.fechaCreacion|date('d/m/Y H:i:s') }}{% endif %}</td>
+                                <td>{% if club.fechaActualizacion %}{{ club.fechaActualizacion|date('d/m/Y H:i:s') }}{% endif %}</td>
+                                <td>
+                                    <a class="btn btn-default" href="{{ path('club_show', { 'id': club.id }) }}">
+                                        <i class="fa fa-eye"></i>
+                                    </a>
+                                    <a class="btn btn-default" href="{{ path('club_edit', { 'id': club.id }) }}">
+                                        <i class="fa fa-edit"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
     <div class="row">

@@ -20,7 +20,7 @@ class PagoJugadorController extends Controller {
 
 		$club = $this->getUser()->getClub();
 
-		$pagoJugadors = $em->getRepository( 'App:PagoJugador' )->findQbByClub( $club );
+		$pagoJugadors = $em->getRepository( PagoJugador::class )->findQbByClub( $club );
 
 
 		$paginator    = $this->get( 'knp_paginator' );

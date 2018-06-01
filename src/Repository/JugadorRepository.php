@@ -23,7 +23,7 @@ class JugadorRepository extends \Doctrine\ORM\EntityRepository {
 		   ->join( 'cj.club', 'c' );
 
 		$qb->where( 'c = :club' );
-		$qb->andWhere('cj.confirmadoUnion = true');
+		$qb->andWhere( 'cj.confirmadoUnion = true' );
 
 		$qb->setParameter( 'club', $club );
 
@@ -31,14 +31,35 @@ class JugadorRepository extends \Doctrine\ORM\EntityRepository {
 		return $qb;
 	}
 
-	public function getJugadores(  ) {
+	public function getJugadores() {
 		$qb = $this->createQueryBuilder( 'j' );
 
-		$qb->join( 'j.clubJugador', 'cj' )
-		   ;
+		$qb->join( 'j.clubJugador', 'cj' );
 
+		$qb->andWhere( 'cj.confirmadoUnion = true' );
 
-		$qb->andWhere('cj.confirmadoUnion = true');
+		return $qb;
+	}
+
+	public function getQbBuscarJugadores( $data ) {
+		$qb = $this->createQueryBuilder( 'j' );
+
+		$qb->join( 'j.clubJugador', 'cj' );
+
+		$qb->andWhere( 'cj.confirmadoUnion = true' );
+		$qb->andWhere( 'cj.confirmadoClub = true' );
+
+		if ( isset( $data['numeroIdentificacion'] ) ) {
+			$numeroIdentificacion = $data['numeroIdentificacion'];
+
+			$qb->join( 'j.persona', 'persona' );
+
+			$qb
+				->where( "upper(persona.numeroIdentificacion) like upper(:numeroIdentificacion)" );
+			$qb->setParameter( 'numeroIdentificacion', '%' . $numeroIdentificacion . '%' );
+		}else{
+			return [];
+		}
 
 
 		return $qb;

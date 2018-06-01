@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\InscripcionReferee;
 use App\Entity\Referee;
+use App\Form\Filter\RefereeFilterType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -14,7 +15,19 @@ class RefereeController extends Controller {
 
 		$em = $this->getDoctrine()->getManager();
 
-		$referees = $em->getRepository( Referee::class )->findQbAll();
+		$filterType = $this->createForm( RefereeFilterType::class,
+			null,
+			[
+				'method' => 'GET'
+			] );
+
+		$filterType->handleRequest( $request );
+
+		if ( $filterType->get( 'buscar' )->isClicked() ) {
+			$referees = $em->getRepository( Referee::class )->findQbBuscar( $filterType->getData() );
+		} else {
+			$referees = $em->getRepository( Referee::class )->findQbAll();
+		}
 
 		$paginator = $this->get( 'knp_paginator' );
 		$referees  = $paginator->paginate(
@@ -25,7 +38,8 @@ class RefereeController extends Controller {
 
 		return $this->render( 'referee/index.html.twig',
 			[
-				'referees' => $referees
+				'referees'    => $referees,
+				'filter_type' => $filterType->createView()
 			] );
 	}
 
@@ -33,7 +47,6 @@ class RefereeController extends Controller {
 		return $this->render( 'referee/show.html.twig',
 			array(
 				'referee' => $id,
-//				'delete_form' => $deleteForm->createView(),
 			) );
 	}
 

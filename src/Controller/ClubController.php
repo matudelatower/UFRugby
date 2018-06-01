@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Club;
 use App\Entity\Jugador;
+use App\Form\Filter\ClubFilterType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -19,8 +20,19 @@ class ClubController extends Controller {
 	public function indexAction( Request $request ) {
 		$em = $this->getDoctrine()->getManager();
 
+		$filterType = $this->createForm( ClubFilterType::class,
+			null,
+			[
+				'method' => 'GET'
+			] );
 
-		$clubs = $em->getRepository( Club::class )->findQbAll();
+		$filterType->handleRequest( $request );
+
+		if ( $filterType->get( 'buscar' )->isClicked() ) {
+			$clubs = $em->getRepository( Club::class )->findQbBuscar( $filterType->getData() );
+		} else {
+			$clubs = $em->getRepository( Club::class )->findQbAll();
+		}
 
 		$paginator = $this->get( 'knp_paginator' );
 		$clubs     = $paginator->paginate(
@@ -31,7 +43,8 @@ class ClubController extends Controller {
 
 		return $this->render( 'club/index.html.twig',
 			array(
-				'clubs' => $clubs,
+				'clubs'       => $clubs,
+				'filter_type' => $filterType->createView()
 			) );
 	}
 
@@ -48,6 +61,11 @@ class ClubController extends Controller {
 			$em = $this->getDoctrine()->getManager();
 			$em->persist( $club );
 			$em->flush();
+
+			$this->get( 'session' )->getFlashBag()->add(
+				'success',
+				'Club creado correctamente!'
+			);
 
 			return $this->redirectToRoute( 'club_show', array( 'id' => $club->getId() ) );
 		}
@@ -90,6 +108,12 @@ class ClubController extends Controller {
 
 		if ( $editForm->isSubmitted() && $editForm->isValid() ) {
 			$this->getDoctrine()->getManager()->flush();
+
+			$this->get( 'session' )->getFlashBag()->add(
+				'success',
+				'Club modificado correctamente!'
+			);
+
 
 			return $this->redirectToRoute( 'club_edit', array( 'id' => $club->getId() ) );
 		}

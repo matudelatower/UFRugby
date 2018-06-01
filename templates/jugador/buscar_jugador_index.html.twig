@@ -1,10 +1,9 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-    Referees
+    Jugadores
 {% endblock title %}
 {% block body %}
-
     <div class="row">
         <div class="col-md-12">
             <div class="box">
@@ -15,11 +14,7 @@
                 {{ form_start(filter_type) }}
                 <div class="box-body">
                     <div class="col-md-6">
-                        {{ form_row(filter_type.nombre) }}
                         {{ form_row(filter_type.numeroIdentificacion) }}
-                    </div>
-                    <div class="col-md-6">
-                        {{ form_row(filter_type.apellido) }}
                     </div>
 
                 </div>
@@ -31,40 +26,41 @@
             </div>
         </div>
     </div>
-
     <div class="row">
         <div class="col-md-12">
             <div class="box">
                 <div class="box-header">
-                    <h3 class="box-title">Listado de Referees</h3>
+                    <h3 class="box-title">Listado de Jugadores</h3>
                 </div>
                 <div class="box-body">
                     <table class="table table-bordered table-striped data-table">
                         <thead>
                         <tr>
+                            <th>Club</th>
                             <th>Nº Identificación</th>
-                            <th>Referee</th>
+                            <th>Jugador</th>
                             <th>Fecha de Nacimiento</th>
+                            <th>Posición</th>
                             <th>Fecha de Registro</th>
                             <th>Acciones</th>
                         </tr>
                         </thead>
                         <tbody>
-                        {% for referee in referees %}
+                        {% for jugador in jugadors %}
                             <tr>
-                                <td>{{ referee.persona.numeroIdentificacion }}</td>
+                                <td>{{ jugador.clubJugador.first.club }}</td>
+                                <td>{{ jugador.persona.numeroIdentificacion }}</td>
+                                <td>{{ jugador.persona.nombre }} {{ jugador.persona.apellido }}</td>
+                                <td>{{ jugador.persona.fechaNacimiento | date ('d/m/Y') }}</td>
+                                <td>{{ jugador.posicionHabitual }}</td>
+                                <td>{% if jugador.fechaCreacion %}{{ jugador.fechaCreacion|date('d/m/Y H:i:s') }}{% endif %}</td>
                                 <td>
-                                    <a href="{{ path('referee_show', { 'id': referee.id }) }}">
-                                        {{ referee.persona.nombre }} {{ referee.persona.apellido }}
-                                    </a>
-                                </td>
-                                <td>{{ referee.persona.fechaNacimiento | date ('d/m/Y') }}</td>
-
-                                <td>{% if referee.fechaCreacion %}{{ referee.fechaCreacion|date('d/m/Y H:i:s') }}{% endif %}</td>
-                                <td>
-                                    <a class="btn btn-default" href="{{ path('referee_show', { 'id': referee.id }) }}">
+                                    <a class="btn btn-default" href="{{ path('jugador_show', { 'id': jugador.id }) }}">
                                         <i class="fa fa-eye"></i>
                                     </a>
+                                    {#<a class="btn btn-default" href="{{ path('jugador_edit', { 'id': jugador.id }) }}">#}
+                                    {#<i class="fa fa-edit"></i>#}
+                                    {#</a>#}
                                 </td>
                             </tr>
                         {% endfor %}
@@ -72,9 +68,10 @@
                     </table>
                 </div>
                 <div class="navigation">
-                    {{ knp_pagination_render(referees) }}
+                    {{ knp_pagination_render(jugadors) }}
                 </div>
             </div>
         </div>
     </div>
+
 {% endblock %}
