@@ -342,14 +342,15 @@ class AjaxController extends Controller {
 				// division
 				$anios = date_diff( date_create( $data['fechaNacimiento'] ), date_create( 'today' ) )->y;
 
-				if ( $anios > 19 ) {
+				if ( $anios > 23 ) {
 					$division = $em->getRepository( Division::class )->findOneBy( [ 'slug' => 'mayores' ] );
-				} elseif ( $anios >= 5 && $anios <= 19 ) {
+				} elseif ( $anios >= 5 && $anios <= 23 ) {
 					$strDiv   = 'm' . $anios;
 					$division = $em->getRepository( Division::class )->findOneBy( [ 'slug' => $strDiv ] );
 				} elseif ( $anios < 5 ) {
-					$division = $em->getRepository( Division::class )->findOneBy( [ 'slug' => 'infantiles' ] );
+					$division = $em->getRepository( Division::class )->findOneBy( [ 'slug' => 'm5' ] );
 				}
+
 				$clubJugador->setDivision( $division );
 
 				$token = md5( uniqid( 'urp_' ) );

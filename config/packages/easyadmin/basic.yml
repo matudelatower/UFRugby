@@ -22,6 +22,7 @@ easy_admin:
             - { label: 'Categoría', entity: Categoria }
             - { label: 'División', entity: Division }
             - { label: 'Tipo Identificación', entity: TipoIdentificacion }
+            - { label: 'Tipo Torneo', entity: TipoTorneo }
             - { label: 'Tipo Relación', entity: TipoRelacion }
             - { label: 'Sexo', entity: Sexo }
             - { label: 'Textos', entity: Texto }
