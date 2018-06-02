@@ -1,0 +1,24 @@
+pase_aceptar_club:
+    path:     /pase-aceptar-club/{pase}
+    controller: App\Controller\PaseController::aceptarClub
+
+pase_rechazar_club:
+    path:     /pase-rechazar-club/{pase}
+    controller: App\Controller\PaseController::rechazarClub
+
+pase_aceptar_union:
+    path: /pase-aceptar-union/{pase}
+    controller: App\Controller\PaseController::aceptarUnion
+
+pase_rechazar_union:
+    path: /pase-rechazar-union/{pase}
+    controller: App\Controller\PaseController::rechazarUnion
+
+
+pase_solicitudes_recibidas:
+    path:     /solicitudes-recibidas/
+    controller: App\Controller\PaseController::solicitudesRecibidas
+
+pase_solicitudes_enviadas:
+    path:     /solicitudes-enviadas/
+    controller: App\Controller\PaseController::solicitudesEnviadas

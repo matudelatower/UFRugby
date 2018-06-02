@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Pase{% endblock %}
+
+{% block body %}
+    <h1>Edit Pase</h1>
+
+    {{ include('pase/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('pase_index') }}">back to list</a>
+
+    {{ include('pase/_delete_form.html.twig') }}
+{% endblock %}

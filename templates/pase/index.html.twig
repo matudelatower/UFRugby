@@ -1,0 +1,104 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Listado de Pases
+{% endblock title %}
+
+{% block body %}
+
+    <div class="row">
+    <div class="col-md-12">
+    <div class="box">
+        <div class="box-header">
+            <h3 class="box-title">Pases</h3>
+        </div>
+        <div class="box-body">
+            <table class="table table-bordered table-striped data-table">
+                <thead>
+                <tr>
+                    <th>Fecha</th>
+                    <th>Cédula</th>
+                    <th>Jugador</th>
+                    <th>Origen</th>
+                    <th>Destino</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for pase in pases %}
+                    <tr>
+                        <td>{{ pase.fechaCreacion ? pase.fechaCreacion|date('d/m/Y') : '' }}</td>
+                        <td>{{ pase.jugador.persona.numeroIdentificacion }}</td>
+                        <td>
+                            <a href="{{ path('jugador_show', {id: pase.jugador.id }) }}">
+                                {{ pase.jugador.persona.nombre }} {{ pase.jugador.persona.apellido }}
+                            </a>
+                        </td>
+                        <td>{{ pase.clubOrigen }}</td>
+                        <td>{{ pase.clubDestino }}</td>
+                        <td>{{ pase.estado }}</td>
+                        <td>
+                            {#<a href="{{ path('pase_show', {'id': pase.id}) }}">show</a>#}
+                            {#<a href="{{ path('pase_edit', {'id': pase.id}) }}">edit</a>#}
+
+                            {% if pase.clubOrigen == app.user.club %}
+                                {% if not pase.confirmacionClub %}
+                                    <a class="btn btn-default" href="{{ path('pase_aceptar_club', {'pase': pase.id}) }}"
+                                       data-toggle="tooltip" title="Aceptar">
+                                        <i class="fa fa-check"></i>
+                                    </a>
+                                    <a class="btn btn-default"
+                                       href="{{ path('pase_rechazar_club', {'pase': pase.id}) }}"
+                                       data-toggle="tooltip" title="Rechazar"
+                                    >
+                                        <i class="fa fa-close"></i>
+                                    </a>
+
+                                {% endif %}
+                            {% endif %}
+
+                            {% if (is_granted('ROLE_UNION')) %}
+                                <a class="btn btn-default"
+                                   href="{{ path('pase_aceptar_union', {'pase': pase.id}) }}"
+                                   data-toggle="tooltip" title="Aceptar"
+                                >
+                                    <i class="fa fa-check"></i>
+                                </a>
+
+                                <a class="btn btn-default"
+                                   href="{{ path('pase_rechazar_union', {'pase': pase.id}) }}"
+                                   data-toggle="tooltip" title="Rechazar"
+                                >
+                                    <i class="fa fa-close"></i>
+                                </a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="12">Sin Resultados</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+
+
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            {#<a class="btn btn-primary" href="{{ path('pase_new') }}">Solicitar Nuevo Pase</a>#}
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <div class="navigation">
+                {{ knp_pagination_render(pases) }}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

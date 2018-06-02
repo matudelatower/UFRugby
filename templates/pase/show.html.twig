@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Pase{% endblock %}
+
+{% block body %}
+    <h1>Pase</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ pase.id }}</td>
+            </tr>
+            <tr>
+                <th>Observacion</th>
+                <td>{{ pase.observacion }}</td>
+            </tr>
+            <tr>
+                <th>FechaConfirmacionClub</th>
+                <td>{{ pase.fechaConfirmacionClub ? pase.fechaConfirmacionClub|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>FechaConfirmacionUnion</th>
+                <td>{{ pase.fechaConfirmacionUnion ? pase.fechaConfirmacionUnion|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>ConfirmacionUnion</th>
+                <td>{{ pase.confirmacionUnion ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>ConfirmacionClub</th>
+                <td>{{ pase.confirmacionClub ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>Estado</th>
+                <td>{{ pase.estado }}</td>
+            </tr>
+            <tr>
+                <th>MotivoRechazo</th>
+                <td>{{ pase.motivoRechazo }}</td>
+            </tr>
+            <tr>
+                <th>Activo</th>
+                <td>{{ pase.activo ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>FechaCreacion</th>
+                <td>{{ pase.fechaCreacion ? pase.fechaCreacion|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>FechaActualizacion</th>
+                <td>{{ pase.fechaActualizacion ? pase.fechaActualizacion|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('pase_index') }}">back to list</a>
+
+    <a href="{{ path('pase_edit', {'id': pase.id}) }}">edit</a>
+
+    {{ include('pase/_delete_form.html.twig') }}
+{% endblock %}

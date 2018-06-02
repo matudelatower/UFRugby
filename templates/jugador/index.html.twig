@@ -24,7 +24,7 @@
                 <tbody>
                 {% for jugador in jugadors %}
                     <tr>
-                        <td>{{ jugador.clubJugador.first.club }}</td>
+                        <td>{{ jugador.clubJugador.last.club }}</td>
                         <td>{{ jugador.persona.numeroIdentificacion }}</td>
                         <td>
                             <a href="{{ path('jugador_show', { 'id': jugador.id }) }}">

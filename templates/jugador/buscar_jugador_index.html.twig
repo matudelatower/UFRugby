@@ -50,7 +50,11 @@
                             <tr>
                                 <td>{{ jugador.clubJugador.first.club }}</td>
                                 <td>{{ jugador.persona.numeroIdentificacion }}</td>
-                                <td>{{ jugador.persona.nombre }} {{ jugador.persona.apellido }}</td>
+                                <td>
+                                    <a href="{{ path('jugador_show', {id: jugador.id}) }}">
+                                        {{ jugador.persona.nombre }} {{ jugador.persona.apellido }}
+                                    </a>
+                                </td>
                                 <td>{{ jugador.persona.fechaNacimiento | date ('d/m/Y') }}</td>
                                 <td>{{ jugador.posicionHabitual }}</td>
                                 <td>{% if jugador.fechaCreacion %}{{ jugador.fechaCreacion|date('d/m/Y H:i:s') }}{% endif %}</td>
@@ -58,9 +62,10 @@
                                     <a class="btn btn-default" href="{{ path('jugador_show', { 'id': jugador.id }) }}">
                                         <i class="fa fa-eye"></i>
                                     </a>
-                                    {#<a class="btn btn-default" href="{{ path('jugador_edit', { 'id': jugador.id }) }}">#}
-                                    {#<i class="fa fa-edit"></i>#}
-                                    {#</a>#}
+                                    <a class="btn btn-default" href="{{ path('soliciar_pase', { 'jugador': jugador.id }) }}"
+                                       data-toggle="tooltip" title="Solicitar Pase">
+                                        <i class="fa fa-exchange"></i>
+                                    </a>
                                 </td>
                             </tr>
                         {% endfor %}

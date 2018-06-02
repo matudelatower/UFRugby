@@ -36,7 +36,7 @@ class ClubJugadorRepository extends \Doctrine\ORM\EntityRepository {
 		$qb->where( 'cj.club = :club' );
 		$qb->andWhere( 'cj.anio = :anio' );
 
-		$qb->andWhere('cj.confirmadoClub = true');
+		$qb->andWhere('cj.confirmadoClub = false');
 		$qb->andWhere('cj.confirmadoUnion = false');
 
 

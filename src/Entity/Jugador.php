@@ -90,6 +90,12 @@ class Jugador extends BaseClass {
 	 */
 	private $clubJugador;
 
+	/**
+	 *
+	 * @ORM\OneToMany(targetEntity="App\Entity\Pase", mappedBy="jugador", cascade={"persist", "remove"})
+	 */
+	private $pases;
+
 	public function __toString() {
 		return $this->persona->__toString();
 	}
@@ -100,6 +106,7 @@ class Jugador extends BaseClass {
 	 */
 	public function __construct() {
 		$this->clubJugador = new \Doctrine\Common\Collections\ArrayCollection();
+		$this->pases = new \Doctrine\Common\Collections\ArrayCollection();
 	}
 
 	/**
@@ -322,9 +329,6 @@ class Jugador extends BaseClass {
 	 * @return Jugador
 	 */
 	public function addClubJugador( \App\Entity\ClubJugador $clubJugador ) {
-//		$this->clubJugador[] = $clubJugador;
-//
-//		return $this;
 
 		if (!$this->clubJugador->contains($clubJugador)) {
 			$this->clubJugador[] = $clubJugador;
@@ -376,5 +380,34 @@ class Jugador extends BaseClass {
 		$this->actualizadoPor = $actualizadoPor;
 
 		return $this;
+	}
+
+
+	public function addPases( \App\Entity\Pase $pase ) {
+
+		if (!$this->pases->contains($pase)) {
+			$this->pases[] = $pase;
+			$pase->setJugador($this);
+		}
+
+		return $this;
+	}
+
+	/**
+	 * Remove pase
+	 *
+	 * @param \App\Entity\Pase $pase
+	 */
+	public function removePases( \App\Entity\Pase $pase ) {
+		$this->pases->removeElement( $pase );
+	}
+
+	/**
+	 * Get pase
+	 *
+	 * @return \Doctrine\Common\Collections\Collection
+	 */
+	public function getPases() {
+		return $this->pases;
 	}
 }

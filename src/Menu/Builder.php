@@ -86,6 +86,14 @@ class Builder {
 						)
 					);
 
+				$menu[ $keyPersonal ]
+					->addChild(
+						'Pases',
+						array(
+							'route' => 'pase_index',
+						)
+					);
+
 			}
 
 			if ( $this->authorizationChecker->isGranted( 'ROLE_CLUB' ) ) {
@@ -102,6 +110,35 @@ class Builder {
 						'Buscar Jugadores',
 						array(
 							'route' => 'buscar_jugador',
+						)
+					);
+
+
+				$menu->addChild(
+					'Pases',
+					array(
+						'childrenAttributes' => array(
+							'class' => 'treeview-menu',
+						),
+					)
+				)
+				     ->setUri( '#' )
+				     ->setExtra( 'icon', 'fa fa-exchange' )
+				     ->setAttribute( 'class', 'treeview' );
+
+				$menu['Pases']
+					->addChild(
+						'Solicitudes Enviadas',
+						array(
+							'route' => 'pase_solicitudes_enviadas',
+						)
+					);
+
+				$menu['Pases']
+					->addChild(
+						'Solicitudes Recibidas',
+						array(
+							'route' => 'pase_solicitudes_recibidas',
 						)
 					);
 			}
