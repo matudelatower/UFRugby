@@ -45,6 +45,14 @@ class Division extends BaseClass
 	 */
 	private $slug;
 
+	/**
+	 * @var
+	 *
+	 * @ORM\ManyToOne(targetEntity="App\Entity\Categoria")
+	 * @ORM\JoinColumn(name="categoria_id", referencedColumnName="id")
+	 */
+	private $categoria;
+
 	public function __toString() {
 		return $this->nombre;
 	}
@@ -187,4 +195,20 @@ class Division extends BaseClass
 
         return $this;
     }
+
+	/**
+	 * @return mixed
+	 */
+	public function getCategoria() {
+		return $this->categoria;
+	}
+
+	/**
+	 * @param mixed $categoria
+	 */
+	public function setCategoria( $categoria ): void {
+		$this->categoria = $categoria;
+	}
+
+
 }
