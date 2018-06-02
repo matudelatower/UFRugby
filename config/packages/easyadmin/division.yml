@@ -8,3 +8,4 @@ easy_admin:
                 fields:
                 - { property: 'nombre' }
                 - { property: 'descripcion' }
+                - { property: 'categoria' }
