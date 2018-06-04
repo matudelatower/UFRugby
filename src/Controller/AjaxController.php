@@ -330,14 +330,17 @@ class AjaxController extends Controller {
 				$persona->addJugador( $jugador );
 				$jugador->setPersona( $persona );
 
-				$fichaMedica = new FichaMedica();
-				$fichaMedica->setClubJugador( $clubJugador );
-				$grupoSanguineo = $em->getRepository( 'App:GrupoSanguineo' )->find( $data['grupoSanguineo']['id'] );
-				$fichaMedica->setGrupoSanguineo( $grupoSanguineo );
-				$fichaMedica->setPrestador( $data['prestador'] );
-				$fichaMedica->setNumeroAfiliado( $data['numeroAfiliado'] );
-				$fichaMedica->setTieneCobertura( $data['tieneCobertura'] ? true : false );
-				$em->persist( $fichaMedica );
+
+				if ( strtoupper( $data['categoria'] ) !== 'INFANTIL' ) {
+					$fichaMedica = new FichaMedica();
+					$fichaMedica->setClubJugador( $clubJugador );
+					$grupoSanguineo = $em->getRepository( 'App:GrupoSanguineo' )->find( $data['grupoSanguineo']['id'] );
+					$fichaMedica->setGrupoSanguineo( $grupoSanguineo );
+					$fichaMedica->setPrestador( $data['prestador'] );
+					$fichaMedica->setNumeroAfiliado( $data['numeroAfiliado'] );
+					$fichaMedica->setTieneCobertura( $data['tieneCobertura'] ? true : false );
+					$em->persist( $fichaMedica );
+				}
 
 				// division
 				$anios = date_diff( date_create( $data['fechaNacimiento'] ), date_create( 'today' ) )->y;
