@@ -13,7 +13,12 @@
 
             {{ form_start(edit_form) }}
             {{ form_widget(edit_form) }}
+
+            <h2>Jugador:</h2>
+            <h3>{{ pagoJugador.jugador }}</h3>
+
             <input class="btn btn-primary" type="submit" value="Guardar"/>
+
             {{ form_end(edit_form) }}
         </div>
     </div>

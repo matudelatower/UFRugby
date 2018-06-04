@@ -50,6 +50,13 @@ class PagoClub extends BaseClass {
 	 */
 	private $club;
 
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(name="concepto", type="string", length=255, nullable=true)
+	 */
+	private $concepto;
+
 
 	/**
 	 * Get id
@@ -207,4 +214,19 @@ class PagoClub extends BaseClass {
     {
         return $this->mes;
     }
+
+	/**
+	 * @return string
+	 */
+	public function getConcepto() {
+		return $this->concepto;
+	}
+
+	/**
+	 * @param string $concepto
+	 */
+	public function setConcepto( string $concepto ): void {
+		$this->concepto = $concepto;
+	}
+
 }

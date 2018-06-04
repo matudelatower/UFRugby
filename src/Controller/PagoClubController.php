@@ -15,10 +15,17 @@ class PagoClubController extends Controller {
 	 * Lists all pagoClub entities.
 	 *
 	 */
-	public function indexAction() {
+	public function indexAction( Request $request ) {
 		$em = $this->getDoctrine()->getManager();
 
-		$pagoClubs = $em->getRepository( 'App:PagoClub' )->findAll();
+		$pagoClubs = $em->getRepository( PagoClub::class )->findQbAll();
+
+		$paginator = $this->get( 'knp_paginator' );
+		$pagoClubs = $paginator->paginate(
+			$pagoClubs, /* query NOT result */
+			$request->query->getInt( 'page', 1 )/*page number*/,
+			10/*limit per page*/
+		);
 
 		return $this->render( 'pagoclub/index.html.twig',
 			array(
@@ -77,6 +84,11 @@ class PagoClubController extends Controller {
 
 		if ( $editForm->isSubmitted() && $editForm->isValid() ) {
 			$this->getDoctrine()->getManager()->flush();
+
+			$this->get( 'session' )->getFlashBag()->add(
+				'success',
+				'El Pago se modificó correctamente'
+			);
 
 			return $this->redirectToRoute( 'pagoclub_edit', array( 'id' => $pagoClub->getId() ) );
 		}

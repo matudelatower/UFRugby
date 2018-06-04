@@ -24,7 +24,7 @@ class ClubJugadorController extends Controller {
 
 		if ( $club ) {
 			$clubJugadors = $em->getRepository( ClubJugador::class )->getQbRegistroJugadores( $club );
-		} elseif ( $this->getUser()->hasRole( 'ROLE_ADMIN' ) ) {
+		} elseif ( $this->getUser()->hasRole( 'ROLE_UNION' ) ) {
 			$clubJugadors = $em->getRepository( ClubJugador::class )->getQbByUnion();
 		} else {
 			$clubJugadors = [];
@@ -137,7 +137,7 @@ class ClubJugadorController extends Controller {
 
 		$asunto = getenv( 'APP_SITE_NAME' ) . ' - Precompetitivo Rechazado';
 
-		$url = $this->get( 'router' )->generate( 'jugador_precompetitivo',
+		$url = $this->get( 'router' )->generate( 'jugador_registro',
 			array(),
 			UrlGeneratorInterface::ABSOLUTE_URL );
 

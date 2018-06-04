@@ -4,44 +4,64 @@
     Pago Jugadores
 {% endblock title %}
 {% block body %}
-    <div class="box">
-        <div class="box-header">
-            <h3 class="box-title">Pago de Jugadores</h3>
-        </div>
-        <div class="box-body">
-            <table class="table table-bordered table-striped data-table">
-                <thead>
-                <tr>
-                    <th>Id</th>
-                    <th>Fecha</th>
-                    <th>Monto</th>
-                    <th>Mes</th>
-                    <th>Acciones</th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for pagoJugador in pagoJugadors %}
-                    <tr>
-                        <td><a href="{{ path('pagojugador_show', { 'id': pagoJugador.id }) }}">{{ pagoJugador.id }}</a>
-                        </td>
-                        <td>{% if pagoJugador.fecha %}{{ pagoJugador.fecha|date('d/m/Y') }}{% endif %}</td>
-                        <td>{{ pagoJugador.monto }}</td>
-                        <td>{{ pagoJugador.mes }}</td>
 
-                        <td>
-                            <a class="btn btn-default" href="{{ path('pagojugador_show', { 'id': pagoJugador.id }) }}">
-                                <i class="fa fa-eye"></i>
-                            </a>
-                            <a class="btn btn-default" href="{{ path('pagojugador_edit', { 'id': pagoJugador.id }) }}">
-                                <i class="fa fa-edit"></i>
-                            </a>
-                        </td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box">
+                <div class="box-header">
+                    <h3 class="box-title">Pago de Jugadores</h3>
+                </div>
+                <div class="box-body">
+                    <table class="table table-bordered table-striped data-table">
+                        <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Fecha</th>
+                            <th>Monto</th>
+                            <th>Mes</th>
+                            <th>Acciones</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for pagoJugador in pagoJugadors %}
+                            <tr>
+                                <td>
+                                    <a href="{{ path('pagojugador_show', { 'id': pagoJugador.id }) }}">{{ pagoJugador.id }}</a>
+                                </td>
+                                <td>{% if pagoJugador.fecha %}{{ pagoJugador.fecha|date('d/m/Y') }}{% endif %}</td>
+                                <td>{{ pagoJugador.monto }}</td>
+                                <td>{{ pagoJugador.mes }}</td>
+
+                                <td>
+                                    <a class="btn btn-default"
+                                       href="{{ path('pagojugador_show', { 'id': pagoJugador.id }) }}">
+                                        <i class="fa fa-eye"></i>
+                                    </a>
+                                    <a class="btn btn-default"
+                                       href="{{ path('pagojugador_edit', { 'id': pagoJugador.id }) }}">
+                                        <i class="fa fa-edit"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
 
-    <a class="btn btn-primary" href="{{ path('pagojugador_new') }}">Registrar Pago</a>
+    <div class="row">
+        <div class="col-md-12">
+            <a class="btn btn-primary" href="{{ path('pagojugador_new') }}">Registrar Pago</a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <div class="navigation">
+                {{ knp_pagination_render(pagoJugadors) }}
+            </div>
+        </div>
+    </div>
 {% endblock %}

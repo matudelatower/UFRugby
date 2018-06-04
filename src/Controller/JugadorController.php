@@ -6,6 +6,7 @@ use App\Entity\ClubJugador;
 use App\Entity\FichaMedica;
 use App\Entity\Jugador;
 use App\Entity\Persona;
+use App\Form\Filter\BuscarJugadoresFilterType;
 use App\Form\Filter\BuscarJugadorFilterType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -26,10 +27,39 @@ class JugadorController extends Controller {
 
 		$club = $this->getUser()->getClub();
 
+		$filterType = $this->createForm( BuscarJugadoresFilterType::class,
+			null,
+			[
+				'method' => 'GET'
+			] );
+
+
 		if ( $club ) {
-			$jugadors = $em->getRepository( 'App:Jugador' )->getJugadoresByClub( $club );
+
+			$filterType->handleRequest( $request );
+
+			if ( $filterType->isSubmitted() && $filterType->get( 'buscar' )->isClicked() ) {
+
+				$jugadors = $em->getRepository( Jugador::class )->getQbBuscarJugadoresByClub( $club,
+					$filterType->getData() );
+
+			} else {
+				$jugadors = $em->getRepository( Jugador::class )->getJugadoresByClub( $club );
+			}
+
+
 		} else {
-			$jugadors = $em->getRepository( 'App:Jugador' )->getJugadores();
+
+			$filterType->add( 'club' );
+
+			$filterType->handleRequest( $request );
+
+			if ( $filterType->isSubmitted() && $filterType->get( 'buscar' )->isClicked() ) {
+				$jugadors = $em->getRepository( Jugador::class )->getQbJugadoresUnion($filterType->getData());
+			} else {
+				$jugadors = $em->getRepository( Jugador::class )->getJugadores();
+			}
+
 		}
 
 		$paginator = $this->get( 'knp_paginator' );
@@ -41,7 +71,8 @@ class JugadorController extends Controller {
 
 		return $this->render( 'jugador/index.html.twig',
 			array(
-				'jugadors' => $jugadors,
+				'jugadors'    => $jugadors,
+				'filter_type' => $filterType->createView()
 			) );
 	}
 
@@ -76,12 +107,18 @@ class JugadorController extends Controller {
 	 * Finds and displays a jugador entity.
 	 *
 	 */
-	public function showAction( Jugador $jugador ) {
-//		$deleteForm = $this->createDeleteForm( $jugador );
+	public function showAction( Request $request, Jugador $jugador ) {
+
+
+		$referer = null;
+		if ( $request->get( 'referer' ) ) {
+			$referer = $request->get( 'referer' );
+		}
 
 		return $this->render( 'jugador/show.html.twig',
 			array(
 				'jugador' => $jugador,
+				'referer' => $referer
 //				'delete_form' => $deleteForm->createView(),
 			) );
 	}

@@ -1,29 +1,44 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}
+    Pago jugador
+{% endblock title %}
+
 {% block body %}
-    <h1>Pago jugador</h1>
 
-    <table>
-        <tbody>
-        <tr>
-            <th>Id</th>
-            <td>{{ pagoJugador.id }}</td>
-        </tr>
-        <tr>
-            <th>Fecha</th>
-            <td>{% if pagoJugador.fecha %}{{ pagoJugador.fecha|date('d/m/Y') }}{% endif %}</td>
-        </tr>
-        <tr>
-            <th>Monto</th>
-            <td>{{ pagoJugador.monto }}</td>
-        </tr>
-        <tr>
-            <th>Mes</th>
-            <td>{{ pagoJugador.mes }}</td>
-        </tr>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="box box-solid">
+                <div class="box-header with-border">
+                    <i class="fa fa-money"></i>
 
-        </tbody>
-    </table>
+                    <h3 class="box-title">Pago jugador</h3>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <table class="table">
+                        <tbody>
+
+                        <tr>
+                            <th>Fecha</th>
+                            <td>{% if pagoJugador.fecha %}{{ pagoJugador.fecha|date('d/m/Y') }}{% endif %}</td>
+                        </tr>
+                        <tr>
+                            <th>Monto</th>
+                            <td>{{ pagoJugador.monto }}</td>
+                        </tr>
+                        <tr>
+                            <th>Mes</th>
+                            <td>{{ pagoJugador.mes }}</td>
+                        </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.box-body -->
+            </div>
+        </div>
+    </div>
 
 
     <a class="btn btn-default" href="{{ path('pagojugador_index') }}">Volver</a>
