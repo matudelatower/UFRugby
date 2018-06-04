@@ -306,10 +306,15 @@ class JugadorController extends Controller {
 			}
 		}
 
+		$from = $fichaje->getJugador()->getPersona()->getFechaNacimiento();
+		$to   = new \DateTime( 'today' );
+		$edad = $from->diff( $to )->y;
+
 		return $this->render( 'jugador/precompetitivo_mensaje.html.twig',
 			array(
 				'mensaje'     => $mensaje,
-				'clubJugador' => $fichaje
+				'clubJugador' => $fichaje,
+				'edad'        => $edad
 			) );
 	}
 
