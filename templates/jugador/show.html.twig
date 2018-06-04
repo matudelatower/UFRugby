@@ -25,9 +25,11 @@
                         <li class="list-group-item">
                             <b>Altura</b> <a class="pull-right">{{ jugador.altura }} Mts</a>
                         </li>
-                        {#<li class="list-group-item">#}
-                        {#<b>Friends</b> <a class="pull-right">13,287</a>#}
-                        {#</li>#}
+                        <li class="list-group-item">
+                            <b>Otras Posiciones</b>
+                            <a class="pull-right">{{ jugador.posicionAlternativa }}</a>
+                            <a class="pull-right">{{ jugador.segundaPosicionAlternativa }}</a>
+                        </li>
                     </ul>
 
                     {#<a href="#" class="btn btn-primary btn-block"><b>Follow</b></a>#}
@@ -107,7 +109,7 @@
                         <!-- The timeline -->
                         <ul class="timeline timeline-inverse">
 
-                            {% for pase in jugador.pases %}
+                            {% for pase in jugador.pases | reverse %}
                                 <!-- timeline time label -->
                                 <li class="time-label">
                                     <span class="bg-red">
@@ -123,12 +125,22 @@
                                     <div class="timeline-item">
                                         {#<span class="time"><i class="fa fa-clock-o"></i> {{ clubJugador.anio }}</span>#}
 
-                                        <h3 class="timeline-header no-border">{{ pase.clubOrigen }} > {{ pase.clubDestino }}
+                                        <h3 class="timeline-header no-border">{{ pase.clubOrigen }}
+                                            > {{ pase.clubDestino }}
                                         </h3>
+                                        {% if not pase.confirmacionUnion %}
+                                        <div class="timeline-footer">
+                                            <span class="btn btn-warning btn-flat btn-xs">{{ pase.estado }}</span>
+                                        </div>
+                                        {% endif %}
+
                                     </div>
                                 </li>
                                 <!-- END timeline item -->
                             {% endfor %}
+                            <li>
+                                <i class="fa fa-clock-o bg-gray"></i>
+                            </li>
 
                         </ul>
                     </div>
@@ -185,7 +197,11 @@
     </div>
 
 
-    <a class="btn btn-default" href="{{ path('jugador_index') }}">Volver</a>
+    {% if referer %}
+        <a class="btn btn-default" href="{{ referer }}">Volver</a>
+    {% else %}
+        <a class="btn btn-default" href="{{ path('jugador_index') }}">Volver</a>
+    {% endif %}
 
     {#<a class="btn btn-default" href="{{ path('jugador_edit', { 'id': jugador.id }) }}">Editar</a>#}
 

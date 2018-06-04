@@ -104,7 +104,7 @@ class PaseController extends Controller {
 	}
 
 	/**
-	 * @Route("/{jugador}/solicitar-pase", name="soliciar_pase", methods="GET|POST")
+	 * @Route("/{jugador}/solicitar-pase", name="solicitar_pase", methods="GET|POST")
 	 */
 	public function solicitarPase( Request $request, Jugador $jugador ) {
 
@@ -151,7 +151,7 @@ class PaseController extends Controller {
 				'Solicitud de pase creada correctamente!'
 			);
 
-			return $this->redirectToRoute( 'pase_index' );
+			return $this->redirectToRoute( 'pase_solicitudes_enviadas' );
 		}
 
 		if ( $pase->getClubOrigen() == $pase->getClubDestino() ) {
@@ -163,10 +163,16 @@ class PaseController extends Controller {
 			return $this->redirectToRoute( 'buscar_jugador' );
 		}
 
+		$referer = null;
+		if ( $request->get( 'referer' ) ) {
+			$referer = $request->get( 'referer' );
+		}
+
 		return $this->render( 'pase/solicitar.html.twig',
 			[
 				'pase'    => $pase,
 				'jugador' => $jugador,
+				'referer' => $referer,
 				'form'    => $form->createView(),
 			] );
 
@@ -233,10 +239,13 @@ class PaseController extends Controller {
 			return $this->redirectToRoute( 'pase_solicitudes_recibidas' );
 		}
 
+		$backRoute = $this->generateUrl( 'pase_solicitudes_recibidas' );
+
 		return $this->render( 'pase/rechazar.html.twig',
 			[
-				'pase' => $pase,
-				'form' => $form->createView(),
+				'pase'      => $pase,
+				'backRoute' => $backRoute,
+				'form'      => $form->createView(),
 			] );
 	}
 
@@ -263,10 +272,13 @@ class PaseController extends Controller {
 			return $this->redirectToRoute( 'pase_solicitudes_recibidas' );
 		}
 
+		$backRoute = $this->generateUrl( 'pase_solicitudes_recibidas' );
+
 		return $this->render( 'pase/aceptar.html.twig',
 			[
-				'pase' => $pase,
-				'form' => $form->createView(),
+				'pase'      => $pase,
+				'backRoute' => $backRoute,
+				'form'      => $form->createView(),
 			] );
 	}
 
@@ -290,13 +302,16 @@ class PaseController extends Controller {
 				'Solicitud de pase rechazada correctamente!'
 			);
 
-			return $this->redirectToRoute( 'pase_solicitudes_recibidas' );
+			return $this->redirectToRoute( 'pase_index' );
 		}
+
+		$backRoute = $this->generateUrl( 'pase_index' );
 
 		return $this->render( 'pase/rechazar.html.twig',
 			[
-				'pase' => $pase,
-				'form' => $form->createView(),
+				'pase'      => $pase,
+				'backRoute' => $backRoute,
+				'form'      => $form->createView(),
 			] );
 	}
 
@@ -344,10 +359,13 @@ class PaseController extends Controller {
 			return $this->redirectToRoute( 'pase_index' );
 		}
 
+		$backRoute = $this->generateUrl( 'pase_index' );
+
 		return $this->render( 'pase/aceptar.html.twig',
 			[
-				'pase' => $pase,
-				'form' => $form->createView(),
+				'pase'      => $pase,
+				'backRoute' => $backRoute,
+				'form'      => $form->createView(),
 			] );
 	}
 }
