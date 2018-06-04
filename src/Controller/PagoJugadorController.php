@@ -46,19 +46,26 @@ class PagoJugadorController extends Controller {
 		$pagoJugador = new Pagojugador();
 
 		$club = $this->getUser()->getClub();
+		$pagoJugador->setClub( $club );
 
 		$form = $this->createForm( 'App\Form\PagoJugadorType',
 			$pagoJugador,
 			[
 				'club' => $club
 			] );
+
 		$form->handleRequest( $request );
 
 		if ( $form->isSubmitted() && $form->isValid() ) {
 			$em = $this->getDoctrine()->getManager();
-			$pagoJugador->setClub( $club );
+
 			$em->persist( $pagoJugador );
 			$em->flush();
+
+			$this->get( 'session' )->getFlashBag()->add(
+				'success',
+				'El Pago se creó correctamente'
+			);
 
 			return $this->redirectToRoute( 'pagojugador_show', array( 'id' => $pagoJugador->getId() ) );
 		}
@@ -95,6 +102,11 @@ class PagoJugadorController extends Controller {
 
 		if ( $editForm->isSubmitted() && $editForm->isValid() ) {
 			$this->getDoctrine()->getManager()->flush();
+
+			$this->get( 'session' )->getFlashBag()->add(
+				'success',
+				'El Pago se modificó correctamente'
+			);
 
 			return $this->redirectToRoute( 'pagojugador_edit', array( 'id' => $pagoJugador->getId() ) );
 		}

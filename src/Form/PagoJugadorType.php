@@ -9,6 +9,9 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Doctrine\ORM\Query\Expr;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 
 class PagoJugadorType extends AbstractType {
 	/**
@@ -26,6 +29,7 @@ class PagoJugadorType extends AbstractType {
 					'html5'  => true
 				) )
 			->add( 'monto' )
+			->add( 'concepto' )
 			->add( 'mes',
 				ChoiceType::class,
 				[
@@ -44,25 +48,42 @@ class PagoJugadorType extends AbstractType {
 							'Noviembre'  => 'Noviembre',
 							'Diciembre'  => 'Diciembre',
 						),
-				] )
-			->add( 'jugador',
-				EntityType::class,
-				[
-					'class'         => 'App\Entity\Jugador',
-					'required'      => true,
-					'placeholder'   => 'Seleccionar Jugador',
-					'label'         => 'Jugador *',
-					'attr'          => [ 'class' => 'select2' ],
-					'query_builder' => function ( EntityRepository $er ) use ( $club ) {
-						return $er->createQueryBuilder( 'j' )
-						          ->join( 'j.clubJugador', 'cj' )
-						          ->join( 'cj.club', 'c' )
-						          ->where( 'c = :club' )
-						          ->andWhere( 'cj.confirmadoUnion = true' )
-						          ->setParameter( 'club', $club );
-					},
-
 				] );
+
+		$builder->addEventListener( FormEvents::PRE_SET_DATA,
+			function ( FormEvent $event ) use ( $club ) {
+				$pago = $event->getData();
+				$form = $event->getForm();
+
+				// checks if the Product object is "new"
+				// If no data is passed to the form, the data is "null".
+				// This should be considered a new "Product"
+				if ( ! $pago || null === $pago->getId() ) {
+					$form->
+					add( 'jugador',
+						EntityType::class,
+						[
+							'class'         => 'App\Entity\Jugador',
+							'required'      => true,
+							'placeholder'   => 'Seleccionar Jugador',
+							'label'         => 'Jugador *',
+							'attr'          => [ 'class' => 'select2' ],
+							'query_builder' => function ( EntityRepository $er ) use ( $club ) {
+								return $er->createQueryBuilder( 'j' )
+								          ->innerJoin( 'j.clubJugador', 'cj' )
+								          ->leftJoin( 'j.clubJugador',
+									          'cj2',
+									          Expr\Join::WITH,
+									          'j = cj2.jugador AND cj.id <  cj2.id' )
+								          ->where( 'cj2.id IS NULL' )
+								          ->andWhere( 'cj.club = :club' )
+								          ->setParameter( 'club', $club )
+								          ->andWhere( 'cj.confirmadoUnion = true' );
+							},
+
+						] );
+				}
+			} );
 	}
 
 	/**

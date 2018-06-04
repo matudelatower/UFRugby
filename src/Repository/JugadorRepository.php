@@ -2,6 +2,8 @@
 
 namespace App\Repository;
 
+use Doctrine\ORM\Query\Expr;
+
 /**
  * JugadorRepository
  *
@@ -17,15 +19,22 @@ class JugadorRepository extends \Doctrine\ORM\EntityRepository {
 	}
 
 	public function getJugadoresByClub( $club ) {
-		$qb = $this->createQueryBuilder( 'j' );
+//		$qb = $this->createQueryBuilder( 'j' );
 
-		$qb->join( 'j.clubJugador', 'cj' )
-		   ->join( 'cj.club', 'c' );
+//		$qb->join( 'j.clubJugador', 'cj' )
+//		   ->join( 'cj.club', 'c' );
+//
+//		$qb->where( 'c = :club' );
+//		$qb->andWhere( 'cj.confirmadoUnion = true' );
 
-		$qb->where( 'c = :club' );
-		$qb->andWhere( 'cj.confirmadoUnion = true' );
+		$qb = $this->createQueryBuilder( 'j' )
+		           ->innerJoin( 'j.clubJugador', 'cj' )
+		           ->leftJoin( 'j.clubJugador', 'cj2', Expr\Join::WITH, 'j = cj2.jugador AND cj.id <  cj2.id' )
+		           ->where( 'cj2.id IS NULL' );
 
+		$qb->andWhere( 'cj.club = :club' );
 		$qb->setParameter( 'club', $club );
+		$qb->andWhere( 'cj.confirmadoUnion = true' );
 
 
 		return $qb;
@@ -57,10 +66,141 @@ class JugadorRepository extends \Doctrine\ORM\EntityRepository {
 			$qb
 				->where( "upper(persona.numeroIdentificacion) like upper(:numeroIdentificacion)" );
 			$qb->setParameter( 'numeroIdentificacion', '%' . $numeroIdentificacion . '%' );
-		}else{
+		} else {
 			return [];
 		}
 
+
+		return $qb;
+	}
+
+	public function getQbBuscarJugadoresByClub( $club, $data ) {
+		$qb = $this->createQueryBuilder( 'j' )
+		           ->innerJoin( 'j.clubJugador', 'cj' )
+		           ->leftJoin( 'j.clubJugador', 'cj2', Expr\Join::WITH, 'j = cj2.jugador AND cj.id <  cj2.id' )
+		           ->where( 'cj2.id IS NULL' );
+
+
+		$qb->andWhere( 'cj.confirmadoUnion = true' );
+
+
+		$qb->join( 'j.persona', 'persona' );
+
+		if ( isset( $data['nombre'] ) ) {
+
+			$nombre = $data['nombre'];
+			$qb
+				->andWhere( "upper(persona.nombre) like upper(:nombre)" );
+			$qb->setParameter( 'nombre', '%' . $nombre . '%' );
+		}
+
+		if ( isset( $data['apellido'] ) ) {
+
+			$apellido = $data['apellido'];
+			$qb
+				->andWhere( "upper(persona.apellido) like upper(:apellido)" );
+			$qb->setParameter( 'apellido', '%' . $apellido . '%' );
+		}
+
+		if ( isset( $data['numeroIdentificacion'] ) ) {
+			$numeroIdentificacion = $data['numeroIdentificacion'];
+
+			$qb
+				->andWhere( "upper(persona.numeroIdentificacion) like upper(:numeroIdentificacion)" );
+			$qb->setParameter( 'numeroIdentificacion', '%' . $numeroIdentificacion . '%' );
+		}
+
+		if ( isset( $data['posicion'] ) ) {
+			$posicion = $data['posicion'];
+
+			$qb->andWhere(
+				$qb->expr()->orX(
+					$qb->expr()->eq( 'j.posicionHabitual', ':posicionHabitual' ),
+					$qb->expr()->eq( 'j.posicionAlternativa', ':posicionAlternativa' ),
+					$qb->expr()->eq( 'j.segundaPosicionAlternativa', ':segundaPosicionAlternativa' )
+
+				)
+			);
+
+			$qb->setParameter( 'posicionHabitual', $posicion );
+
+			$qb->setParameter( 'segundaPosicionAlternativa', $posicion );
+
+			$qb->setParameter( 'posicionAlternativa', $posicion );
+		}
+
+		$qb->andWhere( 'cj.club = :club' );
+		$qb->setParameter( 'club', $club );
+
+
+		return $qb;
+	}
+
+	public function getQbJugadoresUnion( $data ) {
+		$qb = $this->createQueryBuilder( 'j' )
+		           ->innerJoin( 'j.clubJugador', 'cj' )
+		           ->leftJoin( 'j.clubJugador', 'cj2', Expr\Join::WITH, 'j = cj2.jugador AND cj.id <  cj2.id' )
+		           ->where( 'cj2.id IS NULL' );
+
+
+		$qb->andWhere( 'cj.confirmadoUnion = true' );
+
+
+		$qb->join( 'j.persona', 'persona' );
+
+		if ( isset( $data['nombre'] ) ) {
+
+			$nombre = $data['nombre'];
+			$qb
+				->andWhere( "upper(persona.nombre) like upper(:nombre)" );
+			$qb->setParameter( 'nombre', '%' . $nombre . '%' );
+		}
+
+		if ( isset( $data['apellido'] ) ) {
+
+			$apellido = $data['apellido'];
+			$qb
+				->andWhere( "upper(persona.apellido) like upper(:apellido)" );
+			$qb->setParameter( 'apellido', '%' . $apellido . '%' );
+		}
+
+		if ( isset( $data['numeroIdentificacion'] ) ) {
+			$numeroIdentificacion = $data['numeroIdentificacion'];
+
+			$qb
+				->andWhere( "upper(persona.numeroIdentificacion) like upper(:numeroIdentificacion)" );
+			$qb->setParameter( 'numeroIdentificacion', '%' . $numeroIdentificacion . '%' );
+		}
+
+		if ( isset( $data['posicion'] ) ) {
+			$posicion = $data['posicion'];
+
+			$qb->andWhere(
+				$qb->expr()->orX(
+					$qb->expr()->eq( 'j.posicionHabitual', ':posicionHabitual' ),
+					$qb->expr()->eq( 'j.posicionAlternativa', ':posicionAlternativa' ),
+					$qb->expr()->eq( 'j.segundaPosicionAlternativa', ':segundaPosicionAlternativa' )
+
+				)
+			);
+
+			$qb->setParameter( 'posicionHabitual', $posicion );
+
+			$qb->setParameter( 'segundaPosicionAlternativa', $posicion );
+
+			$qb->setParameter( 'posicionAlternativa', $posicion );
+		}
+
+		if ( isset( $data['club'] ) ) {
+
+			$club = $data['club'];
+
+			$qb->innerJoin( 'cj.club', 'club' );
+
+			$qb
+				->andWhere( "upper(club.nombre) like upper(:club)" );
+			$qb->setParameter( 'club', '%' . $club . '%' );
+		}
 
 		return $qb;
 	}

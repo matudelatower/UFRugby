@@ -5,48 +5,56 @@
 {% block body %}
     <h1>Solicitud de Pase</h1>
 
-    <div class="box">
-        <div class="box-header">
-            <h3 class="box-title">Solicitud</h3>
-        </div>
-        <div class="box-body">
-            {{ form_start(form) }}
+    <div class="row">
+        <div class="col-md-3">
+            <div class="box">
+                <div class="box-header">
+                    <h3 class="box-title">Solicitud</h3>
+                </div>
+                <div class="box-body">
+                    {{ form_start(form) }}
 
-            <div class="hidden">
-                {{ form_widget(form) }}
-            </div>
+                    <div class="hidden">
+                        {{ form_widget(form) }}
+                    </div>
 
-            <div class="row">
-                <div class="col-md-3">
-                    <dl>
-                        <dt>
-                            Jugador
-                        </dt>
-                        <dd>
-                            {{ jugador }}
-                        </dd>
-                        <dt>
-                            Club Origen
-                        </dt>
-                        <dd>
-                            {{ pase.clubOrigen }}
-                        </dd>
-                        <dt>
-                            Club Destino
-                        </dt>
-                        <dd>
-                            {{ pase.clubDestino }}
-                        </dd>
-                    </dl>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <dl>
+                                <dt>
+                                    Jugador
+                                </dt>
+                                <dd>
+                                    {{ jugador }}
+                                </dd>
+                                <dt>
+                                    Club Origen
+                                </dt>
+                                <dd>
+                                    {{ pase.clubOrigen }}
+                                </dd>
+                                <dt>
+                                    Club Destino
+                                </dt>
+                                <dd>
+                                    {{ pase.clubDestino }}
+                                </dd>
+                            </dl>
 
+                        </div>
+                    </div>
+
+
+                    <button class="btn btn-primary">{{ button_label|default('Confirmar') }}</button>
+                    {{ form_end(form) }}
                 </div>
             </div>
-
-
-            <button class="btn btn-primary">{{ button_label|default('Confirmar') }}</button>
-            {{ form_end(form) }}
         </div>
     </div>
 
-    <a class="btn btn-default" href="{{ path('pase_index') }}">Volver</a>
+    {% if referer %}
+        <a class="btn btn-default" href="{{ referer }}">Volver</a>
+    {% else %}
+        <a class="btn btn-default" href="{{ path('buscar_jugador') }}">Volver</a>
+    {% endif %}
 {% endblock %}

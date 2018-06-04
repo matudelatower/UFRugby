@@ -2,6 +2,7 @@
 
 namespace App\Form\Filter;
 
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ResetType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -10,7 +11,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Vich\UploaderBundle\Form\Type\VichImageType;
 
-class BuscarJugadorFilterType extends AbstractType {
+class BuscarJugadoresFilterType extends AbstractType {
 	/**
 	 * {@inheritdoc}
 	 */
@@ -20,6 +21,15 @@ class BuscarJugadorFilterType extends AbstractType {
 				TextType::class,
 				[
 					'label' => 'Cédula'
+				] )
+			->add('nombre')
+			->add('apellido')
+			->add( 'posicion',
+				EntityType::class,
+				[
+					'class'       => 'App\Entity\PosicionJugador',
+					'placeholder' => 'Seleccionar Posición',
+					'label'       => 'Posición'
 				] )
 			->add( 'buscar',
 				SubmitType::class,
@@ -38,7 +48,6 @@ class BuscarJugadorFilterType extends AbstractType {
 	 */
 	public function configureOptions( OptionsResolver $resolver ) {
 		$resolver->setDefaults( array(
-//			'data_class' => 'App\Entity\Club'
 			'csrf_protection' => false,
 			'required'        => false
 		) );
@@ -48,7 +57,7 @@ class BuscarJugadorFilterType extends AbstractType {
 	 * {@inheritdoc}
 	 */
 	public function getBlockPrefix() {
-		return 'app_buscar_jugador_filter';
+		return 'app_buscar_jugadores_filter';
 	}
 
 

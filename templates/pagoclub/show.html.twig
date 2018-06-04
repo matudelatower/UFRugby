@@ -1,32 +1,48 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-    Pagos de Clubes
+    Pagos de Club
 {% endblock title %}
 
 {% block body %}
-    <h1>Pago Club</h1>
 
-    <table>
-        <tbody>
-        <tr>
-            <th>Id</th>
-            <td>{{ pagoClub.id }}</td>
-        </tr>
-        <tr>
-            <th>Fecha</th>
-            <td>{% if pagoClub.fecha %}{{ pagoClub.fecha|date('d/m/Y H:i:s') }}{% endif %}</td>
-        </tr>
-        <tr>
-            <th>Monto</th>
-            <td>{{ pagoClub.monto }}</td>
-        </tr>
-        <tr>
-            <th>Mes</th>
-            <td>{{ pagoClub.mes }}</td>
-        </tr>
-        </tbody>
-    </table>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="box box-solid">
+                <div class="box-header with-border">
+                    <i class="fa fa-money"></i>
+
+                    <h3 class="box-title">Pago Club</h3>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <table class="table">
+                        <tbody>
+
+                        <tr>
+                            <th>Fecha</th>
+                            <td>{% if pagoClub.fecha %}{{ pagoClub.fecha|date('d/m/Y H:i:s') }}{% endif %}</td>
+                        </tr>
+                        <tr>
+                            <th>Monto</th>
+                            <td>{{ pagoClub.monto }}</td>
+                        </tr>
+                        <tr>
+                            <th>Concepto</th>
+                            <td>{{ pagoClub.concepto }}</td>
+                        </tr>
+                        <tr>
+                            <th>Mes</th>
+                            <td>{{ pagoClub.mes }}</td>
+                        </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.box-body -->
+            </div>
+        </div>
+    </div>
 
 
     <a class="btn btn-default" href="{{ path('pagoclub_index') }}">Volver</a>
