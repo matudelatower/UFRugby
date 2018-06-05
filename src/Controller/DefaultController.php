@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\ClubJugador;
+use App\Entity\Jugador;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class DefaultController extends Controller {
@@ -12,26 +14,26 @@ class DefaultController extends Controller {
 		$club = $this->getUser()->getClub();
 
 		if ( $club ) {
-			$nuevosFichajes    = count( $em->getRepository( 'App:ClubJugador' )->getCountNuevosFichajes( $club ) );
-			$cantidadJugadores = count($em->getRepository( 'App:ClubJugador' )->getCountJugadores( $club ));
-			$incidencias       = 0;
-			$estadisticas      = 0;
+			$nuevosFichajes        = count( $em->getRepository( ClubJugador::class )->getCountNuevosFichajes( $club ) );
+			$cantidadJugadores     = count( $em->getRepository( ClubJugador::class )->getCountJugadores( $club ) );
+			$cantidadCompetitivos  = $em->getRepository( Jugador::class )->getCountJugadoresCompetitivosPorClub($club);
+			$juvenilesSobreMayores = $em->getRepository( Jugador::class )->getCountJuvenilesSobreMayoresPorClub($club);
 
 
 		} else {
-			$nuevosFichajes    = $em->getRepository( 'App:ClubJugador' )->getCountAllNuevosFichajes();
-			$cantidadJugadores = $em->getRepository( 'App:ClubJugador' )->getCountAllJugadores();
-			$incidencias       = 0;
-			$estadisticas      = 0;
+			$nuevosFichajes        = $em->getRepository( ClubJugador::class )->getCountAllNuevosFichajes();
+			$cantidadJugadores     = $em->getRepository( ClubJugador::class )->getCountAllJugadores();
+			$cantidadCompetitivos  = $em->getRepository( ClubJugador::class )->getCountAllJugadoresCompetitivos();
+			$juvenilesSobreMayores = $em->getRepository( Jugador::class )->getCountJuvenilesSobreMayores();
 
 		}
 
 		return $this->render( 'app/index.html.twig',
 			[
-				'nuevosFichajes'    => $nuevosFichajes,
-				'cantidadJugadores' => $cantidadJugadores,
-				'incidencias'       => $incidencias,
-				'estadisticas'      => $estadisticas,
+				'nuevosFichajes'        => $nuevosFichajes,
+				'cantidadJugadores'     => $cantidadJugadores,
+				'cantidadCompetitivos'  => $cantidadCompetitivos,
+				'juvenilesSobreMayores' => $juvenilesSobreMayores,
 			] );
 
 	}
