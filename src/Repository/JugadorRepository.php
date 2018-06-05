@@ -305,10 +305,153 @@ class JugadorRepository extends \Doctrine\ORM\EntityRepository {
 
 		$stmtTotal = $em->getConnection()
 		                ->prepare( $sqlTotal );
-		
+
 		$stmtTotal->execute();
 
 		return $stmtTotal->fetchColumn( '0' );
+	}
+
+	public function getCountJugadoresPorClub( $club ) {
+
+		$em = $this->getEntityManager();
+
+		$sqlTotal = 'SELECT count(persona.id) as total from persona
+		INNER JOIN jugador on persona.id = jugador.persona_id		
+		INNER JOIN club_jugador on jugador.id = club_jugador.jugador_id				
+		AND club_jugador.id in (Select max(cj.id) from club_jugador cj where cj.jugador_id = jugador.id)
+		AND club_jugador.confirmado_club = TRUE
+		AND club_jugador.club_id =' . $club->getId();
+
+		$stmtTotal = $em->getConnection()
+		                ->prepare( $sqlTotal );
+
+		$stmtTotal->execute();
+
+		return $stmtTotal->fetchColumn( '0' );
+	}
+
+	public function getCountJugadores() {
+
+		$em = $this->getEntityManager();
+
+		$sqlTotal = 'SELECT count(persona.id) as total from persona
+		INNER JOIN jugador on persona.id = jugador.persona_id		
+		INNER JOIN club_jugador on jugador.id = club_jugador.jugador_id				
+		AND club_jugador.id in (Select max(cj.id) from club_jugador cj where cj.jugador_id = jugador.id)
+		AND club_jugador.confirmado_union = TRUE';
+
+		$stmtTotal = $em->getConnection()
+		                ->prepare( $sqlTotal );
+
+		$stmtTotal->execute();
+
+		return $stmtTotal->fetchColumn( '0' );
+	}
+
+	public function getJugadoresCompetitivosPorClubGroupMes( $club ) {
+
+		$em = $this->getEntityManager();
+
+		$sqlCompetitivos = 'SELECT count(persona.id) as total, DATE_FORMAT(club_jugador.fecha_creacion,"%Y-%m") as created_month from persona
+		INNER JOIN jugador on persona.id = jugador.persona_id		
+		INNER JOIN club_jugador on jugador.id = club_jugador.jugador_id
+		WHERE YEAR(DATE_SUB(NOW(), INTERVAL TO_DAYS(persona.fecha_nacimiento) DAY)) > 14		
+		AND club_jugador.id in (Select max(cj.id) from club_jugador cj where cj.jugador_id = jugador.id)
+		AND club_jugador.club_id = ' . $club->getId() . '
+		GROUP BY created_month';
+
+		$stmtCompetitivos = $em->getConnection()
+		                       ->prepare( $sqlCompetitivos );
+
+		$stmtCompetitivos->execute();
+
+		$retCompetitivos = $stmtCompetitivos->fetchAll();
+
+		$a = [];
+
+		foreach ( $retCompetitivos as $item ) {
+			$a[] = [
+				'y'              => $item['created_month'],
+				'competitivos'   => $item['total'],
+				'nocompetitivos' => 0,
+			];
+		}
+
+		$sqlNoCompetitivos = 'SELECT count(persona.id) as total, DATE_FORMAT(club_jugador.fecha_creacion,"%Y-%m") as created_month from persona
+		INNER JOIN jugador on persona.id = jugador.persona_id		
+		INNER JOIN club_jugador on jugador.id = club_jugador.jugador_id
+		WHERE YEAR(DATE_SUB(NOW(), INTERVAL TO_DAYS(persona.fecha_nacimiento) DAY)) <= 14		
+		AND club_jugador.id in (Select max(cj.id) from club_jugador cj where cj.jugador_id = jugador.id)
+		AND club_jugador.club_id = ' . $club->getId() . '
+		GROUP BY created_month';
+
+		$stmtNoCompetitivos = $em->getConnection()
+		                         ->prepare( $sqlNoCompetitivos );
+
+		$stmtNoCompetitivos->execute();
+
+		$retNoCompetitivos = $stmtNoCompetitivos->fetchAll();
+
+		foreach ( $retNoCompetitivos as $item ) {
+			$a[] = [
+				'y'              => $item['created_month'],
+				'nocompetitivos' => $item['total'],
+			];
+		}
+
+		return json_encode( $a );
+	}
+
+	public function getJugadoresCompetitivosGroupMes() {
+
+		$em = $this->getEntityManager();
+
+		$sqlCompetitivos = 'SELECT count(persona.id) as total, DATE_FORMAT(club_jugador.fecha_creacion,"%Y-%m") as created_month from persona
+		INNER JOIN jugador on persona.id = jugador.persona_id		
+		INNER JOIN club_jugador on jugador.id = club_jugador.jugador_id
+		WHERE YEAR(DATE_SUB(NOW(), INTERVAL TO_DAYS(persona.fecha_nacimiento) DAY)) > 14		
+		AND club_jugador.id in (Select max(cj.id) from club_jugador cj where cj.jugador_id = jugador.id)
+		GROUP BY created_month';
+
+		$stmtCompetitivos = $em->getConnection()
+		                       ->prepare( $sqlCompetitivos );
+
+		$stmtCompetitivos->execute();
+
+		$retCompetitivos = $stmtCompetitivos->fetchAll();
+
+		$a = [];
+
+		foreach ( $retCompetitivos as $item ) {
+			$a[] = [
+				'y'              => $item['created_month'],
+				'competitivos'   => $item['total'],
+				'nocompetitivos' => 0,
+			];
+		}
+
+		$sqlNoCompetitivos = 'SELECT count(persona.id) as total, DATE_FORMAT(club_jugador.fecha_creacion,"%Y-%m") as created_month from persona
+		INNER JOIN jugador on persona.id = jugador.persona_id		
+		INNER JOIN club_jugador on jugador.id = club_jugador.jugador_id
+		WHERE YEAR(DATE_SUB(NOW(), INTERVAL TO_DAYS(persona.fecha_nacimiento) DAY)) <= 14		
+		AND club_jugador.id in (Select max(cj.id) from club_jugador cj where cj.jugador_id = jugador.id)
+		GROUP BY created_month';
+
+		$stmtNoCompetitivos = $em->getConnection()
+		                         ->prepare( $sqlNoCompetitivos );
+
+		$stmtNoCompetitivos->execute();
+
+		$retNoCompetitivos = $stmtNoCompetitivos->fetchAll();
+
+		foreach ( $retNoCompetitivos as $item ) {
+			$a[] = [
+				'y'              => $item['created_month'],
+				'nocompetitivos' => $item['total'],
+			];
+		}
+
+		return json_encode( $a );
 	}
 
 
