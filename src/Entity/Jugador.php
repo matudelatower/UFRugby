@@ -4,10 +4,12 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use App\Entity\Base\BaseClass;
+use ApiPlatform\Core\Annotation\ApiResource;
 
 /**
  * Jugador
  *
+ * @ApiResource()
  * @ORM\Table(name="jugador")
  * @ORM\Entity(repositoryClass="App\Repository\JugadorRepository")
  */
