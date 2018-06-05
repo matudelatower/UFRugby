@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use Doctrine\ORM\Query\Expr;
+use Doctrine\ORM\Query\ResultSetMapping;
 
 /**
  * JugadorRepository
@@ -204,4 +205,111 @@ class JugadorRepository extends \Doctrine\ORM\EntityRepository {
 
 		return $qb;
 	}
+
+	public function getCountJuvenilesSobreMayores() {
+
+		$em = $this->getEntityManager();
+
+//		mayores
+//		$sql = 'SELECT count(persona.id) as mayores from persona
+//		INNER JOIN jugador on persona.id = jugador.persona_id
+//		WHERE YEAR(DATE_SUB(NOW(), INTERVAL TO_DAYS(persona.fecha_nacimiento) DAY)) > 18';
+//
+//
+//		$stmt = $em->getConnection()
+//		           ->prepare( $sql );
+//
+//		$stmt->execute();
+//		$rstMayores = $stmt->fetchColumn( '0' );
+
+// juveniles
+		$sql2 = 'SELECT count(persona.id) as juveniles from persona
+		INNER JOIN jugador on persona.id = jugador.persona_id
+		WHERE  YEAR(DATE_SUB(NOW(), INTERVAL TO_DAYS(persona.fecha_nacimiento) DAY)) BETWEEN 14 and 18';
+
+
+		$stmt2 = $em->getConnection()
+		            ->prepare( $sql2 );
+
+		$stmt2->execute();
+		$rstJuveniles = $stmt2->fetchColumn( '0' );
+
+//		total
+		$sqlTotal = 'SELECT count(persona.id) as total from persona
+		INNER JOIN jugador on persona.id = jugador.persona_id		
+		WHERE YEAR(DATE_SUB(NOW(), INTERVAL TO_DAYS(persona.fecha_nacimiento) DAY)) > 14';
+
+
+		$stmtTotal = $em->getConnection()
+		                ->prepare( $sqlTotal );
+
+		$stmtTotal->execute();
+		$rstTotal = $stmtTotal->fetchColumn( '0' );
+
+		$porcentaje = round( ( $rstJuveniles / $rstTotal ) * 100, 2 );
+
+
+		return $porcentaje;
+	}
+
+	public function getCountJuvenilesSobreMayoresPorClub( $club ) {
+
+		$em = $this->getEntityManager();
+
+// juveniles
+		$sql2 = 'SELECT count(persona.id) as total from persona
+		INNER JOIN jugador on persona.id = jugador.persona_id		
+		INNER JOIN club_jugador on jugador.id = club_jugador.jugador_id
+		WHERE YEAR(DATE_SUB(NOW(), INTERVAL TO_DAYS(persona.fecha_nacimiento) DAY)) BETWEEN 14 and 18
+		AND club_jugador.id in (Select max(cj.id) from club_jugador cj where cj.jugador_id = jugador.id)
+		AND club_jugador.club_id =' . $club->getId();
+
+
+		$stmt2 = $em->getConnection()
+		            ->prepare( $sql2 );
+
+		$stmt2->execute();
+		$rstJuveniles = $stmt2->fetchColumn( '0' );
+
+//		total
+		$sqlTotal = 'SELECT count(persona.id) as total from persona
+		INNER JOIN jugador on persona.id = jugador.persona_id		
+		INNER JOIN club_jugador on jugador.id = club_jugador.jugador_id
+		WHERE YEAR(DATE_SUB(NOW(), INTERVAL TO_DAYS(persona.fecha_nacimiento) DAY)) > 14		
+		AND club_jugador.id in (Select max(cj.id) from club_jugador cj where cj.jugador_id = jugador.id)
+		AND club_jugador.club_id =' . $club->getId();
+
+
+		$stmtTotal = $em->getConnection()
+		                ->prepare( $sqlTotal );
+
+		$stmtTotal->execute();
+		$rstTotal = $stmtTotal->fetchColumn( '0' );
+
+		$porcentaje = round( ( $rstJuveniles / $rstTotal ) * 100, 2 );
+
+
+		return $porcentaje;
+	}
+
+	public function getCountJugadoresCompetitivosPorClub( $club ) {
+
+		$em = $this->getEntityManager();
+
+		$sqlTotal = 'SELECT count(persona.id) as total from persona
+		INNER JOIN jugador on persona.id = jugador.persona_id		
+		INNER JOIN club_jugador on jugador.id = club_jugador.jugador_id
+		WHERE YEAR(DATE_SUB(NOW(), INTERVAL TO_DAYS(persona.fecha_nacimiento) DAY)) > 14		
+		AND club_jugador.id in (Select max(cj.id) from club_jugador cj where cj.jugador_id = jugador.id)
+		AND club_jugador.club_id =' . $club->getId();
+
+		$stmtTotal = $em->getConnection()
+		                ->prepare( $sqlTotal );
+		
+		$stmtTotal->execute();
+
+		return $stmtTotal->fetchColumn( '0' );
+	}
+
+
 }
