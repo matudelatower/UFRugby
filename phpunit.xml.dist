@@ -20,6 +20,10 @@
         <env name="WKHTMLTOPDF_PATH" value="/usr/local/bin/wkhtmltopdf"/>
         <env name="WKHTMLTOIMAGE_PATH" value="/usr/local/bin/wkhtmltoimage"/>
         <!-- ###- knplabs/knp-snappy-bundle ### -->
+
+        <!-- ###+ nelmio/cors-bundle ### -->
+        <env name="CORS_ALLOW_ORIGIN" value="^https?://localhost:?[0-9]*$"/>
+        <!-- ###- nelmio/cors-bundle ### -->
     </php>
 
     <testsuites>

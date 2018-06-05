@@ -9,10 +9,12 @@ use App\Entity\Base\BaseClass;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\Validator\Constraints as Assert;
+use ApiPlatform\Core\Annotation\ApiResource;
 
 /**
  * Persona
  *
+ * @ApiResource()
  * @Vich\Uploadable
  * @ORM\Table(name="persona")
  * @ORM\Entity(repositoryClass="App\Repository\PersonaRepository")
