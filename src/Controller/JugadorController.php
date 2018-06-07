@@ -49,9 +49,7 @@ class JugadorController extends Controller {
 
 
 		} else {
-
-			$filterType->add( 'club' );
-
+			
 			$filterType->handleRequest( $request );
 
 			if ( $filterType->isSubmitted() && $filterType->get( 'buscar' )->isClicked() ) {
