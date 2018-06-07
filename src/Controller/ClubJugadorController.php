@@ -31,7 +31,12 @@ class ClubJugadorController extends Controller {
 
 		if ( $club ) {
 			$filterType->handleRequest( $request );
-			$clubJugadors = $em->getRepository( ClubJugador::class )->getQbRegistroJugadores( $club );
+			if ( $filterType->isSubmitted() && $filterType->get( 'buscar' )->isClicked() ) {
+				$clubJugadors = $em->getRepository( ClubJugador::class )->getQbBuscarRegistroJugadores( $filterType->getData(),
+					$club );
+			} else {
+				$clubJugadors = $em->getRepository( ClubJugador::class )->getQbRegistroJugadores( $club );
+			}
 		} elseif ( $this->getUser()->hasRole( 'ROLE_UNION' ) ) {
 
 			$filterType->handleRequest( $request );

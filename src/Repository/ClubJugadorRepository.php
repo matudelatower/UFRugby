@@ -49,6 +49,66 @@ class ClubJugadorRepository extends \Doctrine\ORM\EntityRepository {
 		return $qb;
 	}
 
+	public function getQbBuscarRegistroJugadores( $data, $club ) {
+		$qb = $this->createQueryBuilder( 'cj' );
+
+		$qb->where( 'cj.club = :club' );
+		$qb->andWhere( 'cj.anio = :anio' );
+
+		$qb->andWhere( 'cj.confirmadoClub = false' );
+
+		$qb->setParameter( 'club', $club );
+		$qb->setParameter( 'anio', date( 'Y' ) );
+
+		$qb->innerJoin( 'cj.jugador', 'j' );
+		$qb->innerJoin( 'j.persona', 'persona' );
+		if ( isset( $data['nombre'] ) ) {
+
+			$nombre = $data['nombre'];
+			$qb
+				->andWhere( "upper(persona.nombre) like upper(:nombre)" );
+			$qb->setParameter( 'nombre', '%' . $nombre . '%' );
+		}
+
+		if ( isset( $data['apellido'] ) ) {
+
+			$apellido = $data['apellido'];
+			$qb
+				->andWhere( "upper(persona.apellido) like upper(:apellido)" );
+			$qb->setParameter( 'apellido', '%' . $apellido . '%' );
+		}
+
+		if ( isset( $data['numeroIdentificacion'] ) ) {
+			$numeroIdentificacion = $data['numeroIdentificacion'];
+
+			$qb
+				->andWhere( "upper(persona.numeroIdentificacion) like upper(:numeroIdentificacion)" );
+			$qb->setParameter( 'numeroIdentificacion', '%' . $numeroIdentificacion . '%' );
+		}
+
+		if ( isset( $data['posicion'] ) ) {
+			$posicion = $data['posicion'];
+
+			$qb->andWhere(
+				$qb->expr()->orX(
+					$qb->expr()->eq( 'j.posicionHabitual', ':posicionHabitual' ),
+					$qb->expr()->eq( 'j.posicionAlternativa', ':posicionAlternativa' ),
+					$qb->expr()->eq( 'j.segundaPosicionAlternativa', ':segundaPosicionAlternativa' )
+
+				)
+			);
+
+			$qb->setParameter( 'posicionHabitual', $posicion );
+
+			$qb->setParameter( 'segundaPosicionAlternativa', $posicion );
+
+			$qb->setParameter( 'posicionAlternativa', $posicion );
+		}
+
+
+		return $qb;
+	}
+
 	public function getCountNuevosFichajes( $club ) {
 		$qb = $this->createQueryBuilder( 'cj' );
 
@@ -185,13 +245,32 @@ class ClubJugadorRepository extends \Doctrine\ORM\EntityRepository {
 			$qb2->setParameter( 'numeroIdentificacion', '%' . $numeroIdentificacion . '%' );
 		}
 
+		if ( isset( $data['posicion'] ) ) {
+			$posicion = $data['posicion'];
+
+			$qb2->andWhere(
+				$qb2->expr()->orX(
+					$qb2->expr()->eq( 'j.posicionHabitual', ':posicionHabitual' ),
+					$qb2->expr()->eq( 'j.posicionAlternativa', ':posicionAlternativa' ),
+					$qb2->expr()->eq( 'j.segundaPosicionAlternativa', ':segundaPosicionAlternativa' )
+
+				)
+			);
+
+			$qb2->setParameter( 'posicionHabitual', $posicion );
+
+			$qb2->setParameter( 'segundaPosicionAlternativa', $posicion );
+
+			$qb2->setParameter( 'posicionAlternativa', $posicion );
+		}
+
 
 		if ( isset( $data['club'] ) ) {
 
 			$club = $data['club'];
 
 			$qb2->andWhere( 'cj2.club = :club' )
-			   ->setParameter( 'club', $club );
+			    ->setParameter( 'club', $club );
 
 		}
 
