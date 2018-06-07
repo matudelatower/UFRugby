@@ -196,11 +196,14 @@ class JugadorRepository extends \Doctrine\ORM\EntityRepository {
 
 			$club = $data['club'];
 
-			$qb->innerJoin( 'cj.club', 'club' );
+			$qb->andWhere( 'cj.club = :club' )
+			   ->setParameter( 'club', $club );
 
-			$qb
-				->andWhere( "upper(club.nombre) like upper(:club)" );
-			$qb->setParameter( 'club', '%' . $club . '%' );
+//			$qb->innerJoin( 'cj.club', 'club' );
+//
+//			$qb
+//				->andWhere( "upper(club.nombre) like upper(:club)" );
+//			$qb->setParameter( 'club', '%' . $club . '%' );
 		}
 
 		return $qb;
