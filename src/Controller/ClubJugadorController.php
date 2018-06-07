@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\ClubJugador;
+use App\Form\Filter\BuscarJugadoresFilterType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -22,10 +23,25 @@ class ClubJugadorController extends Controller {
 
 		$club = $this->getUser()->getClub();
 
+		$filterType = $this->createForm( BuscarJugadoresFilterType::class,
+			null,
+			[
+				'method' => 'GET'
+			] );
+
 		if ( $club ) {
+			$filterType->handleRequest( $request );
 			$clubJugadors = $em->getRepository( ClubJugador::class )->getQbRegistroJugadores( $club );
 		} elseif ( $this->getUser()->hasRole( 'ROLE_UNION' ) ) {
-			$clubJugadors = $em->getRepository( ClubJugador::class )->getQbByUnion();
+
+			$filterType->handleRequest( $request );
+
+			if ( $filterType->isSubmitted() && $filterType->get( 'buscar' )->isClicked() ) {
+				$clubJugadors = $em->getRepository( ClubJugador::class )->getQbBuscarByUnion( $filterType->getData() );
+			} else {
+				$clubJugadors = $em->getRepository( ClubJugador::class )->getQbByUnion();
+			}
+
 		} else {
 			$clubJugadors = [];
 		}
@@ -40,6 +56,7 @@ class ClubJugadorController extends Controller {
 		return $this->render( 'clubjugador/index.html.twig',
 			array(
 				'clubJugadors' => $clubJugadors,
+				'filter_type'  => $filterType->createView()
 			) );
 	}
 

@@ -74,7 +74,7 @@ class ClubJugadorRepository extends \Doctrine\ORM\EntityRepository {
 		$qb->andWhere( 'cj.anio = :anio' );
 		$qb->setParameter( 'anio', date( 'Y' ) );
 
-		$qb->andWhere('cj.confirmadoUnion = false');
+		$qb->andWhere( 'cj.confirmadoUnion = false' );
 
 
 		return $qb->getQuery()->getSingleScalarResult();
@@ -133,6 +133,67 @@ class ClubJugadorRepository extends \Doctrine\ORM\EntityRepository {
 		);
 
 		$qb2->setParameter( 'anio', date( 'Y' ) );
+
+
+		return $qb2;
+	}
+
+	public function getQbBuscarByUnion( $data ) {
+		$qb = $this->createQueryBuilder( 'cj' );
+
+		$qb->select( 'cj.id' );
+
+		$qb->andWhere( 'cj.anio = :anio' );
+
+		$qb
+			->andwhere( 'cj.confirmado = true' )
+			->andwhere( 'cj.confirmadoClub = true' )
+			->andwhere( 'cj.confirmadoUnion = true' );
+
+		$qb2 = $this->createQueryBuilder( 'cj2' );
+		$qb2->where(
+			$qb2->expr()->notIn( 'cj2.id', $qb->getDQL() )
+		);
+
+		$qb2->setParameter( 'anio', date( 'Y' ) );
+
+
+		$qb2->innerJoin( 'cj2.jugador', 'j' );
+		$qb2->innerJoin( 'j.persona', 'persona' );
+
+		if ( isset( $data['nombre'] ) ) {
+
+			$nombre = $data['nombre'];
+			$qb2
+				->andWhere( "upper(persona.nombre) like upper(:nombre)" );
+			$qb2->setParameter( 'nombre', '%' . $nombre . '%' );
+		}
+
+		if ( isset( $data['apellido'] ) ) {
+
+			$apellido = $data['apellido'];
+			$qb2
+				->andWhere( "upper(persona.apellido) like upper(:apellido)" );
+			$qb2->setParameter( 'apellido', '%' . $apellido . '%' );
+		}
+
+		if ( isset( $data['numeroIdentificacion'] ) ) {
+			$numeroIdentificacion = $data['numeroIdentificacion'];
+
+			$qb2
+				->andWhere( "upper(persona.numeroIdentificacion) like upper(:numeroIdentificacion)" );
+			$qb2->setParameter( 'numeroIdentificacion', '%' . $numeroIdentificacion . '%' );
+		}
+
+
+		if ( isset( $data['club'] ) ) {
+
+			$club = $data['club'];
+
+			$qb2->andWhere( 'cj2.club = :club' )
+			   ->setParameter( 'club', $club );
+
+		}
 
 
 		return $qb2;

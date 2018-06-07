@@ -22,14 +22,22 @@ class BuscarJugadoresFilterType extends AbstractType {
 				[
 					'label' => 'Cédula'
 				] )
-			->add('nombre')
-			->add('apellido')
+			->add( 'nombre' )
+			->add( 'apellido' )
 			->add( 'posicion',
 				EntityType::class,
 				[
 					'class'       => 'App\Entity\PosicionJugador',
 					'placeholder' => 'Seleccionar Posición',
 					'label'       => 'Posición'
+				] )
+			->add( 'club',
+				EntityType::class,
+				[
+					'class'       => 'App\Entity\Club',
+					'placeholder' => 'Seleccionar Club',
+					'label'       => 'Club',
+					'attr'        => [ 'class' => 'select2' ],
 				] )
 			->add( 'buscar',
 				SubmitType::class,
