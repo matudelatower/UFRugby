@@ -64,9 +64,13 @@
                                 <td>{{ clubJugador.jugador.persona.numeroIdentificacion }}</td>
                                 <td>{{ clubJugador.jugador.persona.nombre }} {{ clubJugador.jugador.persona.apellido }}</td>
                                 <td>{{ clubJugador.jugador.persona.fechaNacimiento | date ('d/m/Y') }}</td>
-                                <td>{{ clubJugador.jugador.posicionHabitual }}</td>
+                                <td class="col-md-2">
+                                    {{ clubJugador.jugador.posicionHabitual }}<br>
+                                    {{ clubJugador.jugador.posicionAlternativa }}<br>
+                                    {{ clubJugador.jugador.segundaPosicionAlternativa }}
+                                </td>
                                 <td>{% if clubJugador.fechaCreacion %}{{ clubJugador.fechaCreacion|date('d/m/Y H:i:s') }}{% endif %}</td>
-                                <td>
+                                <td class="col-md-2">
                                     {% if not clubJugador.confirmado %}
                                         <small class="label bg-yellow">El jugador no Confirmó su mail</small>
                                     {% endif %}
