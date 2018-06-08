@@ -1,8 +1,6 @@
 <template>
     <form-wizard shape="square" title="" subtitle="" color="#3498db"
-                 next-button-text="Siguiente"
-                 back-button-text="Anterior"
-                 finish-button-text="Confirmar"
+
                  @on-complete="submit"
     >
         <tab-content title="1" icon="ti-user">
@@ -17,7 +15,7 @@
             <precompetitivo-2 ref="step2" @on-validate="mergePartialModels"></precompetitivo-2>
         </tab-content>
         <tab-content title="3" icon="ti-settings" :before-change="()=>validateStep('step3')">
-            <precompetitivo-3 ref="step3"
+            <precompetitivo-3 ref="step3" @show-next="mostrarSiguiente"
                               @on-validate="mergePartialModels" :final-model="finalModel"></precompetitivo-3>
         </tab-content>
 
@@ -70,6 +68,17 @@
         </template>
 
         <BlockUI message="Procesando..." v-show="cargando"></BlockUI>
+
+        <template slot="footer" slot-scope="props">
+            <div class="wizard-footer-left">
+                <wizard-button  v-if="props.activeTabIndex > 0 && !props.isLastStep" @click.native="props.prevTab()" :style="props.fillButtonStyle">Anterior</wizard-button>
+            </div>
+            <div class="wizard-footer-right" v-if="showNext">
+                <wizard-button v-if="!props.isLastStep"@click.native="props.nextTab()" class="wizard-footer-right" :style="props.fillButtonStyle">Siguiente</wizard-button>
+
+                <wizard-button v-else class="wizard-footer-right finish-button" :style="props.fillButtonStyle">  {{props.isLastStep ? 'Confirmar' : 'Siguiente'}}</wizard-button>
+            </div>
+        </template>
     </form-wizard>
 
 </template>
@@ -79,7 +88,8 @@
         data: function () {
             return {
                 finalModel: {},
-                cargando: false
+                cargando: false,
+                showNext: true
             }
         },
         methods: {
@@ -92,6 +102,10 @@
                     // merging each step model into the final model
                     this.finalModel = Object.assign({}, this.finalModel, model)
                 }
+            },
+            mostrarSiguiente(event){
+                this.showNext = event
+
             },
             submit() {
                 console.log(this.finalModel)
