@@ -242,7 +242,8 @@
                 clubs: [],
                 posiciones: [],
                 disableFields: true,
-                cargando: false
+                cargando: false,
+                estadoFichaje: []
             }
         },
         validations() {
@@ -274,7 +275,7 @@
                         'posicionHabitual',
                     ]
                 }
-            }else {
+            } else {
                 return {
                     apellido: {required},
                     nombre: {required},
@@ -333,7 +334,10 @@
                 });
             },
             buscarPersona() {
-                console.log('buscando');
+                console.log('buscando', this.numeroIdentificacion);
+                if (this.numeroIdentificacion == '' || !this.numeroIdentificacion) {
+                    return false;
+                }
                 this.cargando = true;
                 if (this.numeroIdentificacion) {
                     let params = {
@@ -358,13 +362,35 @@
                         this.telefono = response.data.telefono;
                         this.telefonoAlternativo = response.data.telefonoAlternativo;
                         this.mail = response.data.mail;
+                        this.estadoFichaje = response.data.estadoFichaje;
+
+                        if (this.estadoFichaje) {
+                            window.$('#modal-alert').modal('toggle');
+                            let mensaje = 'Ya completaste tu ficha este año. <br>' +
+                                'Si cargaste mal alguno de tus datos, comunicate con la Unión'
+                            window.$('#modal-alert .modal-body').html(mensaje);
+                            this.$emit('show-next', false);
+                        }
 
                         this.cargando = false;
+
 
                     }).catch(error => {
                         console.error(error);
+
+                        this.apellido = null;
+                        this.nombre = null;
+                        this.sexo = null;
+                        this.numeroIdentificacion = null;
+                        this.fechaNacimiento = null;
+                        this.direccion = null;
+                        this.telefono = null;
+                        this.telefonoAlternativo = null;
+                        this.mail = null;
+
                         this.disableFields = false;
                         this.cargando = false;
+                        this.$emit('show-next', true);
 
                     });
                 }

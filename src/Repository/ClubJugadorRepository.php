@@ -301,4 +301,16 @@ class ClubJugadorRepository extends \Doctrine\ORM\EntityRepository {
 		return $qb->getQuery()->getSingleScalarResult();
 	}
 
+	public function findSolicitudPendiente( $persona ) {
+		$qb = $this->createQueryBuilder( 'cj' );
+
+		$qb->innerJoin( 'cj.jugador', 'jugador' );
+		$qb->where( 'jugador.persona = :persona' );
+		$qb->setParameter( 'persona', $persona );
+		$qb->andWhere( 'cj.anio = :anio' );
+		$qb->setParameter( 'anio', date( 'Y' ) );
+
+		return $qb->getQuery()->getResult();
+	}
+
 }

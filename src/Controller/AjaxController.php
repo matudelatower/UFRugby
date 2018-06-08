@@ -116,7 +116,7 @@ class AjaxController extends Controller {
 			foreach ( $entities as $entity ) {
 				$json[] = array(
 					'id'     => $entity->getId(),
-					'numero'     => $entity->getNumero(),
+					'numero' => $entity->getNumero(),
 					'nombre' => $entity->getNombre()
 				);
 			}
@@ -453,6 +453,18 @@ class AjaxController extends Controller {
 		];
 		$persona            = $this->getDoctrine()->getRepository( 'App:Persona' )->findOneBy( $criteria );
 
+		$clubJugador = $this->getDoctrine()->getRepository( ClubJugador::class )->findSolicitudPendiente( $persona );
+
+		$estadoFichaje = [];
+		if ( count( $clubJugador ) >= 1 ) {
+			$fichaje       = $clubJugador[0];
+			$estadoFichaje = [
+				'pendienteJugador' => $fichaje->getConfirmado(),
+				'pendienteClub'    => $fichaje->getConfirmadoClub(),
+				'pendienteUnion'   => $fichaje->getConfirmadoUnion(),
+			];
+		}
+
 		if ( $persona ) {
 			$rta = [
 				'apellido'            => $persona->getApellido(),
@@ -466,6 +478,7 @@ class AjaxController extends Controller {
 				'telefono'            => $persona->getContacto()->getTelefono(),
 				'telefonoAlternativo' => $persona->getContacto()->getTelefonoAlternativa(),
 				'mail'                => $persona->getContacto()->getMail(),
+				'estadoFichaje'       => $estadoFichaje
 			];
 
 			return new JsonResponse( $rta );
