@@ -27,7 +27,7 @@
                     identificación</label>
                     <input v-model="numeroIdentificacion" id="appbundle_precompetitivo_numeroIdentificacion"
                            name="appbundle_precompetitivo[numeroIdentificacion]"
-                           required="required" class="form-control" type="text" @blur="buscarPersona">
+                           required="required" class="form-control" type="number" @blur="buscarPersona">
 
                     <span class="help-block" v-if="$v.numeroIdentificacion.$error && !$v.numeroIdentificacion.required">Campo Requerido</span>
                 </div>
