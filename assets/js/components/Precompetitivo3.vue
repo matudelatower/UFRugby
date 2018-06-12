@@ -381,7 +381,6 @@
                         this.apellido = null;
                         this.nombre = null;
                         this.sexo = null;
-                        this.numeroIdentificacion = null;
                         this.fechaNacimiento = null;
                         this.direccion = null;
                         this.telefono = null;
