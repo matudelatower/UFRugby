@@ -1,6 +1,5 @@
 <template>
     <form-wizard shape="square" title="" subtitle="" color="#3498db"
-
                  @on-complete="submit"
     >
         <tab-content title="1" icon="ti-user">
@@ -74,9 +73,10 @@
                 <wizard-button  v-if="props.activeTabIndex > 0 && !props.isLastStep" @click.native="props.prevTab()" :style="props.fillButtonStyle">Anterior</wizard-button>
             </div>
             <div class="wizard-footer-right" v-if="showNext">
-                <wizard-button v-if="!props.isLastStep"@click.native="props.nextTab()" class="wizard-footer-right" :style="props.fillButtonStyle">Siguiente</wizard-button>
+                <wizard-button v-if="!props.isLastStep" @click.native="props.nextTab()" class="wizard-footer-right" :style="props.fillButtonStyle">Siguiente</wizard-button>
 
-                <wizard-button v-else class="wizard-footer-right finish-button" :style="props.fillButtonStyle">  {{props.isLastStep ? 'Confirmar' : 'Siguiente'}}</wizard-button>
+                <wizard-button v-else @click.native="props.nextTab()" class="wizard-footer-right finish-button" :style="props.fillButtonStyle">{{props.isLastStep ? 'Confirmar' : 'Siguiente'}}</wizard-button>
+
             </div>
         </template>
     </form-wizard>
