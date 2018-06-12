@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Persona;
+use App\Form\PersonaType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -71,7 +72,7 @@ class PersonaController extends Controller
      */
     public function editAction(Request $request, Persona $persona)
     {
-        $editForm = $this->createForm('App\Form\PersonaType', $persona);
+        $editForm = $this->createForm(PersonaType::class, $persona);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
