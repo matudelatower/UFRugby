@@ -62,7 +62,16 @@
                             <tr>
                                 <td>{{ clubJugador.club }}</td>
                                 <td>{{ clubJugador.jugador.persona.numeroIdentificacion }}</td>
-                                <td>{{ clubJugador.jugador.persona.nombre }} {{ clubJugador.jugador.persona.apellido }}</td>
+                                <td>
+                                    {% if (is_granted('ROLE_UNION')) %}
+                                        <a href="{{ path('persona_edit', { 'id': clubJugador.jugador.persona.id }) }}"
+                                           data-toggle="tooltip" title="Editar Datos Personales">
+                                            {{ clubJugador.jugador.persona.nombre }} {{ clubJugador.jugador.persona.apellido }}
+                                        </a>
+                                    {% else %}
+                                        {{ clubJugador.jugador.persona.nombre }} {{ clubJugador.jugador.persona.apellido }}
+                                    {% endif %}
+                                </td>
                                 <td>{{ clubJugador.jugador.persona.fechaNacimiento | date ('d/m/Y') }}</td>
                                 <td class="col-md-2">
                                     {{ clubJugador.jugador.posicionHabitual }}<br>
