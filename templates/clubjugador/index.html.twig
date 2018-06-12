@@ -64,7 +64,7 @@
                                 <td>{{ clubJugador.jugador.persona.numeroIdentificacion }}</td>
                                 <td>
                                     {% if (is_granted('ROLE_UNION')) %}
-                                        <a href="{{ path('persona_edit', { 'id': clubJugador.jugador.persona.id }) }}"
+                                        <a href="{{ path('persona_edit', { 'id': clubJugador.jugador.persona.id }) }}?referer={{app.request.requestUri | url_encode }}"
                                            data-toggle="tooltip" title="Editar Datos Personales">
                                             {{ clubJugador.jugador.persona.nombre }} {{ clubJugador.jugador.persona.apellido }}
                                         </a>
