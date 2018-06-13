@@ -18,3 +18,6 @@ clubjugador_rechazar:
     controller: App\Controller\ClubJugadorController::rechazarAction
 #    methods:  [GET, POST]
 
+clubjugador_reenviar_mail_confirmacion:
+    path:     /{id}/clubjugador-reenviar-mail-confirmacion
+    controller: App\Controller\ClubJugadorController::reenviarMailConfirmacion

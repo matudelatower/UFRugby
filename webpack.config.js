@@ -22,6 +22,7 @@ Encore
     .addEntry('js/charts', './assets/js/charts.js')
     .addEntry('js/app', './assets/js/app.js')
     .addEntry('js/login', './assets/js/login.js')
+    .addEntry('js/functions', './assets/js/functions.js')
 
     .addStyleEntry('css/main', './assets/css/main.scss')
     .addStyleEntry('css/adminlte', './assets/css/adminlte.scss')
