@@ -143,13 +143,17 @@ class Builder {
 					);
 			}
 
-			$menu[ $keyPersonal ]
-				->addChild(
-					'Registro de Jugadores',
-					array(
-						'route' => 'clubjugador_index',
-					)
-				);
+			if ( $this->authorizationChecker->isGranted( 'ROLE_CLUB' ) ||
+			     $this->authorizationChecker->isGranted( 'ROLE_UNION' ) ) {
+
+				$menu[ $keyPersonal ]
+					->addChild(
+						'Registro de Jugadores',
+						array(
+							'route' => 'clubjugador_index',
+						)
+					);
+			}
 
 			$menu[ $keyPersonal ]
 				->addChild(
@@ -161,7 +165,8 @@ class Builder {
 		}
 
 		if ( $this->authorizationChecker->isGranted( 'ROLE_ADMIN' ) ||
-		     $this->authorizationChecker->isGranted( 'ROLE_UNION' ) ) {
+		     $this->authorizationChecker->isGranted( 'ROLE_UNION' ) ||
+		     $this->authorizationChecker->isGranted( 'ROLE_REFEREE_ADMIN' ) ) {
 
 			$menu[ $keyPersonal ]
 				->addChild(
@@ -170,7 +175,6 @@ class Builder {
 						'route' => 'referee_index',
 					)
 				);
-
 		}
 
 

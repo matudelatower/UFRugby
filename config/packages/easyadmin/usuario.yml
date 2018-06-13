@@ -23,6 +23,7 @@ easy_admin:
                             'ROLE_ADMIN': 'ROLE_ADMIN',
                             'ROLE_CLUB': 'ROLE_CLUB',
                             'ROLE_REFEREE': 'ROLE_REFEREE',
+                            'ROLE_REFEREE_ADMIN': 'ROLE_REFEREE_ADMIN',
                             'ROLE_UNION': 'ROLE_UNION'
                           }
                         }
