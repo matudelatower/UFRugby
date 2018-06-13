@@ -64,7 +64,7 @@
                                 <td>{{ clubJugador.jugador.persona.numeroIdentificacion }}</td>
                                 <td>
                                     {% if (is_granted('ROLE_UNION')) %}
-                                        <a href="{{ path('persona_edit', { 'id': clubJugador.jugador.persona.id }) }}?referer={{app.request.requestUri | url_encode }}"
+                                        <a href="{{ path('persona_edit', { 'id': clubJugador.jugador.persona.id }) }}?referer={{ app.request.requestUri | url_encode }}"
                                            data-toggle="tooltip" title="Editar Datos Personales">
                                             {{ clubJugador.jugador.persona.nombre }} {{ clubJugador.jugador.persona.apellido }}
                                         </a>
@@ -106,6 +106,11 @@
                                                 <i class="fa fa-check"></i>
                                             </a>
                                         {% endif %}
+                                        <a class="btn btn-default btn-resend" data-toggle="tooltip"
+                                           title="Reenviar Mail"
+                                           data-url="{{ path('clubjugador_reenviar_mail_confirmacion', { 'id': clubJugador.id }) }}">
+                                            <i class="fa fa-send"></i>
+                                        </a>
                                     {% endif %}
 
                                     <a class="btn btn-default"
@@ -132,3 +137,19 @@
 
 
 {% endblock %}
+
+{% block javascripts %}
+    <script>
+        $(document).ready(function () {
+            $('.btn-resend').click(function () {
+                let url = $(this).data('url');
+                modalConfirm('Aviso!', 'Desea Reenviar el Mail?', url);
+            })
+        });
+        $(document).on('click','#modal-confirm #modal-confirm-btn-ok', function () {
+            $(this).addClass('disabled');
+            $(this).html('<i class="fa fa-circle-o-notch fa-spin"></i> Enviando');
+        } )
+
+    </script>
+{% endblock javascripts %}
