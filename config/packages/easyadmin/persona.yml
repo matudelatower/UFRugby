@@ -1,0 +1,9 @@
+easy_admin:
+    entities:
+        Persona:
+#            label: "Tipo de Torneo"
+            class: App\Entity\Persona
+            form:
+                fields:
+                - { property: 'nombre' }
+                - { property: 'apellido' }

@@ -42,9 +42,9 @@ class Builder {
 
 		if ( $this->authorizationChecker->isGranted( 'ROLE_USER' ) ) {
 
-			$keyPersonal = 'ADMINISTRACIÓN';
+			$keyAdministracion = 'ADMINISTRACIÓN';
 			$menu->addChild(
-				$keyPersonal,
+				$keyAdministracion,
 				array(
 					'childrenAttributes' => array(
 						'class' => 'treeview-menu',
@@ -57,7 +57,7 @@ class Builder {
 
 			if ( $this->authorizationChecker->isGranted( 'ROLE_ADMIN' ) ) {
 
-				$menu[ $keyPersonal ]
+				$menu[ $keyAdministracion ]
 					->addChild(
 						'Parámetros',
 						array(
@@ -70,7 +70,7 @@ class Builder {
 			if ( $this->authorizationChecker->isGranted( 'ROLE_ADMIN' ) ||
 			     $this->authorizationChecker->isGranted( 'ROLE_UNION' ) ) {
 
-				$menu[ $keyPersonal ]
+				$menu[ $keyAdministracion ]
 					->addChild(
 						'Clubs',
 						array(
@@ -78,7 +78,7 @@ class Builder {
 						)
 					);
 
-				$menu[ $keyPersonal ]
+				$menu[ $keyAdministracion ]
 					->addChild(
 						'Registro de Pagos',
 						array(
@@ -86,7 +86,7 @@ class Builder {
 						)
 					);
 
-				$menu[ $keyPersonal ]
+				$menu[ $keyAdministracion ]
 					->addChild(
 						'Pases',
 						array(
@@ -97,7 +97,7 @@ class Builder {
 			}
 
 			if ( $this->authorizationChecker->isGranted( 'ROLE_CLUB' ) ) {
-				$menu[ $keyPersonal ]
+				$menu[ $keyAdministracion ]
 					->addChild(
 						'Registro de Pagos',
 						array(
@@ -105,7 +105,7 @@ class Builder {
 						)
 					);
 
-				$menu[ $keyPersonal ]
+				$menu[ $keyAdministracion ]
 					->addChild(
 						'Buscar Jugadores',
 						array(
@@ -146,7 +146,7 @@ class Builder {
 			if ( $this->authorizationChecker->isGranted( 'ROLE_CLUB' ) ||
 			     $this->authorizationChecker->isGranted( 'ROLE_UNION' ) ) {
 
-				$menu[ $keyPersonal ]
+				$menu[ $keyAdministracion ]
 					->addChild(
 						'Registro de Jugadores',
 						array(
@@ -154,8 +154,10 @@ class Builder {
 						)
 					);
 			}
-
-			$menu[ $keyPersonal ]
+			if ( $this->authorizationChecker->isGranted( 'ROLE_ADMIN' ) ||
+				 $this->authorizationChecker->isGranted( 'ROLE_CLUB' ) ||
+			     $this->authorizationChecker->isGranted( 'ROLE_UNION' ) ) {
+			$menu[ $keyAdministracion ]
 				->addChild(
 					'Jugadores',
 					array(
@@ -163,12 +165,13 @@ class Builder {
 					)
 				);
 		}
+		}
 
 		if ( $this->authorizationChecker->isGranted( 'ROLE_ADMIN' ) ||
 		     $this->authorizationChecker->isGranted( 'ROLE_UNION' ) ||
 		     $this->authorizationChecker->isGranted( 'ROLE_REFEREE_ADMIN' ) ) {
 
-			$menu[ $keyPersonal ]
+			$menu[ $keyAdministracion ]
 				->addChild(
 					'Referees',
 					array(
