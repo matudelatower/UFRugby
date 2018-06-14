@@ -455,7 +455,7 @@ class AjaxController extends Controller {
 
 		$clubJugador = $this->getDoctrine()->getRepository( ClubJugador::class )->findSolicitudPendiente( $persona );
 
-		$estadoFichaje = [];
+		$estadoFichaje = null;
 		if ( count( $clubJugador ) >= 1 ) {
 			$fichaje       = $clubJugador[0];
 			$estadoFichaje = [
