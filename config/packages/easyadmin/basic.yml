@@ -26,6 +26,7 @@ easy_admin:
             - { label: 'Tipo Relación', entity: TipoRelacion }
             - { label: 'Sexo', entity: Sexo }
             - { label: 'Textos', entity: Texto }
+            - { label: 'Personas', entity: Persona }
             - { label: 'Grupos Sanguineos', entity: GrupoSanguineo }
             - { label: 'País', entity: Pais }
             - { label: 'Usuarios', entity: Usuario }
