@@ -24,6 +24,7 @@
                     <div class="col-md-6">
                         {{ form_row(filter_type.apellido) }}
                         {{ form_row(filter_type.posicion) }}
+                        {{ form_row(filter_type.estadoFichaje) }}
                     </div>
                 </div>
                 <div class="box-footer">
@@ -39,94 +40,127 @@
 
     <div class="row">
         <div class="col-md-12">
-            <div class="box">
-                <div class="box-header">
-                    <h3 class="box-title">Jugadores</h3>
-                </div>
-                <div class="box-body">
-                    <table class="table table-bordered table-striped data-table">
-                        <thead>
-                        <tr>
-                            <th>Club</th>
-                            <th>Nº Identificación</th>
-                            <th>Jugador</th>
-                            <th>Fecha de Nacimiento</th>
-                            <th>Posición</th>
-                            <th>Fecha de Registro</th>
-                            <th>Estado</th>
-                            <th>Acciones</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {% for clubJugador in clubJugadors %}
+            <form method="post" id="form-confirmar-fichajes" action="{{ path('clubjugador_confirmar_fichajes') }}">
+                <div class="box">
+                    <div class="box-header">
+                        <h3 class="box-title">Fichajes - {{ clubJugadors.getTotalItemCount }} encontrados</h3>
+                    </div>
+                    <div class="box-body">
+                        <table class="table table-bordered table-striped data-table">
+                            <thead>
                             <tr>
-                                <td>{{ clubJugador.club }}</td>
-                                <td>{{ clubJugador.jugador.persona.numeroIdentificacion }}</td>
-                                <td>
-                                    {% if (is_granted('ROLE_UNION')) %}
-                                        <a href="{{ path('persona_edit', { 'id': clubJugador.jugador.persona.id }) }}?referer={{ app.request.requestUri | url_encode }}"
-                                           data-toggle="tooltip" title="Editar Datos Personales">
-                                            {{ clubJugador.jugador.persona.nombre }} {{ clubJugador.jugador.persona.apellido }}
-                                        </a>
-                                    {% else %}
-                                        {{ clubJugador.jugador.persona.nombre }} {{ clubJugador.jugador.persona.apellido }}
-                                    {% endif %}
-                                </td>
-                                <td>{{ clubJugador.jugador.persona.fechaNacimiento | date ('d/m/Y') }}</td>
-                                <td class="col-md-2">
-                                    {{ clubJugador.jugador.posicionHabitual }}<br>
-                                    {{ clubJugador.jugador.posicionAlternativa }}<br>
-                                    {{ clubJugador.jugador.segundaPosicionAlternativa }}
-                                </td>
-                                <td>{% if clubJugador.fechaCreacion %}{{ clubJugador.fechaCreacion|date('d/m/Y H:i:s') }}{% endif %}</td>
-                                <td class="col-md-2">
-                                    {% if not clubJugador.confirmado %}
-                                        <small class="label bg-yellow">El jugador no Confirmó su mail</small>
-                                    {% endif %}
-                                    {% if not clubJugador.confirmadoUnion %}
-                                        <small class="label bg-yellow">Pendiente Unión</small>
-                                    {% endif %}
-                                    {% if not clubJugador.confirmadoClub %}
-                                        <small class="label bg-yellow">Pendiente Club</small>
-                                    {% endif %}
-                                </td>
-                                <td>
-                                    {% if (is_granted('ROLE_CLUB')) %}
-                                        {% if clubJugador.confirmado and not clubJugador.confirmadoClub %}
-                                            <a class="btn btn-default"
-                                               href="{{ path('clubjugador_confirmar', { 'id': clubJugador.id }) }}">
-                                                <i class="fa fa-check"></i>
-                                            </a>
-                                        {% endif %}
-                                    {% endif %}
-                                    {% if (is_granted('ROLE_UNION')) %}
-                                        {% if clubJugador.confirmado and clubJugador.confirmadoClub and not clubJugador.confirmadoUnion %}
-                                            <a class="btn btn-default"
-                                               href="{{ path('clubjugador_confirmar', { 'id': clubJugador.id }) }}">
-                                                <i class="fa fa-check"></i>
-                                            </a>
-                                        {% endif %}
-                                        <a class="btn btn-default btn-resend" data-toggle="tooltip"
-                                           title="Reenviar Mail"
-                                           data-url="{{ path('clubjugador_reenviar_mail_confirmacion', { 'id': clubJugador.id }) }}">
-                                            <i class="fa fa-send"></i>
-                                        </a>
-                                    {% endif %}
-
-                                    <a class="btn btn-default"
-                                       href="{{ path('clubjugador_rechazar', { 'id': clubJugador.id }) }}">
-                                        <i class="fa fa-remove"></i>
-                                    </a>
-                                </td>
+                                <th>
+                                    <input type="checkbox" id="select_all"/>
+                                </th>
+                                <th>Club</th>
+                                <th>Nº Identificación</th>
+                                <th>Jugador</th>
+                                <th>Fecha de Nacimiento</th>
+                                <th>Posición</th>
+                                <th>Fecha de Registro</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
                             </tr>
-                        {% endfor %}
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                            {% for clubJugador in clubJugadors %}
+                                <tr>
+                                    <td>
+                                        {% if clubJugador.confirmadoClub %}
+                                            <input type="checkbox" class="checkbox" name="fichajes[]"
+                                                   value="{{ clubJugador.id }}">
+                                        {% endif %}
+                                    </td>
+                                    <td>{{ clubJugador.club }}</td>
+                                    <td>{{ clubJugador.jugador.persona.numeroIdentificacion }}</td>
+                                    <td>
+                                        {% if (is_granted('ROLE_UNION')) %}
+                                            <a href="{{ path('persona_edit', { 'id': clubJugador.jugador.persona.id }) }}?referer={{ app.request.requestUri | url_encode }}"
+                                               data-toggle="tooltip" title="Editar Datos Personales">
+                                                {{ clubJugador.jugador.persona.nombre }} {{ clubJugador.jugador.persona.apellido }}
+                                            </a>
+                                        {% else %}
+                                            {{ clubJugador.jugador.persona.nombre }} {{ clubJugador.jugador.persona.apellido }}
+                                        {% endif %}
+                                    </td>
+                                    <td>{{ clubJugador.jugador.persona.fechaNacimiento | date ('d/m/Y') }}</td>
+                                    <td class="col-md-2">
+                                        {{ clubJugador.jugador.posicionHabitual }}<br>
+                                        {{ clubJugador.jugador.posicionAlternativa }}<br>
+                                        {{ clubJugador.jugador.segundaPosicionAlternativa }}
+                                    </td>
+                                    <td>{% if clubJugador.fechaCreacion %}{{ clubJugador.fechaCreacion|date('d/m/Y H:i:s') }}{% endif %}</td>
+                                    <td class="col-md-2">
+                                        {% if not clubJugador.confirmado %}
+                                            <small class="label bg-yellow">El jugador no Confirmó su mail</small>
+                                        {% endif %}
+                                        {% if not clubJugador.confirmadoUnion %}
+                                            <small class="label bg-yellow">Pendiente Unión</small>
+                                        {% endif %}
+                                        {% if not clubJugador.confirmadoClub %}
+                                            <small class="label bg-yellow">Pendiente Club</small>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% if (is_granted('ROLE_CLUB')) %}
+                                            {% if clubJugador.confirmado and not clubJugador.confirmadoClub %}
+                                                <a class="btn btn-default"
+                                                   href="{{ path('clubjugador_confirmar', { 'id': clubJugador.id }) }}">
+                                                    <i class="fa fa-check"></i>
+                                                </a>
+                                            {% endif %}
+                                        {% endif %}
+                                        {% if (is_granted('ROLE_UNION')) %}
+                                            {% if clubJugador.confirmado and clubJugador.confirmadoClub and not clubJugador.confirmadoUnion %}
+                                                <a class="btn btn-default"
+                                                   href="{{ path('clubjugador_confirmar', { 'id': clubJugador.id }) }}">
+                                                    <i class="fa fa-check"></i>
+                                                </a>
+                                            {% endif %}
+                                            <a class="btn btn-default btn-resend" data-toggle="tooltip"
+                                               title="Reenviar Mail"
+                                               data-url="{{ path('clubjugador_reenviar_mail_confirmacion', { 'id': clubJugador.id }) }}">
+                                                <i class="fa fa-send"></i>
+                                            </a>
+                                        {% endif %}
+
+                                        <a class="btn btn-default"
+                                           href="{{ path('clubjugador_rechazar', { 'id': clubJugador.id }) }}">
+                                            <i class="fa fa-remove"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="box-footer">
+                        {% if (is_granted('ROLE_UNION')) %}
+                            <button type="submit" id="btn-confirmar-fichajes" class="btn btn-primary"> Confirmar
+                                Fichajes
+                            </button>
+                        {% endif %}
+                    </div>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
 
+    <div class="row">
+        <div class="col-md-2">
+            <label> Registros:</label>
+            <select name="mostrar-resultados" id="mostrar-resultados" class="input-sm">
+                <option value="10" {% if filter_type.cantidadRegistros.vars.data == 10 %}selected{% endif %} >10
+                </option>
+                <option value="25" {% if filter_type.cantidadRegistros.vars.data == 25 %}selected{% endif %} >25
+                </option>
+                <option value="50" {% if filter_type.cantidadRegistros.vars.data == 50 %}selected{% endif %} >50
+                </option>
+                <option value="100" {% if filter_type.cantidadRegistros.vars.data == 100 %}selected{% endif %} >100
+                </option>
+            </select>
+        </div>
+    </div>
     <div class="row">
         <div class="col-md-12 text-center">
             <div class="navigation">
@@ -145,11 +179,44 @@
                 let url = $(this).data('url');
                 modalConfirm('Aviso!', 'Desea Reenviar el Mail?', url);
             })
+
+            $('#mostrar-resultados').change(function () {
+                console.log($(this).val())
+                $('#{{ filter_type.cantidadRegistros.vars.id }}').val($(this).val())
+                $("form[name='{{ filter_type.vars.id }}']").submit();
+            });
+
+
+            $('#select_all').on('click', function () {
+                if (this.checked) {
+                    $('.checkbox').each(function () {
+                        this.checked = true;
+                    });
+                } else {
+                    $('.checkbox').each(function () {
+                        this.checked = false;
+                    });
+                }
+            });
+
+            $('.checkbox').on('click', function () {
+                if ($('.checkbox:checked').length == $('.checkbox').length) {
+                    $('#select_all').prop('checked', true);
+                } else {
+                    $('#select_all').prop('checked', false);
+                }
+            });
+
+            $('#form-confirmar-fichajes').submit(function (event) {
+                $('#btn-confirmar-fichajes').addClass('disabled');
+                $('#btn-confirmar-fichajes').html('<i class="fa fa-circle-o-notch fa-spin"></i> Enviando');
+            });
         });
-        $(document).on('click','#modal-confirm #modal-confirm-btn-ok', function () {
+        $(document).on('click', '#modal-confirm #modal-confirm-btn-ok', function () {
             $(this).addClass('disabled');
             $(this).html('<i class="fa fa-circle-o-notch fa-spin"></i> Enviando');
-        } )
+        });
+
 
     </script>
 {% endblock javascripts %}

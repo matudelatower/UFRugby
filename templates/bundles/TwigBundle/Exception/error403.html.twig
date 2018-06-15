@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Error 403
+{% endblock title %}
+{% block body %}
+    <div class="error-page">
+        <h2 class="headline text-yellow"> 403</h2>
+
+        <div class="error-content">
+            <h3><i class="fa fa-warning text-yellow"></i> No tenés Permisos para ver esta página.</h3>
+
+            <p>
+                Si se trata de un error enviar captura de pantalla del problema al administrador.
+                <a href="{{ path('app_homepage') }}" class="btn btn-primary">
+                    <i class="fa fa-arrow-left"></i>
+                    Volver al Inicio
+                </a>
+            </p>
+
+
+        </div>
+        <!-- /.error-content -->
+    </div>
+{% endblock body %}

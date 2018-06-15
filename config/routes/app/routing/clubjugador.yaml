@@ -21,3 +21,8 @@ clubjugador_rechazar:
 clubjugador_reenviar_mail_confirmacion:
     path:     /{id}/clubjugador-reenviar-mail-confirmacion
     controller: App\Controller\ClubJugadorController::reenviarMailConfirmacion
+
+clubjugador_confirmar_fichajes:
+    path:     /confirmar-fichajes
+    controller: App\Controller\ClubJugadorController::confirmarFichajes
+    methods: POST
