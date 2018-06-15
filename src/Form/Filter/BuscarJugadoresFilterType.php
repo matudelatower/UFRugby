@@ -4,6 +4,8 @@ namespace App\Form\Filter;
 
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\ResetType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -39,6 +41,18 @@ class BuscarJugadoresFilterType extends AbstractType {
 					'label'       => 'Club',
 					'attr'        => [ 'class' => 'select2' ],
 				] )
+			->add( 'estadoFichaje',
+				ChoiceType::class,
+				[
+					'choices'  => [
+						'Pendiente Unión' => 'confirmadoClub',
+						'Pendiente Club'  => 'confirmadoUnion'
+//						se pone al reves los valores porque busca lo contrario
+					],
+					'placeholder' => 'Seleccionar Estado',
+					'required' => false
+				] )
+			->add( 'cantidadRegistros', HiddenType::class )
 			->add( 'buscar',
 				SubmitType::class,
 				array(

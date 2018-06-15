@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Error
+{% endblock title %}
+{% block body %}
+    <div class="error-page">
+        <h2 class="headline text-yellow"> Error</h2>
+
+        <div class="error-content">
+            <h3><i class="fa fa-warning text-yellow"></i> Error Interno.</h3>
+
+            <p>
+                Enviar captura de pantalla del problema al administrador.
+                <a href="{{ path('app_homepage') }}" class="btn btn-primary">
+                    <i class="fa fa-arrow-left"></i>
+                    Volver al Inicio
+                </a>
+            </p>
+
+
+        </div>
+        <!-- /.error-content -->
+    </div>
+{% endblock body %}

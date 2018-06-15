@@ -51,11 +51,13 @@ class ClubJugadorController extends Controller {
 			$clubJugadors = [];
 		}
 
+		$cantidadRegistros = $filterType->getData()['cantidadRegistros'] ? $filterType->getData()['cantidadRegistros'] : 10;
+
 		$paginator    = $this->get( 'knp_paginator' );
 		$clubJugadors = $paginator->paginate(
 			$clubJugadors, /* query NOT result */
 			$request->query->getInt( 'page', 1 )/*page number*/,
-			10/*limit per page*/
+			$cantidadRegistros/*limit per page*/
 		);
 
 		return $this->render( 'clubjugador/index.html.twig',
@@ -83,7 +85,7 @@ class ClubJugadorController extends Controller {
 		$confirmarUnion = $this->getUser()->hasRole( 'ROLE_UNION' );
 		$confirmarClub  = $this->getUser()->hasRole( 'ROLE_CLUB' );
 
-		$jugador = $em->getRepository( 'App:ClubJugador' )->find( $id );
+		$jugador = $em->getRepository( ClubJugador::class )->find( $id );
 		$form    = $this->createForm( 'App\Form\ConfirmarType',
 			$jugador,
 			[
@@ -132,7 +134,7 @@ class ClubJugadorController extends Controller {
 
 		$em = $this->getDoctrine()->getManager();
 
-		$jugador = $em->getRepository( 'App:ClubJugador' )->find( $id );
+		$jugador = $em->getRepository( ClubJugador::class )->find( $id );
 
 		$persona = $jugador->getJugador()->getPersona();
 
@@ -214,5 +216,36 @@ class ClubJugadorController extends Controller {
 		$this->get( 'session' )->getFlashBag()->add( 'success', 'Se reenvió el mail a: ' . $mail );
 
 		return $this->redirectToRoute( 'clubjugador_index' );
+	}
+
+	public function confirmarFichajes( Request $request ) {
+
+		if ( $request->getMethod() == 'POST' ) {
+			$em = $this->getDoctrine()->getManager();
+
+			$ids = $request->get( 'fichajes' );
+
+			if ( $ids ) {
+				$fichajes = $em->getRepository( ClubJugador::class )->findById( $ids );
+
+				foreach ( $fichajes as $fichaje ) {
+					$fichaje->setConfirmadoUnion( true );
+					$fichaje->setFechaConfirmacionUnion( new \DateTime( 'now' ) );
+				}
+
+				$em->flush();
+
+				$this->get( 'session' )->getFlashBag()->add( 'success', 'Los Fichajes se confirmaron con éxito!' );
+			} else {
+				$this->get( 'session' )
+				     ->getFlashBag()
+				     ->add( 'error', 'Tenes que elegir al menos un Fichaje' );
+			}
+
+
+		}
+
+		return $this->redirectToRoute( 'clubjugador_index' );
+
 	}
 }

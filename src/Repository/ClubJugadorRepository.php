@@ -275,6 +275,15 @@ class ClubJugadorRepository extends \Doctrine\ORM\EntityRepository {
 		}
 
 
+		if ( isset( $data['estadoFichaje'] ) ) {
+
+			$estadoFichaje = $data['estadoFichaje'];
+
+			$qb2->andWhere( 'cj2.' . $estadoFichaje . ' = true' );
+
+		}
+
+
 		return $qb2;
 	}
 
