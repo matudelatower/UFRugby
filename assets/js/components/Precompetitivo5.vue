@@ -68,20 +68,20 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
-                    <label class="control-label" for="appbundle_precompetitivo_jugador_altura">Altura</label>
+                    <label class="control-label" for="appbundle_precompetitivo_jugador_altura">Altura (en Cm)</label>
                     <input v-model="altura"
                            id="appbundle_precompetitivo_jugador_altura"
                            name="appbundle_precompetitivo[jugador][altura]"
-                           maxlength="255" class="form-control" type="text">
+                           class="form-control" type="number">
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-group">
                     <label class="control-label"
-                           for="appbundle_precompetitivo_jugador_peso">Peso</label>
+                           for="appbundle_precompetitivo_jugador_peso">Peso (en Kg)</label>
                     <input v-model="peso"
                            id="appbundle_precompetitivo_jugador_peso" name="appbundle_precompetitivo[jugador][peso]"
-                           maxlength="255" class="form-control" type="text"></div>
+                           class="form-control" type="number"></div>
             </div>
         </div>
         <div class="row">

@@ -5,9 +5,24 @@
 </head>
 <link rel="stylesheet" href="{{ absolute_url(asset('build/css/main.css')) }}">
 <body>
-<div class="row">
-    <div class="col-md-3">
-        Unión de Rugby del Paraguay
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xs-4">
+            <div style="width: 33%">
+                <img class="img-responsive" src="{{ absolute_url(asset('build/img/logo_urp.jpg')) }}">
+            </div>
+        </div>
+        <div class="col-xs-4 text-center">
+            <h3>Unión de Rugby del Paraguay</h3>
+        </div>
+        <div class="col-xs-4">
+            <div class="pull-right">
+                <strong>Usuario:</strong> {{ app.user }}<br>
+                {% if app.user.club %}
+                    <strong>Club:</strong> {{ app.user.club }}
+                {% endif %}
+            </div>
+        </div>
     </div>
 </div>
 </body>
