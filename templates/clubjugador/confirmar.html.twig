@@ -69,11 +69,11 @@
                                 <input class="form-control" id="doctor" name="doctor" required type="text">
 
                             </div>
-
+                            {{ form_widget(form.confirmadoClub) }}
                         {% endif %}
                     {% endif %}
 
-                    {{ form_widget(form.confirmadoClub) }}
+
 
                     {% if is_granted('ROLE_UNION') %}
                         <div class="row">
