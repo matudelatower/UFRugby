@@ -8,6 +8,7 @@ use App\Entity\Jugador;
 use App\Entity\Persona;
 use App\Form\Filter\BuscarJugadoresFilterType;
 use App\Form\Filter\BuscarJugadorFilterType;
+use App\Service\ReporteManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -49,11 +50,11 @@ class JugadorController extends Controller {
 
 
 		} else {
-			
+
 			$filterType->handleRequest( $request );
 
 			if ( $filterType->isSubmitted() && $filterType->get( 'buscar' )->isClicked() ) {
-				$jugadors = $em->getRepository( Jugador::class )->getQbJugadoresUnion($filterType->getData());
+				$jugadors = $em->getRepository( Jugador::class )->getQbJugadoresUnion( $filterType->getData() );
 			} else {
 				$jugadors = $em->getRepository( Jugador::class )->getJugadores();
 			}
@@ -421,5 +422,104 @@ class JugadorController extends Controller {
 				'jugadors'    => $jugadors,
 				'filter_type' => $filterType->createView()
 			) );
+	}
+
+	public function exportarPDF( Request $request, ReporteManager $reporteManager) {
+		$em = $this->getDoctrine()->getManager();
+
+		$club = $this->getUser()->getClub();
+
+		$filterType = $this->createForm( BuscarJugadoresFilterType::class,
+			null,
+			[
+				'method' => 'GET'
+			] );
+
+
+		if ( $club ) {
+
+			$filterType->handleRequest( $request );
+
+			if ( $filterType->isSubmitted() ) {
+
+				$jugadors = $em->getRepository( Jugador::class )->getQbBuscarJugadoresByClub( $club,
+					$filterType->getData() );
+
+			} else {
+				$jugadors = $em->getRepository( Jugador::class )->getJugadoresByClub( $club );
+			}
+
+
+		} else {
+
+			$filterType->handleRequest( $request );
+
+			if ( $filterType->isSubmitted() ) {
+				$jugadors = $em->getRepository( Jugador::class )->getQbJugadoresUnion( $filterType->getData() );
+			} else {
+				$jugadors = $em->getRepository( Jugador::class )->getJugadores();
+			}
+
+		}
+
+		$title = 'Listado de Jugadores';
+
+		$html = $this->renderView( 'jugador/listado.pdf.twig',
+			[
+
+				'title'     => $title,
+				'jugadores' => $jugadors->getQuery()->getResult()
+			]
+		);
+
+//        return new Response($html);
+
+		return new Response(
+			$reporteManager->imprimir($html)
+			, 200, array(
+				'Content-Type'        => 'application/pdf',
+				'Content-Disposition' => 'inline; filename="' . $title . '.pdf"'
+			)
+		);
+	}
+
+	public function exportarExcel( Request $request ) {
+		$em = $this->getDoctrine()->getManager();
+
+		$club = $this->getUser()->getClub();
+
+		$filterType = $this->createForm( BuscarJugadoresFilterType::class,
+			null,
+			[
+				'method' => 'GET'
+			] );
+
+
+		if ( $club ) {
+
+			$filterType->handleRequest( $request );
+
+			if ( $filterType->isSubmitted() ) {
+
+				$jugadors = $em->getRepository( Jugador::class )->getQbBuscarJugadoresByClub( $club,
+					$filterType->getData() );
+
+			} else {
+				$jugadors = $em->getRepository( Jugador::class )->getJugadoresByClub( $club );
+			}
+
+
+		} else {
+
+			$filterType->handleRequest( $request );
+
+			if ( $filterType->isSubmitted() ) {
+				$jugadors = $em->getRepository( Jugador::class )->getQbJugadoresUnion( $filterType->getData() );
+			} else {
+				$jugadors = $em->getRepository( Jugador::class )->getJugadores();
+			}
+
+		}
+
 	}
 }
