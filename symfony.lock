@@ -155,6 +155,9 @@
     "ocramius/proxy-manager": {
         "version": "2.1.1"
     },
+    "onurb/excel-bundle": {
+        "version": "1.0.0"
+    },
     "pagerfanta/pagerfanta": {
         "version": "v1.1.0"
     },
@@ -169,6 +172,9 @@
     },
     "phpdocumentor/type-resolver": {
         "version": "0.4.0"
+    },
+    "phpoffice/phpspreadsheet": {
+        "version": "1.3.1"
     },
     "psr/cache": {
         "version": "1.0.1"

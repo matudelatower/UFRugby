@@ -8,7 +8,7 @@
                     <input name="categoria" required class="optionsRadios2" v-model="categoria"
                            value="infantil"
                            type="radio">
-                    Infantil (no competitivo)
+                    Infantil (no competitivo, 12 años o menor)
                 </label>
             </div>
 

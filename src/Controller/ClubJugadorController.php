@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\ClubJugador;
+use App\Entity\FichaMedica;
+use App\Entity\GrupoSanguineo;
 use App\Form\Filter\BuscarJugadoresFilterType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -93,7 +95,22 @@ class ClubJugadorController extends Controller {
 				'confirmarClub'  => $confirmarClub
 			] );
 
-		$fichaMedica = $em->getRepository( 'App:FichaMedica' )->findOneByClubJugador( $jugador );
+		$competitivo      = true;
+		$tieneFichaMedica = true;
+		$grupoSanguineos  = [];
+
+		if ( $jugador->getDivision()->getCategoria()->getSlug() == 'infantiles' ) {
+			$competitivo = false;
+		}
+
+		$fichaMedica = $em->getRepository( FichaMedica::class )->findOneByClubJugador( $jugador );
+
+		if ( ! $fichaMedica && $jugador->getDivision()->getCategoria()->getSlug() !== 'infantiles' ) {
+			$tieneFichaMedica = false;
+			$grupoSanguineos  = $em->getRepository( GrupoSanguineo::class )->findAll();
+			$fichaMedica      = new FichaMedica();
+
+		}
 
 		$form->handleRequest( $request );
 
@@ -101,9 +118,15 @@ class ClubJugadorController extends Controller {
 
 			if ( $confirmarClub ) {
 
-				$fichaMedica->setDoctor( $request->get( 'doctor' ) );
-				$fichaMedica->setMatricula( $request->get( 'matricula' ) );
-				$em->persist( $fichaMedica );
+				if ( $competitivo ) {
+					if ( $request->get( 'grupoSanguineo' ) ) {
+						$fichaMedica->setGrupoSanguineo( $em->getRepository( GrupoSanguineo::class )
+						                                    ->find( $request->get( 'grupoSanguineo' ) ) );
+					}
+					$fichaMedica->setDoctor( $request->get( 'doctor' ) );
+					$fichaMedica->setMatricula( $request->get( 'matricula' ) );
+					$em->persist( $fichaMedica );
+				}
 
 				$jugador->setFechaConfirmacionClub( new \DateTime( 'now' ) );
 			}
@@ -123,9 +146,12 @@ class ClubJugadorController extends Controller {
 
 		return $this->render( 'clubjugador/confirmar.html.twig',
 			[
-				'form'        => $form->createView(),
-				'jugador'     => $jugador,
-				'fichaMedica' => $fichaMedica,
+				'form'             => $form->createView(),
+				'jugador'          => $jugador,
+				'fichaMedica'      => $fichaMedica,
+				'competitivo'      => $competitivo,
+				'tieneFichaMedica' => $tieneFichaMedica,
+				'grupoSanguineos'  => $grupoSanguineos,
 
 			] );
 	}

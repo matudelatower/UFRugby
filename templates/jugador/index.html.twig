@@ -30,6 +30,16 @@
                 <div class="box-footer">
                     {{ form_widget(filter_type.buscar) }}
                     {{ form_widget(filter_type.limpiar) }}
+                    <div class="pull-right">
+                        <button type="button" id="imprimirPDF"
+                                class="btn btn-default btn">
+                            <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
+                        </button>
+                        {#<button type="button" id="imprimirExcel"#}
+                                {#class="btn btn-default btn">#}
+                            {#<i class="fa fa-file-excel-o" aria-hidden="true"></i>#}
+                        {#</button>#}
+                    </div>
                 </div>
                 <div class="hidden">
                     {{ form_end(filter_type) }}
@@ -97,3 +107,24 @@
 
     {#<a class="btn btn-primary" href="{{ path('jugador_new') }}">Nuevo jugador</a>#}
 {% endblock %}
+
+{% block javascripts %}
+    <script>
+        $(document).ready(function () {
+            $('#imprimirPDF').click(function () {
+                $('form[name="{{ filter_type.vars.name }}"]').attr('target', '_blank');
+                $('form[name="{{ filter_type.vars.name }}"]').attr('action', '{{ path('jugador_exportar_pdf') }}');
+                $('form[name="{{ filter_type.vars.name }}"]').submit();
+                $('form[name="{{ filter_type.vars.name }}"]').removeAttr('target');
+                $('form[name="{{ filter_type.vars.name }}"]').removeAttr('action');
+            });
+            $('#imprimirExcel').click(function () {
+                $('form[name="{{ filter_type.vars.name }}"]').attr('target', '_blank');
+                $('form[name="{{ filter_type.vars.name }}"]').attr('action', '{{ path('jugador_exportar_excel') }}');
+                $('form[name="{{ filter_type.vars.name }}"]').submit();
+                $('form[name="{{ filter_type.vars.name }}"]').removeAttr('target');
+                $('form[name="{{ filter_type.vars.name }}"]').removeAttr('action');
+            });
+        });
+    </script>
+{% endblock javascripts %}

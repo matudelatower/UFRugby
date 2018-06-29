@@ -1,0 +1,47 @@
+{% extends 'layout_base.pdf.twig' %}
+{% block stylesheets %}
+    <style>
+
+        td {
+            text-align: center;
+        }
+        tr {
+            page-break-inside: avoid;
+            page-break-after: auto
+        }
+    </style>
+{% endblock stylesheets %}
+{% block body %}
+    <div>
+        <table class="table table-bordered table-striped data-table">
+            <thead>
+            <tr>
+                <th>Club</th>
+                <th>Nº Identificación</th>
+                <th>Jugador</th>
+                <th>Fecha de Nacimiento</th>
+                <th>Posición</th>
+                <th>Periodo fichaje</th>
+
+            </tr>
+            </thead>
+            <tbody>
+            {% for jugador in jugadores %}
+                <tr>
+                    <td>{{ jugador.clubJugador.last.club }}</td>
+                    <td>{{ jugador.persona.numeroIdentificacion }}</td>
+                    <td>
+                        {{ jugador.persona.nombre | title }} {{ jugador.persona.apellido | title }}
+                    </td>
+                    <td>{{ jugador.persona.fechaNacimiento | date ('d/m/Y') }}</td>
+                    <td>{{ jugador.posicionHabitual }}</td>
+                    <td>
+                        {{ jugador.clubJugador.last.anio }}
+                    </td>
+
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock body %}

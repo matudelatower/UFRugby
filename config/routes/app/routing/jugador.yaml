@@ -67,7 +67,14 @@ jugador_precompetitivo:
     path:     /precompetitivo
     controller: App\Controller\JugadorController::precompetitivoAction
 
-
 buscar_jugador:
     path:     /buscar-jugador
     controller: App\Controller\JugadorController::buscarJugador
+
+jugador_exportar_pdf:
+    path:     /exportar-pdf
+    controller: App\Controller\JugadorController::exportarPDF
+
+jugador_exportar_excel:
+    path:     /exportar-excel
+    controller: App\Controller\JugadorController::exportarExcel
