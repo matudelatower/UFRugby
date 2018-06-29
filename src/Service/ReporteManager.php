@@ -8,7 +8,6 @@
 
 namespace App\Service;
 
-
 use Knp\Snappy\Pdf;
 
 class ReporteManager {

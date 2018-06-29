@@ -38,5 +38,19 @@ services:
             - { name: knp_menu.menu_builder, method: mainMenu, alias: main }
 
 ##Reportes
-#
-#    App\Service\ReporteManager:
+
+
+    phpspreadsheet:
+        class: Onurb\Bundle\ExcelBundle\Factory\ExcelFactory
+        public: true
+
+    phpexcel:
+        class: Onurb\Bundle\ExcelBundle\Factory\CompatibilityFactory
+        public: true
+        arguments:
+            - "@phpspreadsheet"
+
+    App\Service\ReporteExcelManager:
+        public: true
+        arguments:
+            - "@phpexcel"
