@@ -1,10 +1,19 @@
 {% extends 'layout_base.pdf.twig' %}
 {% block stylesheets %}
     <style>
+        body {
+            font-size: 10pt !important;
+        }
+
+        table {
+            width: 100%;
+            page-break-inside: auto
+        }
 
         td {
             text-align: center;
         }
+
         tr {
             page-break-inside: avoid;
             page-break-after: auto
@@ -21,8 +30,14 @@
                 <th>Jugador</th>
                 <th>Fecha de Nacimiento</th>
                 <th>Posición</th>
-                <th>Periodo fichaje</th>
-
+                <th>Categoría</th>
+                <th>Sexo</th>
+                <th>Prestador</th>
+                <th>Peso</th>
+                <th>Estatura</th>
+                <th>Email</th>
+                <th>Telefono</th>
+                <th>Celular</th>
             </tr>
             </thead>
             <tbody>
@@ -36,7 +51,28 @@
                     <td>{{ jugador.persona.fechaNacimiento | date ('d/m/Y') }}</td>
                     <td>{{ jugador.posicionHabitual }}</td>
                     <td>
-                        {{ jugador.clubJugador.last.anio }}
+                        {{ jugador.clubJugador.last.division }}
+                    </td>
+                    <td>
+                        {{ jugador.persona.sexo }}
+                    </td>
+                    <td>
+                        {{ jugador.clubJugador.last.fichaMedica.last.prestador }}
+                    </td>
+                    <td>
+                        {{ jugador.peso }}
+                    </td>
+                    <td>
+                        {{ jugador.altura }}
+                    </td>
+                    <td>
+                        {{ jugador.persona.contacto.mail }}
+                    </td>
+                    <td>
+                        {{ jugador.persona.contacto.telefono }}
+                    </td>
+                    <td>
+                        {{ jugador.persona.contacto.telefonoAlternativa }}
                     </td>
 
                 </tr>

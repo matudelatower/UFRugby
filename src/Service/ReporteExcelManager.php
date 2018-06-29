@@ -47,7 +47,7 @@ class ReporteExcelManager {
 		$phpExcelObject->setActiveSheetIndex( 0 );
 
 		// create the writer
-		$writer = $this->phpexcel->createWriter( $phpExcelObject, 'Excel5' );
+		$writer = $this->phpexcel->createWriter( $phpExcelObject, 'Xlsx' );
 
 		return $this->phpexcel->createStreamedResponse( $writer );
 

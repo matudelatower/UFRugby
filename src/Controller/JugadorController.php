@@ -475,7 +475,7 @@ class JugadorController extends Controller {
 //        return new Response($html);
 
 		return new Response(
-			$reporteManager->imprimir( $html )
+			$reporteManager->imprimir( $html, 'H' )
 			, 200, array(
 				'Content-Type'        => 'application/pdf',
 				'Content-Disposition' => 'inline; filename="' . $title . '.pdf"'
@@ -531,10 +531,9 @@ class JugadorController extends Controller {
 		$data['H1'] = 'Prestador';
 		$data['I1'] = 'Peso';
 		$data['J1'] = 'Estatura';
-		$data['K1'] = 'Puesto';
-		$data['L1'] = 'Email';
-		$data['M1'] = 'Telefono';
-		$data['N1'] = 'Celular';
+		$data['K1'] = 'Email';
+		$data['L1'] = 'Telefono';
+		$data['M1'] = 'Celular';
 
 
 		$i = 2;
@@ -545,15 +544,14 @@ class JugadorController extends Controller {
 			$data[ 'C' . $i ] = $jugador->getPersona();
 			$data[ 'D' . $i ] = $jugador->getPersona()->getFechaNacimiento()->format( 'd/m/Y' );
 			$data[ 'E' . $i ] = $jugador->getPosicionHabitual();
-			$data[ 'F' . $i ] = $jugador->getClubJugador()->last()->getAnio();
+			$data[ 'F' . $i ] = $jugador->getClubJugador()->last()->getDivision();
 			$data[ 'G' . $i ] = $jugador->getPersona()->getSexo();
 			$data[ 'H' . $i ] = $jugador->getClubJugador()->last()->getFichaMedica()->last()->getPrestador();
 			$data[ 'I' . $i ] = $jugador->getPeso();
 			$data[ 'J' . $i ] = $jugador->getAltura();
-			$data[ 'K' . $i ] = $jugador->getPosicionHabitual();
-			$data[ 'L' . $i ] = $jugador->getPersona()->getContacto()->getMail();
-			$data[ 'M' . $i ] = $jugador->getPersona()->getContacto()->getTelefono();
-			$data[ 'N' . $i ] = $jugador->getPersona()->getContacto()->getTelefonoAlternativa();
+			$data[ 'K' . $i ] = $jugador->getPersona()->getContacto()->getMail();
+			$data[ 'L' . $i ] = $jugador->getPersona()->getContacto()->getTelefono();
+			$data[ 'M' . $i ] = $jugador->getPersona()->getContacto()->getTelefonoAlternativa();
 			$i ++;
 		}
 
@@ -564,7 +562,7 @@ class JugadorController extends Controller {
 		// adding headers
 		$dispositionHeader = $response->headers->makeDisposition(
 			ResponseHeaderBag::DISPOSITION_ATTACHMENT,
-			$title . '.xls'
+			$title . '.xlsx'
 		);
 		$response->headers->set( 'Content-Type', 'text/vnd.ms-excel; charset=utf-8' );
 		$response->headers->set( 'Pragma', 'public' );

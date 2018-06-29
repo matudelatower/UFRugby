@@ -108,7 +108,7 @@
                            :disabled="disableFields"
                            id="appbundle_precompetitivo_contacto_telefono"
                            name="appbundle_precompetitivo[contacto][telefono]" required="required" maxlength="255"
-                           class="form-control" type="text">
+                           class="form-control" type="tel" pattern="[0-9]">
                     <span class="help-block" v-if="$v.telefono.$error && !$v.telefono.required">Campo Requerido</span>
                 </div>
             </div>
@@ -119,7 +119,7 @@
                     <input v-model="telefonoAlternativo" id="appbundle_precompetitivo_contacto_telefonoAlternativo"
                            :disabled="disableFields"
                            name="appbundle_precompetitivo[contacto][telefonoAlternativo]"
-                           maxlength="255" class="form-control" type="text">
+                           maxlength="255" class="form-control" type="tel" pattern="[0-9]">
 
                 </div>
             </div>
