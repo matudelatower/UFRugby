@@ -2,17 +2,17 @@
 
 namespace App\Controller;
 
-use App\Entity\ClubJugador;
-use App\Entity\FichaMedica;
 use App\Entity\Jugador;
 use App\Entity\Persona;
 use App\Form\Filter\BuscarJugadoresFilterType;
 use App\Form\Filter\BuscarJugadorFilterType;
+use App\Service\ReporteExcelManager;
 use App\Service\ReporteManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
 /**
  * Jugador controller.
@@ -424,7 +424,7 @@ class JugadorController extends Controller {
 			) );
 	}
 
-	public function exportarPDF( Request $request, ReporteManager $reporteManager) {
+	public function exportarPDF( Request $request, ReporteManager $reporteManager ) {
 		$em = $this->getDoctrine()->getManager();
 
 		$club = $this->getUser()->getClub();
@@ -475,7 +475,7 @@ class JugadorController extends Controller {
 //        return new Response($html);
 
 		return new Response(
-			$reporteManager->imprimir($html)
+			$reporteManager->imprimir( $html )
 			, 200, array(
 				'Content-Type'        => 'application/pdf',
 				'Content-Disposition' => 'inline; filename="' . $title . '.pdf"'
@@ -483,7 +483,7 @@ class JugadorController extends Controller {
 		);
 	}
 
-	public function exportarExcel( Request $request ) {
+	public function exportarExcel( Request $request, ReporteExcelManager $reporteManager ) {
 		$em = $this->getDoctrine()->getManager();
 
 		$club = $this->getUser()->getClub();
@@ -520,6 +520,58 @@ class JugadorController extends Controller {
 			}
 
 		}
+
+		$data['A1'] = 'Club';
+		$data['B1'] = 'Nº Identificación';
+		$data['C1'] = 'Jugador';
+		$data['D1'] = 'Fecha de Nacimiento';
+		$data['E1'] = 'Posición';
+		$data['F1'] = 'Categoría';
+		$data['G1'] = 'Sexo';
+		$data['H1'] = 'Prestador';
+		$data['I1'] = 'Peso';
+		$data['J1'] = 'Estatura';
+		$data['K1'] = 'Puesto';
+		$data['L1'] = 'Email';
+		$data['M1'] = 'Telefono';
+		$data['N1'] = 'Celular';
+
+
+		$i = 2;
+		foreach ( $jugadors->getQuery()->getResult() as $jugador ) {
+
+			$data[ 'A' . $i ] = $jugador->getClubJugador()->last()->getClub();
+			$data[ 'B' . $i ] = $jugador->getPersona()->getNumeroIdentificacion();
+			$data[ 'C' . $i ] = $jugador->getPersona();
+			$data[ 'D' . $i ] = $jugador->getPersona()->getFechaNacimiento()->format( 'd/m/Y' );
+			$data[ 'E' . $i ] = $jugador->getPosicionHabitual();
+			$data[ 'F' . $i ] = $jugador->getClubJugador()->last()->getAnio();
+			$data[ 'G' . $i ] = $jugador->getPersona()->getSexo();
+			$data[ 'H' . $i ] = $jugador->getClubJugador()->last()->getFichaMedica()->last()->getPrestador();
+			$data[ 'I' . $i ] = $jugador->getPeso();
+			$data[ 'J' . $i ] = $jugador->getAltura();
+			$data[ 'K' . $i ] = $jugador->getPosicionHabitual();
+			$data[ 'L' . $i ] = $jugador->getPersona()->getContacto()->getMail();
+			$data[ 'M' . $i ] = $jugador->getPersona()->getContacto()->getTelefono();
+			$data[ 'N' . $i ] = $jugador->getPersona()->getContacto()->getTelefonoAlternativa();
+			$i ++;
+		}
+
+		$title = 'Listado de Jugadores';
+
+		// create the response
+		$response = $reporteManager->exportarExcel( $title, $data, 'Jugadores' );
+		// adding headers
+		$dispositionHeader = $response->headers->makeDisposition(
+			ResponseHeaderBag::DISPOSITION_ATTACHMENT,
+			$title . '.xls'
+		);
+		$response->headers->set( 'Content-Type', 'text/vnd.ms-excel; charset=utf-8' );
+		$response->headers->set( 'Pragma', 'public' );
+		$response->headers->set( 'Cache-Control', 'maxage=1' );
+		$response->headers->set( 'Content-Disposition', $dispositionHeader );
+
+		return $response;
 
 	}
 }
