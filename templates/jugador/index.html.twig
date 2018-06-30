@@ -98,6 +98,22 @@
     </div>
 
     <div class="row">
+        <div class="col-md-2">
+            <label> Registros:</label>
+            <select name="mostrar-resultados" id="mostrar-resultados" class="input-sm">
+                <option value="10" {% if filter_type.cantidadRegistros.vars.data == 10 %}selected{% endif %} >10
+                </option>
+                <option value="25" {% if filter_type.cantidadRegistros.vars.data == 25 %}selected{% endif %} >25
+                </option>
+                <option value="50" {% if filter_type.cantidadRegistros.vars.data == 50 %}selected{% endif %} >50
+                </option>
+                <option value="100" {% if filter_type.cantidadRegistros.vars.data == 100 %}selected{% endif %} >100
+                </option>
+            </select>
+        </div>
+    </div>
+
+    <div class="row">
         <div class="col-md-12 text-center">
             <div class="navigation">
                 {{ knp_pagination_render(jugadors) }}
@@ -111,6 +127,13 @@
 {% block javascripts %}
     <script>
         $(document).ready(function () {
+
+            $('#mostrar-resultados').change(function () {
+                console.log($(this).val())
+                $('#{{ filter_type.cantidadRegistros.vars.id }}').val($(this).val())
+                $("form[name='{{ filter_type.vars.id }}']").submit();
+            });
+
             $('#imprimirPDF').click(function () {
                 $('form[name="{{ filter_type.vars.name }}"]').attr('target', '_blank');
                 $('form[name="{{ filter_type.vars.name }}"]').attr('action', '{{ path('jugador_exportar_pdf') }}');
