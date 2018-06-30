@@ -38,6 +38,7 @@
                 <th>Email</th>
                 <th>Telefono</th>
                 <th>Celular</th>
+                <th>Último Fichaje</th>
             </tr>
             </thead>
             <tbody>
@@ -74,6 +75,7 @@
                     <td>
                         {{ jugador.persona.contacto.telefonoAlternativa }}
                     </td>
+                    <td>{{ jugador.clubJugador.last.anio }}</td>
 
                 </tr>
             {% endfor %}

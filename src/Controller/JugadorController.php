@@ -61,11 +61,13 @@ class JugadorController extends Controller {
 
 		}
 
+		$cantidadRegistros = $filterType->getData()['cantidadRegistros'] ? $filterType->getData()['cantidadRegistros'] : 10;
+
 		$paginator = $this->get( 'knp_paginator' );
 		$jugadors  = $paginator->paginate(
 			$jugadors, /* query NOT result */
 			$request->query->getInt( 'page', 1 )/*page number*/,
-			10/*limit per page*/
+			$cantidadRegistros/*limit per page*/
 		);
 
 		return $this->render( 'jugador/index.html.twig',
@@ -534,6 +536,7 @@ class JugadorController extends Controller {
 		$data['K1'] = 'Email';
 		$data['L1'] = 'Telefono';
 		$data['M1'] = 'Celular';
+		$data['N1'] = 'Último Fichaje';
 
 
 		$i = 2;
@@ -552,6 +555,7 @@ class JugadorController extends Controller {
 			$data[ 'K' . $i ] = $jugador->getPersona()->getContacto()->getMail();
 			$data[ 'L' . $i ] = $jugador->getPersona()->getContacto()->getTelefono();
 			$data[ 'M' . $i ] = $jugador->getPersona()->getContacto()->getTelefonoAlternativa();
+			$data[ 'N' . $i ] = $jugador->getClubJugador()->last()->getAnio();
 			$i ++;
 		}
 
