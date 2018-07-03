@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}FichaMedica index{% endblock %}
+
+{% block body %}
+    <h1>FichaMedica index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Prestador</th>
+                <th>NumeroAfiliado</th>
+                <th>TieneCobertura</th>
+                <th>Doctor</th>
+                <th>Matricula</th>
+                <th>Activo</th>
+                <th>FechaCreacion</th>
+                <th>FechaActualizacion</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for ficha_medica in ficha_medicas %}
+            <tr>
+                <td>{{ ficha_medica.id }}</td>
+                <td>{{ ficha_medica.prestador }}</td>
+                <td>{{ ficha_medica.numeroAfiliado }}</td>
+                <td>{{ ficha_medica.tieneCobertura ? 'Yes' : 'No' }}</td>
+                <td>{{ ficha_medica.doctor }}</td>
+                <td>{{ ficha_medica.matricula }}</td>
+                <td>{{ ficha_medica.activo ? 'Yes' : 'No' }}</td>
+                <td>{{ ficha_medica.fechaCreacion ? ficha_medica.fechaCreacion|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ ficha_medica.fechaActualizacion ? ficha_medica.fechaActualizacion|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <a href="{{ path('ficha_medica_show', {'id': ficha_medica.id}) }}">show</a>
+                    <a href="{{ path('ficha_medica_edit', {'id': ficha_medica.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="10">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('ficha_medica_new') }}">Create new</a>
+{% endblock %}
