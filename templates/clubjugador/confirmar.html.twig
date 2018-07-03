@@ -37,9 +37,49 @@
                         </div>
                     </div>
                     {{ form_start(form) }}
+                    {% if is_granted('ROLE_UNION') %}
+                        {% if not jugador.jugador.altura %}
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="altura" class="control-label">Altura (en Cm)</label>
+                                        <input class="form-control" id="altura" name="altura"
+                                               type="number">
+
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                        {% if not jugador.jugador.peso %}
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="peso" class="control-label">Peso (en Kg)</label>
+                                        <input class="form-control" id="peso" name="peso"
+                                               type="number">
+
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endif %}
                     {% if competitivo %}
                         <h3 class="box-title">Ficha Médica</h3>
 
+                        {% if is_granted('ROLE_UNION') %}
+                            {% if not fichaMedica.prestador %}
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="prestador" class="control-label">Prestador</label>
+                                            <input class="form-control" id="prestador" name="prestador"
+                                                   type="text">
+
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% endif %}
                         {% if is_granted('ROLE_CLUB') %}
 
                             {% if not tieneFichaMedica %}
