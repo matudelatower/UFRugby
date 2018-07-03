@@ -125,6 +125,7 @@ class ClubJugadorController extends Controller {
 					}
 					$fichaMedica->setDoctor( $request->get( 'doctor' ) );
 					$fichaMedica->setMatricula( $request->get( 'matricula' ) );
+
 					$em->persist( $fichaMedica );
 				}
 
@@ -133,6 +134,9 @@ class ClubJugadorController extends Controller {
 
 			if ( $confirmarUnion ) {
 				$jugador->setFechaConfirmacionUnion( new \DateTime( 'now' ) );
+				$fichaMedica->setPrestador( $request->get( 'prestador' ) );
+				$jugador->getJugador()->setAltura( $request->get( 'altura' ) );
+				$jugador->getJugador()->setPeso( $request->get( 'peso' ) );
 			}
 
 
