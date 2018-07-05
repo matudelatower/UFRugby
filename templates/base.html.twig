@@ -45,6 +45,21 @@
 
             <div class="navbar-custom-menu">
                 <ul class="nav navbar-nav">
+                    {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
+                        <li>
+                            <a href="{{ path('app_homepage') }}?_want_to_be_this_user=_exit">
+                                <i class="fa fa-fw fa-sign-out"></i>
+                                Desimpersonar
+                            </a>
+                        </li>
+                    {% endif %}
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <li>
+                            <a href="#" id="mostrar-modal-impersonar"><i
+                                        class="fa fa-fw fa-user-secret"></i>
+                                Impersonar</a>
+                        </li>
+                    {% endif %}
                     <!-- User Account: style can be found in dropdown.less -->
                     <li class="dropdown user user-menu">
                         {% set fotoPerfil = asset('build/img/avatar.png') %}
@@ -114,7 +129,8 @@
                     ...
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" id="modal-btn-ok" data-dismiss="modal">{{ 'Ok'|trans }}</button>
+                    <button type="button" class="btn btn-default" id="modal-btn-ok"
+                            data-dismiss="modal">{{ 'Ok'|trans }}</button>
                     {#<a type="button" id="modal-btn-ok" class="btn btn-primary">Ok</a>#}
                 </div>
             </div>
@@ -205,6 +221,9 @@
 
 <script src="{{ asset('build/js/adminlte.js') }}"></script>
 <script src="{{ asset('build/js/functions.js') }}"></script>
+{% if is_granted('ROLE_ADMIN') %}
+    {% include 'default/modal_usuarios_impersonar.html.twig' %}
+{% endif %}
 {% block javascripts %}{% endblock %}
 </body>
 </html>

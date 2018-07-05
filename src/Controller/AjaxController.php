@@ -12,6 +12,7 @@ use App\Entity\Persona;
 use App\Entity\PosicionJugador;
 use App\Entity\Referee;
 use App\Entity\ResponsableJugador;
+use App\Entity\Usuario;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -486,4 +487,24 @@ class AjaxController extends Controller {
 			return new JsonResponse( 'No se encontró un jugador', 404 );
 		}
 	}
+
+	public function getUsuarios() {
+		$usuarios = $this->getDoctrine()
+		                 ->getManager()
+		                 ->getRepository( Usuario::class )
+		                 ->findBy( [ 'enabled' => true ] );
+		$usuarios = array_map( function ( Usuario $usuario ) {
+			return [
+				'id'           => $usuario->getId(),
+				'username'     => $usuario->getUsername(),
+				'nombre'       => $usuario->getPersona() ? $usuario->getPersona()->__toString() : null,
+				'club' => $usuario->getClub() ? $usuario->getClub()->__toString() : null,
+				'roles'        => $usuario->getRoles(),
+			];
+		},
+			$usuarios );
+
+		return JsonResponse::create( $usuarios );
+	}
+
 }
