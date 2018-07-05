@@ -1,0 +1,89 @@
+<div class="modal fade" id="modal-impersonar">
+    <div class="modal-dialog  modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title"><i class="fa fa-fw fa-user-secret"></i> Impersonar usuario</h4>
+            </div>
+            <div class="modal-body">
+                <div class="impersonar-loading text-muted text-center"><i class="fa fa-fw fa-spin fa-circle-o-notch"></i> Cargando...</div>
+                <div class="impersonar-content" style="max-height: 600px; overflow-y: scroll;">
+
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input id="modal-impersonar-buscar" type="text" class="form-control" placeholder="Buscar...">
+                            <span class="input-group-addon"><i class="fa fa-fw fa-search"></i></span>
+                        </div>
+                    </div>
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>Usuario</th>
+                            <th>Nombre</th>
+                            <th>Club</th>
+                            <th>Roles</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cerrar</button>
+                {#<button type="button" class="btn btn-primary">Impersonar</button>#}
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        var modal = $('#modal-impersonar')
+        $('#mostrar-modal-impersonar').click(function () {
+            modal.modal({
+                show: true
+            })
+            modal.on('shown.bs.modal', function () {
+                $('#modal-impersonar-buscar').focus();
+            })
+        })
+        let loading = modal.find('.impersonar-loading')
+        let content = modal.find('.impersonar-content')
+        loading.show();
+        // content.html('')
+        let dataUsuarios = []
+        let actualizarTabla = function (datos, filtro) {
+            console.log('actualizarTabla', filtro)
+            let table = modal.find('tbody')
+            table.html('')
+            let r = new RegExp(filtro, 'gi')
+            for (let i in datos) {
+                let user = datos[i]
+                if (!r.test(user.username)
+                    && !r.test(user.nombre)
+                    && !r.test(user.roles.join('|'))
+                ) {
+                    continue
+                }
+                let row = [
+                    '<a href="{{ path('app_homepage') }}?_want_to_be_this_user=' + user.username + '">' + user.username + '</a>',
+                    user.nombre,
+                    user.club,
+                    user.roles.join(','),
+                ].join('</td><td>')
+                table.append('<tr><td>' + row + '</td></tr>')
+            }
+        }
+        $.get('{{ path('get_usuarios') }}', function (data) {
+            loading.hide();
+            dataUsuarios = data
+            actualizarTabla(data, $('#modal-impersonar-buscar').val())
+        })
+        $('#modal-impersonar-buscar').keyup(function () {
+            actualizarTabla(dataUsuarios, this.value)
+        })
+    })
+</script>
