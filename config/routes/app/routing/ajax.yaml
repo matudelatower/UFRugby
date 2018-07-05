@@ -1,0 +1,3 @@
+get_usuarios:
+    path:     /usuarios
+    controller: App\Controller\AjaxController::getUsuarios
