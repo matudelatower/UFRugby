@@ -21,10 +21,17 @@
                         {% if is_granted('ROLE_UNION') %}
                             {{ form_row(filter_type.club) }}
                         {% endif %}
+                        {{ form_row(filter_type.categoria) }}
                     </div>
                     <div class="col-md-6">
                         {{ form_row(filter_type.apellido) }}
                         {{ form_row(filter_type.posicion) }}
+                        <div class="col-md-6">
+                            {{ form_row(filter_type.fechaNacimientoDesde) }}
+                        </div>
+                        <div class="col-md-6">
+                            {{ form_row(filter_type.fechaNacimientoHasta) }}
+                        </div>
                     </div>
                 </div>
                 <div class="box-footer">
