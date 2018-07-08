@@ -130,6 +130,26 @@ class JugadorRepository extends \Doctrine\ORM\EntityRepository {
 			$qb->setParameter( 'posicionAlternativa', $posicion );
 		}
 
+		$fechaDesde = new \DateTime( '1800-1-1' );
+		$fechaHasta = new \DateTime( '2200-12-31' );
+		if ( isset( $data['fechaNacimientoDesde'] ) ) {
+			$fechaDesde = $data['fechaNacimientoDesde'];
+		}
+		if ( isset( $data['fechaNacimientoHasta'] ) ) {
+			$fechaHasta = $data['fechaNacimientoHasta'];
+		}
+
+		$qb->andWhere( 'persona.fechaNacimiento between :desde AND :hasta' );
+		$qb->setParameter( 'desde', $fechaDesde );
+		$qb->setParameter( 'hasta', $fechaHasta );
+
+		if ( isset( $data['categoria'] ) ) {
+			$qb->join( 'cj.division', 'division' );
+			$qb->andWhere( 'division.categoria = :categoria' );
+			$qb->setParameter( 'categoria', $data['categoria'] );
+		}
+
+
 		$qb->andWhere( 'cj.club = :club' );
 		$qb->setParameter( 'club', $club );
 
@@ -192,18 +212,32 @@ class JugadorRepository extends \Doctrine\ORM\EntityRepository {
 			$qb->setParameter( 'posicionAlternativa', $posicion );
 		}
 
+		$fechaDesde = new \DateTime( '1800-1-1' );
+		$fechaHasta = new \DateTime( '2200-12-31' );
+		if ( isset( $data['fechaNacimientoDesde'] ) ) {
+			$fechaDesde = $data['fechaNacimientoDesde'];
+		}
+		if ( isset( $data['fechaNacimientoHasta'] ) ) {
+			$fechaHasta = $data['fechaNacimientoHasta'];
+		}
+
+		$qb->andWhere( 'persona.fechaNacimiento between :desde AND :hasta' );
+		$qb->setParameter( 'desde', $fechaDesde );
+		$qb->setParameter( 'hasta', $fechaHasta );
+
+		if ( isset( $data['categoria'] ) ) {
+			$qb->join( 'cj.division', 'division' );
+			$qb->andWhere( 'division.categoria = :categoria' );
+			$qb->setParameter( 'categoria', $data['categoria'] );
+		}
+
 		if ( isset( $data['club'] ) ) {
 
 			$club = $data['club'];
 
 			$qb->andWhere( 'cj.club = :club' )
 			   ->setParameter( 'club', $club );
-
-//			$qb->innerJoin( 'cj.club', 'club' );
-//
-//			$qb
-//				->andWhere( "upper(club.nombre) like upper(:club)" );
-//			$qb->setParameter( 'club', '%' . $club . '%' );
+			
 		}
 
 		return $qb;

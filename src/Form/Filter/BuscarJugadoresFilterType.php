@@ -2,10 +2,12 @@
 
 namespace App\Form\Filter;
 
+use App\Entity\Categoria;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ButtonType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\ResetType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -53,6 +55,27 @@ class BuscarJugadoresFilterType extends AbstractType {
 					'placeholder' => 'Seleccionar Estado',
 					'required'    => false
 				] )
+			->add( 'categoria',
+				EntityType::class,
+				[
+					'class'       => Categoria::class,
+					'placeholder' => 'Seleccionar Categoría',
+					'label'       => 'Categoría'
+				] )
+			->add( 'fechaNacimientoDesde',
+				DateType::class,
+				array(
+					'widget' => 'single_text',
+					'html5'  => true,
+					'label'  => 'Fecha de Nacimiento Desde'
+				) )
+			->add( 'fechaNacimientoHasta',
+				DateType::class,
+				array(
+					'widget' => 'single_text',
+					'html5'  => true,
+					'label'  => 'Fecha de Nacimiento Desde'
+				) )
 			->add( 'cantidadRegistros', HiddenType::class )
 			->add( 'buscar',
 				SubmitType::class,
@@ -63,8 +86,7 @@ class BuscarJugadoresFilterType extends AbstractType {
 				ResetType::class,
 				array(
 					'attr' => array( 'class' => 'btn btn-default' ),
-				) )
-		;
+				) );
 	}
 
 	/**
