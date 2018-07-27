@@ -95,6 +95,7 @@
                 <ul class="nav nav-tabs">
                     <li class="active"><a href="#activity" data-toggle="tab">Datos Médicos</a></li>
                     <li><a href="#timeline" data-toggle="tab">Historial de Pases</a></li>
+                    <li><a href="#timeline-selecciones" data-toggle="tab">Historial de Seleccionados</a></li>
                     {#<li><a href="#settings" data-toggle="tab">Settings</a></li>#}
                 </ul>
                 <div class="tab-content">
@@ -162,6 +163,40 @@
                     </div>
                     <!-- /.tab-pane -->
 
+                    <div class="tab-pane" id="timeline-selecciones">
+                        {% if is_granted('ROLE_UNION') %}
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="box-tools pull-right">
+                                        <a href="{{ path('historial_seleccion_jugador_nuevo', {'jugador': jugador.id }) }}"
+                                           class="btn btn-primary">Agregar Historial</a>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                        <div class="row">
+                            <div class="col-md-12">
+                                <table class="table table-striped">
+                                    <thead>
+                                    <tr>
+                                        <th>Fecha</th>
+                                        <th>Selección</th>
+                                        <th>Torneo</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for historialSeleccion in jugador.historialSeleccions %}
+                                        <tr>
+                                            <td>{{ historialSeleccion.fecha | date ('d/m/Y') }}</td>
+                                            <td>{{ historialSeleccion.seleccion }}</td>
+                                            <td>{{ historialSeleccion.torneo }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
 
                 </div>
                 <!-- /.tab-content -->

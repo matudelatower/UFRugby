@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}HistorialSeleccion index{% endblock %}
+
+{% block body %}
+    <h1>HistorialSeleccion index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Fecha</th>
+                <th>Torneo</th>
+                <th>Activo</th>
+                <th>FechaCreacion</th>
+                <th>FechaActualizacion</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for historial_seleccion in historial_seleccions %}
+            <tr>
+                <td>{{ historial_seleccion.id }}</td>
+                <td>{{ historial_seleccion.fecha ? historial_seleccion.fecha|date('Y-m-d') : '' }}</td>
+                <td>{{ historial_seleccion.torneo }}</td>
+                <td>{{ historial_seleccion.activo ? 'Yes' : 'No' }}</td>
+                <td>{{ historial_seleccion.fechaCreacion ? historial_seleccion.fechaCreacion|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ historial_seleccion.fechaActualizacion ? historial_seleccion.fechaActualizacion|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <a href="{{ path('historial_seleccion_show', {'id': historial_seleccion.id}) }}">show</a>
+                    <a href="{{ path('historial_seleccion_edit', {'id': historial_seleccion.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('historial_seleccion_new') }}">Create new</a>
+{% endblock %}

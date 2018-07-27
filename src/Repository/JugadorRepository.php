@@ -237,7 +237,23 @@ class JugadorRepository extends \Doctrine\ORM\EntityRepository {
 
 			$qb->andWhere( 'cj.club = :club' )
 			   ->setParameter( 'club', $club );
-			
+
+		}
+
+		$qb->leftJoin( 'j.historialSeleccions', 'hs' );
+
+		if ( isset( $data['tipoSeleccion'] ) ) {
+
+			$qb->andWhere( 'hs.seleccion = :tipoSeleccion' )
+			   ->setParameter( 'tipoSeleccion', $data['tipoSeleccion'] );
+		}
+
+		if ( isset( $data['torneo'] ) ) {
+			$torneo = $data['torneo'];
+
+			$qb
+				->andWhere( "upper(hs.torneo) like upper(:torneo)" );
+			$qb->setParameter( 'torneo', '%' . $torneo . '%' );
 		}
 
 		return $qb;
