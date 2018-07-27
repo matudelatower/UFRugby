@@ -1,0 +1,9 @@
+easy_admin:
+    entities:
+        TipoSeleccion:
+            label: "Tipo de Selección"
+            class: App\Entity\TipoSeleccion
+            disabled_actions: ['delete']
+            form:
+                fields:
+                - { property: 'nombre' }

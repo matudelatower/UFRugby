@@ -24,6 +24,7 @@ easy_admin:
             - { label: 'Tipo Identificación', entity: TipoIdentificacion }
             - { label: 'Tipo Torneo', entity: TipoTorneo }
             - { label: 'Tipo Relación', entity: TipoRelacion }
+            - { label: 'Tipo de Selección', entity: TipoSeleccion }
             - { label: 'Sexo', entity: Sexo }
             - { label: 'Textos', entity: Texto }
             - { label: 'Personas', entity: Persona }

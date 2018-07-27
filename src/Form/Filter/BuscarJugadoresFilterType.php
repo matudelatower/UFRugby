@@ -3,6 +3,7 @@
 namespace App\Form\Filter;
 
 use App\Entity\Categoria;
+use App\Entity\TipoSeleccion;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ButtonType;
@@ -76,6 +77,13 @@ class BuscarJugadoresFilterType extends AbstractType {
 					'html5'  => true,
 					'label'  => 'Fecha de Nacimiento Desde'
 				) )
+			->add( 'torneo' )
+			->add( 'tipoSeleccion',
+				EntityType::class,
+				[
+					'class'       => TipoSeleccion::class,
+					'placeholder' => 'Seleccionar',
+				] )
 			->add( 'cantidadRegistros', HiddenType::class )
 			->add( 'buscar',
 				SubmitType::class,

@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use App\Entity\Base\BaseClass;
 use ApiPlatform\Core\Annotation\ApiResource;
@@ -98,6 +100,11 @@ class Jugador extends BaseClass {
 	 */
 	private $pases;
 
+	/**
+	* @ORM\OneToMany(targetEntity="App\Entity\HistorialSeleccion", mappedBy="jugador", orphanRemoval=true)
+	*/
+	private $historialSeleccions;
+
 	public function __toString() {
 		return $this->persona->__toString();
 	}
@@ -109,6 +116,7 @@ class Jugador extends BaseClass {
 	public function __construct() {
 		$this->clubJugador = new \Doctrine\Common\Collections\ArrayCollection();
 		$this->pases = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->historialSeleccions = new ArrayCollection();
 	}
 
 	/**
@@ -411,5 +419,33 @@ class Jugador extends BaseClass {
 	 */
 	public function getPases() {
 		return $this->pases;
+	}
+
+	/**
+	 * @return Collection|HistorialSeleccion[]
+	 */
+	public function getHistorialSeleccions(): Collection {
+		return $this->historialSeleccions;
+	}
+
+	public function addHistorialSeleccion( HistorialSeleccion $historialSeleccion ): self {
+		if ( ! $this->historialSeleccions->contains( $historialSeleccion ) ) {
+			$this->historialSeleccions[] = $historialSeleccion;
+			$historialSeleccion->setJugador( $this );
+		}
+
+		return $this;
+	}
+
+	public function removeHistorialSeleccion( HistorialSeleccion $historialSeleccion ): self {
+		if ( $this->historialSeleccions->contains( $historialSeleccion ) ) {
+			$this->historialSeleccions->removeElement( $historialSeleccion );
+			// set the owning side to null (unless already changed)
+			if ( $historialSeleccion->getJugador() === $this ) {
+				$historialSeleccion->setJugador( null );
+			}
+		}
+
+		return $this;
 	}
 }
