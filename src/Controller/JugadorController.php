@@ -549,7 +549,8 @@ class JugadorController extends Controller {
 			$data[ 'E' . $i ] = $jugador->getPosicionHabitual();
 			$data[ 'F' . $i ] = $jugador->getClubJugador()->last()->getDivision();
 			$data[ 'G' . $i ] = $jugador->getPersona()->getSexo();
-			$data[ 'H' . $i ] = $jugador->getClubJugador()->last()->getFichaMedica()->last()->getPrestador();
+			$data[ 'H' . $i ] = $jugador->getClubJugador()->last()->getFichaMedica()->last() ?
+				$jugador->getClubJugador()->last()->getFichaMedica()->last()->getPrestador() : null;
 			$data[ 'I' . $i ] = $jugador->getPeso();
 			$data[ 'J' . $i ] = $jugador->getAltura();
 			$data[ 'K' . $i ] = $jugador->getPersona()->getContacto()->getMail();
