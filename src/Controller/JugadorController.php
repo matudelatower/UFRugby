@@ -296,7 +296,7 @@ class JugadorController extends Controller {
 			UrlGeneratorInterface::ABSOLUTE_URL );
 
 		$message = ( new \Swift_Message( $asunto ) )
-			->setFrom( $this->container->getParameter( 'mailer_user' ), 'Unión de Rugby del Paraguay ' )
+			->setFrom( $this->container->getParameter( 'mailer_user' ), 'Federación Boliviana de Rugby ' )
 			->setTo( $mail )
 			->setBody(
 //				$body,
