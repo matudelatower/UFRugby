@@ -234,13 +234,20 @@ class AjaxController extends Controller {
 				$persona->setFechaNacimiento( $fechaNacimiento );
 
 				$contacto = new Contacto();
-				$contacto->setDireccion( $data['direccion'] );
-				$contacto->setTelefono( $data['telefono'] );
-				$contacto->setTelefonoAlternativa( $data['telefonoAlternativo'] );
-				$contacto->setMail( $data['mail'] );
 
-				$persona->setContacto( $contacto );
+			} else {
+				// si existe la persona	actualiza datos de contacto
+				$contacto = $persona->getContacto();
+
 			}
+
+			$contacto->setDireccion( $data['direccion'] );
+			$contacto->setTelefono( $data['telefono'] );
+			$contacto->setTelefonoAlternativa( $data['telefonoAlternativo'] );
+			$contacto->setMail( $data['mail'] );
+
+			$persona->setContacto( $contacto );
+
 
 //			is es referee
 			if ( strtoupper( $data['categoria'] ) == 'REFEREE' ) {
