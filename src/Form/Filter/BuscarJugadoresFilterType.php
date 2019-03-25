@@ -75,9 +75,23 @@ class BuscarJugadoresFilterType extends AbstractType {
 				array(
 					'widget' => 'single_text',
 					'html5'  => true,
-					'label'  => 'Fecha de Nacimiento Desde'
+					'label'  => 'Fecha de Nacimiento Hasta'
 				) )
 			->add( 'torneo' )
+			->add( 'fechaRegistroDesde',
+				DateType::class,
+				array(
+					'widget' => 'single_text',
+					'html5'  => true,
+					'label'  => 'Fecha de Registro Desde'
+				) )
+			->add( 'fechaRegistroHasta',
+				DateType::class,
+				array(
+					'widget' => 'single_text',
+					'html5'  => true,
+					'label'  => 'Fecha de Registro Hasta'
+				) )
 			->add( 'tipoSeleccion',
 				EntityType::class,
 				[
