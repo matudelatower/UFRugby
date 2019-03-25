@@ -20,11 +20,13 @@
                         {% if is_granted('ROLE_UNION') %}
                             {{ form_row(filter_type.club) }}
                         {% endif %}
+                        {{ form_row(filter_type.fechaRegistroDesde) }}
                     </div>
                     <div class="col-md-6">
                         {{ form_row(filter_type.apellido) }}
                         {{ form_row(filter_type.posicion) }}
                         {{ form_row(filter_type.estadoFichaje) }}
+                        {{ form_row(filter_type.fechaRegistroHasta) }}
                     </div>
                 </div>
                 <div class="box-footer">

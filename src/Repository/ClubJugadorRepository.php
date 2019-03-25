@@ -283,6 +283,19 @@ class ClubJugadorRepository extends \Doctrine\ORM\EntityRepository {
 
 		}
 
+		$fechaRegistroDesde = new \DateTime( '2017-1-1' );
+		$fechaRegistroHasta = new \DateTime( '2200-12-31' );
+		if ( isset( $data['fechaRegistroDesde'] ) ) {
+			$fechaRegistroDesde = $data['fechaRegistroDesde'];
+		}
+		if ( isset( $data['fechaRegistroHasta'] ) ) {
+			$fechaRegistroHasta = $data['fechaRegistroHasta'];
+		}
+
+		$qb2->andWhere( 'cj2.fechaCreacion between :desde AND :hasta' );
+		$qb2->setParameter( 'desde', $fechaRegistroDesde );
+		$qb2->setParameter( 'hasta', $fechaRegistroHasta );
+
 
 		return $qb2;
 	}
