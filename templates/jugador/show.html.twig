@@ -100,8 +100,9 @@
                 </ul>
                 <div class="tab-content">
                     <div class="active tab-pane" id="activity">
-                        {% for clubJugador in jugador.clubJugador %}
-                            {% for fichaMedica in clubJugador.fichaMedica %}
+                        {#{% for clubJugador in jugador.clubJugador %}#}
+                        {% set fichaMedica = jugador.clubJugador.last.fichaMedica.last %}
+                            {#{% for fichaMedica in clubJugador.fichaMedica %}#}
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="box-tools pull-right">
@@ -117,8 +118,8 @@
                                     </div>
 
                                 </div>
-                            {% endfor %}
-                        {% endfor %}
+                            {#{% endfor %}#}
+                        {#{% endfor %}#}
 
                     </div>
                     <!-- /.tab-pane -->
@@ -218,7 +219,7 @@
                                     <th>Club</th>
                                     <th>Precompetitivo</th>
                                 </tr>
-                                {% for fichaje in jugador.clubJugador %}
+                                {% for fichaje in jugador.clubJugador | reverse %}
                                     <tr>
                                         <td>{{ fichaje.anio }}</td>
                                         <td>{{ fichaje.club }}</td>

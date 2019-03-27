@@ -54,7 +54,7 @@ class PaseRepository extends ServiceEntityRepository {
 	public function findQbPendientesUnion(  ) {
 		$qb = $this->findQbAll();
 
-		$qb->where('p.confirmacionUnion = false');
+		$qb->where('p.confirmacionClub is not null');
 		$qb->andWhere("UPPER(p.estado) <> 'RECHAZADA'");
 
 		return $qb;
