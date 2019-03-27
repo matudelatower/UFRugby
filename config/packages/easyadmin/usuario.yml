@@ -7,6 +7,7 @@ easy_admin:
                     - { property: 'username' }
                     - { property: 'email' }
                     - { property: 'enabled' }
+                    - { property: 'club' }
                     - { property: 'lastLogin' }
             form:
                 fields:

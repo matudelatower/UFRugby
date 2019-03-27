@@ -2,12 +2,14 @@
 
 namespace App\Controller;
 
+use App\Entity\Club;
 use App\Entity\ClubJugador;
 use App\Entity\Contacto;
 use App\Entity\Division;
 use App\Entity\FichaMedica;
 use App\Entity\InscripcionReferee;
 use App\Entity\Jugador;
+use App\Entity\Pase;
 use App\Entity\Persona;
 use App\Entity\PosicionJugador;
 use App\Entity\Referee;
@@ -274,7 +276,14 @@ class AjaxController extends Controller {
 				return new JsonResponse( $urlOk );
 
 			} else {
-				$jugador = new Jugador();
+
+				$jugador = $jugadorPrevio = $em->getRepository( Jugador::class )->findOneBy(
+					[ 'persona' => $persona ],
+					[ 'id' => 'desc' ] );
+
+				if ( ! $jugadorPrevio ) {
+					$jugador = new Jugador();
+				}
 				$jugador->setAltura( $data['altura'] );
 				$jugador->setPeso( $data['peso'] );
 				$posicionHabitual = $em->getRepository( 'App:PosicionJugador' )->find( $data['posicionHabitual']['id'] );
@@ -290,7 +299,7 @@ class AjaxController extends Controller {
 					$jugador->setSegundaPosicionAlternativa( $segundaPosicionAlternativa );
 				}
 
-//			si es menor
+				// si es menor
 
 				if ( strtoupper( $data['categoria'] ) == 'INFANTIL' ) {
 
@@ -325,9 +334,29 @@ class AjaxController extends Controller {
 					$em->persist( $responsableJugador );
 				}
 
+				$clubFichaje = $em->getRepository( Club::class )->find( $data['club']['id'] );
+
+
+				// si tiene fichaje previo
+				if ( $jugadorPrevio ) {
+					$fichajePrevio = $em->getRepository( ClubJugador::class )->findOneBy(
+						[ 'jugador' => $jugadorPrevio ],
+						[ 'id' => 'desc' ] );
+
+					if ( $fichajePrevio ) {
+						// si tiene fichaje previo, genero una solicitud de pase
+						$pase = new Pase();
+						$pase->setClubOrigen( $fichajePrevio->getClub() );
+						$pase->setClubDestino( $clubFichaje );
+						$pase->setJugador( $jugador );
+						$pase->setEstado( 'Pendiente' );
+						$em->persist( $pase );
+					}
+				}
+
 				$clubJugador = new ClubJugador();
-				$cub         = $em->getRepository( 'App:Club' )->find( $data['club']['id'] );
-				$clubJugador->setClub( $cub );
+
+				$clubJugador->setClub( $clubFichaje );
 				$clubJugador->setConfirmado( false );
 				$clubJugador->setConfirmadoClub( false );
 				$clubJugador->setConfirmadoUnion( false );
@@ -502,11 +531,11 @@ class AjaxController extends Controller {
 		                 ->findBy( [ 'enabled' => true ] );
 		$usuarios = array_map( function ( Usuario $usuario ) {
 			return [
-				'id'           => $usuario->getId(),
-				'username'     => $usuario->getUsername(),
-				'nombre'       => $usuario->getPersona() ? $usuario->getPersona()->__toString() : null,
-				'club' => $usuario->getClub() ? $usuario->getClub()->__toString() : null,
-				'roles'        => $usuario->getRoles(),
+				'id'       => $usuario->getId(),
+				'username' => $usuario->getUsername(),
+				'nombre'   => $usuario->getPersona() ? $usuario->getPersona()->__toString() : null,
+				'club'     => $usuario->getClub() ? $usuario->getClub()->__toString() : null,
+				'roles'    => $usuario->getRoles(),
 			];
 		},
 			$usuarios );
