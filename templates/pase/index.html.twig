@@ -58,7 +58,7 @@
                                 {% endif %}
                             {% endif %}
 
-                            {% if (is_granted('ROLE_UNION')) %}
+                            {% if (is_granted('ROLE_UNION')) and pase.estado != 'Aprobada' %}
                                 <a class="btn btn-default"
                                    href="{{ path('pase_aceptar_union', {'pase': pase.id}) }}"
                                    data-toggle="tooltip" title="Aceptar"

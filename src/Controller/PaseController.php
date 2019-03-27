@@ -9,7 +9,8 @@ use App\Form\PaseAceptarType;
 use App\Form\PaseRechazarType;
 use App\Form\PaseType;
 use App\Repository\PaseRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -17,21 +18,21 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * @Route("/pase")
  */
-class PaseController extends Controller {
+class PaseController extends AbstractController {
 	/**
 	 * @Route("/", name="pase_index", methods="GET")
 	 */
-	public function index( Request $request, PaseRepository $paseRepository ): Response {
-
+	public function index( Request $request, PaseRepository $paseRepository, PaginatorInterface $paginator ): Response {
 
 		if ( $this->getUser()->hasRole( 'ROLE_ADMIN' ) ) {
-			$pases = $paseRepository->findQbPendientesUnion();
-		} else {
 			$pases = $paseRepository->findQbAll();
+		} elseif ( $this->getUser()->hasRole( 'ROLE_UNION' ) ) {
+			$pases = $paseRepository->findQbPendientesUnion();
+		} elseif ( $this->getUser()->hasRole( 'ROLE_CLUB' ) ) {
+			$pases = [];
 		}
 
-		$paginator = $this->get( 'knp_paginator' );
-		$pases     = $paginator->paginate(
+		$pases = $paginator->paginate(
 			$pases, /* query NOT result */
 			$request->query->getInt( 'page', 1 )/*page number*/,
 			10/*limit per page*/
@@ -43,7 +44,10 @@ class PaseController extends Controller {
 	/**
 	 * @Route("/new", name="pase_new", methods="GET|POST")
 	 */
-	public function new( Request $request ): Response {
+	public
+	function new(
+		Request $request
+	): Response {
 		$pase = new Pase();
 		$form = $this->createForm( PaseType::class, $pase );
 		$form->handleRequest( $request );
@@ -64,7 +68,7 @@ class PaseController extends Controller {
 	}
 
 	/**
-	 * @Route("/{id}", name="pase_show", methods="GET")
+	 * @Route("/{id}", name="pase_show", methods="GET", requirements={"id":"\d+"})
 	 */
 	public function show( Pase $pase ): Response {
 		return $this->render( 'pase/show.html.twig', [ 'pase' => $pase ] );
@@ -179,7 +183,7 @@ class PaseController extends Controller {
 
 	}
 
-	public function solicitudesEnviadas( Request $request ): Response {
+	public function solicitudesEnviadas( Request $request, PaginatorInterface $paginator ): Response {
 
 		$em = $this->getDoctrine()->getManager();
 
@@ -187,8 +191,7 @@ class PaseController extends Controller {
 
 		$pases = $em->getRepository( Pase::class )->findQbSolicitudesEnviadas( $club );
 
-		$paginator = $this->get( 'knp_paginator' );
-		$pases     = $paginator->paginate(
+		$pases = $paginator->paginate(
 			$pases, /* query NOT result */
 			$request->query->getInt( 'page', 1 )/*page number*/,
 			10/*limit per page*/
@@ -197,7 +200,7 @@ class PaseController extends Controller {
 		return $this->render( 'pase/index.html.twig', [ 'pases' => $pases ] );
 	}
 
-	public function solicitudesRecibidas( Request $request ): Response {
+	public function solicitudesRecibidas( Request $request, PaginatorInterface $paginator ): Response {
 
 		$em = $this->getDoctrine()->getManager();
 
@@ -205,8 +208,7 @@ class PaseController extends Controller {
 
 		$pases = $em->getRepository( Pase::class )->findQbSolicitudesRecibidas( $club );
 
-		$paginator = $this->get( 'knp_paginator' );
-		$pases     = $paginator->paginate(
+		$pases = $paginator->paginate(
 			$pases, /* query NOT result */
 			$request->query->getInt( 'page', 1 )/*page number*/,
 			10/*limit per page*/
@@ -327,27 +329,31 @@ class PaseController extends Controller {
 			$pase->setConfirmacionUnion( true );
 			$pase->setEstado( 'Aprobada' );
 
-			$clubJugador = new ClubJugador();
-			$clubJugador->setJugador( $pase->getJugador() );
-			$clubJugador->setClub( $pase->getClubDestino() );
-			$clubJugador->setConfirmado( true );
-			$clubJugador->setConfirmadoClub( true );
-			$clubJugador->setFechaConfirmacionClub( new \DateTime( 'now' ) );
-			$clubJugador->setConfirmadoUnion( true );
-			$clubJugador->setFechaConfirmacionUnion( new \DateTime( 'now' ) );
-			$clubJugador->setConsentimiento( true );
-			$clubJugador->setAnio( date( "Y" ) );
+			$clubJugador = $pase->getJugador()->getClubJugador()->last();
 
-			$division = $fichaMedica = $pase->getJugador()->getClubJugador()->last()->getDivision();
+			if ( ! $clubJugador ) {
+				$clubJugador = new ClubJugador();
+				$clubJugador->setJugador( $pase->getJugador() );
+				$clubJugador->setClub( $pase->getClubDestino() );
+				$clubJugador->setConfirmado( true );
+				$clubJugador->setConfirmadoClub( true );
+				$clubJugador->setFechaConfirmacionClub( new \DateTime( 'now' ) );
+				$clubJugador->setConfirmadoUnion( true );
+				$clubJugador->setFechaConfirmacionUnion( new \DateTime( 'now' ) );
+				$clubJugador->setConsentimiento( true );
+				$clubJugador->setAnio( date( "Y" ) );
 
-			$clubJugador->setDivision( $division );
+				$division = $fichaMedica = $pase->getJugador()->getClubJugador()->last()->getDivision();
 
-			$fichaMedica = $pase->getJugador()->getClubJugador()->last()->getFichaMedica()->last();
-			$clubJugador->addFichaMedica( $fichaMedica );
+				$clubJugador->setDivision( $division );
 
-			$pase->getJugador()->addClubJugador( $clubJugador );
+				$fichaMedica = $pase->getJugador()->getClubJugador()->last()->getFichaMedica()->last();
+				$clubJugador->addFichaMedica( $fichaMedica );
 
-			$em->persist( $clubJugador );
+				$pase->getJugador()->addClubJugador( $clubJugador );
+
+				$em->persist( $clubJugador );
+			}
 
 			$em->flush();
 
