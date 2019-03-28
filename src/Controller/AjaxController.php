@@ -343,7 +343,7 @@ class AjaxController extends Controller {
 						[ 'jugador' => $jugadorPrevio ],
 						[ 'id' => 'desc' ] );
 
-					if ( $fichajePrevio ) {
+					if ( $fichajePrevio && $fichajePrevio->getClub() !== $clubFichaje) {
 						// si tiene fichaje previo, genero una solicitud de pase
 						$pase = new Pase();
 						$pase->setClubOrigen( $fichajePrevio->getClub() );
