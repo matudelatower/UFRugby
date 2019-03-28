@@ -323,6 +323,33 @@ class ClubJugadorRepository extends \Doctrine\ORM\EntityRepository {
 		return $qb->getQuery()->getSingleScalarResult();
 	}
 
+	public function getCountAllJugadoresCompetitivosPorClub($club) {
+		$qb = $this->createQueryBuilder( 'cj' );
+		$qb->select( 'COUNT(cj.id)' );
+
+
+		$qb->andWhere( 'cj.anio = :anio' );
+
+		$qb->andWhere( 'cj.confirmadoUnion = true' );
+
+		$qb->setParameter( 'anio', date( 'Y' ) );
+
+
+		$endDate = new \DateTime( 'now' );
+		$endDate->modify( '-14 years' );
+
+		$qb->innerJoin( 'cj.jugador', 'jugador' )
+		   ->innerJoin( 'jugador.persona', 'persona' )
+		   ->andWhere( 'persona.fechaNacimiento < :anios' )
+		   ->setParameter( 'anios', $endDate );
+
+		$qb->andWhere( 'cj.club = :club' );
+
+		$qb->setParameter( 'club', $club );
+
+		return $qb->getQuery()->getSingleScalarResult();
+	}
+
 	public function findSolicitudPendiente( $persona ) {
 		$qb = $this->createQueryBuilder( 'cj' );
 
