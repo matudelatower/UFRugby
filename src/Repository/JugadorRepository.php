@@ -259,7 +259,7 @@ class JugadorRepository extends \Doctrine\ORM\EntityRepository {
 		return $qb;
 	}
 
-	public function getCountJuvenilesSobreMayores($anio) {
+	public function getCountJuvenilesSobreMayores( $anio ) {
 
 		$em = $this->getEntityManager();
 
@@ -282,7 +282,7 @@ class JugadorRepository extends \Doctrine\ORM\EntityRepository {
 		WHERE  YEAR(DATE_SUB(NOW(), INTERVAL TO_DAYS(persona.fecha_nacimiento) DAY)) BETWEEN 14 and 18
 		AND club_jugador.id in (Select max(cj.id) from club_jugador cj where cj.jugador_id = jugador.id)
 		AND club_jugador.confirmado_union = TRUE
-		AND club_jugador.anio= '. $anio;
+		AND club_jugador.anio= ' . $anio;
 
 
 		$stmt2 = $em->getConnection()
@@ -298,7 +298,7 @@ class JugadorRepository extends \Doctrine\ORM\EntityRepository {
 		WHERE YEAR(DATE_SUB(NOW(), INTERVAL TO_DAYS(persona.fecha_nacimiento) DAY)) > 14
 		AND club_jugador.id in (Select max(cj.id) from club_jugador cj where cj.jugador_id = jugador.id)
 		AND club_jugador.confirmado_union = TRUE
-		AND club_jugador.anio= '. $anio;
+		AND club_jugador.anio= ' . $anio;
 
 
 		$stmtTotal = $em->getConnection()
@@ -306,6 +306,10 @@ class JugadorRepository extends \Doctrine\ORM\EntityRepository {
 
 		$stmtTotal->execute();
 		$rstTotal = $stmtTotal->fetchColumn( '0' );
+
+		if ( $rstTotal == 0 ) {
+			return 0;
+		}
 
 		$porcentaje = round( ( $rstJuveniles / $rstTotal ) * 100, 2 );
 
@@ -354,6 +358,10 @@ class JugadorRepository extends \Doctrine\ORM\EntityRepository {
 
 		$stmtTotal->execute();
 		$rstTotal = $stmtTotal->fetchColumn( '0' );
+
+		if ( $rstTotal == 0 ) {
+			return 0;
+		}
 
 		$porcentaje = round( ( $rstJuveniles / $rstTotal ) * 100, 2 );
 
