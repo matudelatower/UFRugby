@@ -259,7 +259,7 @@ class JugadorRepository extends \Doctrine\ORM\EntityRepository {
 		return $qb;
 	}
 
-	public function getCountJuvenilesSobreMayores() {
+	public function getCountJuvenilesSobreMayores($anio) {
 
 		$em = $this->getEntityManager();
 
@@ -278,7 +278,11 @@ class JugadorRepository extends \Doctrine\ORM\EntityRepository {
 // juveniles
 		$sql2 = 'SELECT count(persona.id) as juveniles from persona
 		INNER JOIN jugador on persona.id = jugador.persona_id
-		WHERE  YEAR(DATE_SUB(NOW(), INTERVAL TO_DAYS(persona.fecha_nacimiento) DAY)) BETWEEN 14 and 18';
+		INNER JOIN club_jugador on jugador.id = club_jugador.jugador_id
+		WHERE  YEAR(DATE_SUB(NOW(), INTERVAL TO_DAYS(persona.fecha_nacimiento) DAY)) BETWEEN 14 and 18
+		AND club_jugador.id in (Select max(cj.id) from club_jugador cj where cj.jugador_id = jugador.id)
+		AND club_jugador.confirmado_union = TRUE
+		AND club_jugador.anio= '. $anio;
 
 
 		$stmt2 = $em->getConnection()
@@ -289,8 +293,12 @@ class JugadorRepository extends \Doctrine\ORM\EntityRepository {
 
 //		total
 		$sqlTotal = 'SELECT count(persona.id) as total from persona
-		INNER JOIN jugador on persona.id = jugador.persona_id		
-		WHERE YEAR(DATE_SUB(NOW(), INTERVAL TO_DAYS(persona.fecha_nacimiento) DAY)) > 14';
+		INNER JOIN jugador on persona.id = jugador.persona_id
+		INNER JOIN club_jugador on jugador.id = club_jugador.jugador_id		
+		WHERE YEAR(DATE_SUB(NOW(), INTERVAL TO_DAYS(persona.fecha_nacimiento) DAY)) > 14
+		AND club_jugador.id in (Select max(cj.id) from club_jugador cj where cj.jugador_id = jugador.id)
+		AND club_jugador.confirmado_union = TRUE
+		AND club_jugador.anio= '. $anio;
 
 
 		$stmtTotal = $em->getConnection()
@@ -305,7 +313,7 @@ class JugadorRepository extends \Doctrine\ORM\EntityRepository {
 		return $porcentaje;
 	}
 
-	public function getCountJuvenilesSobreMayoresPorClub( $club ) {
+	public function getCountJuvenilesSobreMayoresPorClub( $club, $anio = null ) {
 
 		$em = $this->getEntityManager();
 
@@ -316,6 +324,10 @@ class JugadorRepository extends \Doctrine\ORM\EntityRepository {
 		WHERE YEAR(DATE_SUB(NOW(), INTERVAL TO_DAYS(persona.fecha_nacimiento) DAY)) BETWEEN 14 and 18
 		AND club_jugador.id in (Select max(cj.id) from club_jugador cj where cj.jugador_id = jugador.id)
 		AND club_jugador.club_id =' . $club->getId();
+
+		if ( $anio ) {
+			$sql2 .= ' AND club_jugador.anio =' . $anio;
+		}
 
 
 		$stmt2 = $em->getConnection()
@@ -331,6 +343,10 @@ class JugadorRepository extends \Doctrine\ORM\EntityRepository {
 		WHERE YEAR(DATE_SUB(NOW(), INTERVAL TO_DAYS(persona.fecha_nacimiento) DAY)) > 14		
 		AND club_jugador.id in (Select max(cj.id) from club_jugador cj where cj.jugador_id = jugador.id)
 		AND club_jugador.club_id =' . $club->getId();
+
+		if ( $anio ) {
+			$sqlTotal .= ' AND club_jugador.anio =' . $anio;
+		}
 
 
 		$stmtTotal = $em->getConnection()
@@ -364,7 +380,7 @@ class JugadorRepository extends \Doctrine\ORM\EntityRepository {
 		return $stmtTotal->fetchColumn( '0' );
 	}
 
-	public function getCountJugadoresPorClub( $club ) {
+	public function getCountJugadoresPorClub( $club, $anio = null ) {
 
 		$em = $this->getEntityManager();
 
@@ -375,6 +391,10 @@ class JugadorRepository extends \Doctrine\ORM\EntityRepository {
 		AND club_jugador.confirmado_club = TRUE
 		AND club_jugador.club_id =' . $club->getId();
 
+		if ( $anio ) {
+			$sqlTotal .= ' AND club_jugador.anio =' . $anio;
+		}
+
 		$stmtTotal = $em->getConnection()
 		                ->prepare( $sqlTotal );
 
@@ -383,7 +403,7 @@ class JugadorRepository extends \Doctrine\ORM\EntityRepository {
 		return $stmtTotal->fetchColumn( '0' );
 	}
 
-	public function getCountJugadores() {
+	public function getCountJugadores( $anio = null ) {
 
 		$em = $this->getEntityManager();
 
@@ -392,6 +412,10 @@ class JugadorRepository extends \Doctrine\ORM\EntityRepository {
 		INNER JOIN club_jugador on jugador.id = club_jugador.jugador_id				
 		AND club_jugador.id in (Select max(cj.id) from club_jugador cj where cj.jugador_id = jugador.id)
 		AND club_jugador.confirmado_union = TRUE';
+
+		if ( $anio ) {
+			$sqlTotal .= ' AND club_jugador.anio =' . $anio;
+		}
 
 		$stmtTotal = $em->getConnection()
 		                ->prepare( $sqlTotal );
@@ -409,7 +433,7 @@ class JugadorRepository extends \Doctrine\ORM\EntityRepository {
 		INNER JOIN jugador on persona.id = jugador.persona_id		
 		INNER JOIN club_jugador on jugador.id = club_jugador.jugador_id
 		WHERE YEAR(DATE_SUB(NOW(), INTERVAL TO_DAYS(persona.fecha_nacimiento) DAY)) > 14		
-		AND club_jugador.id in (Select max(cj.id) from club_jugador cj where cj.jugador_id = jugador.id)
+		AND club_jugador.id in (SELECT max(cj.id) from club_jugador cj where cj.jugador_id = jugador.id)
 		AND club_jugador.club_id = ' . $club->getId() . '
 		GROUP BY created_month';
 
