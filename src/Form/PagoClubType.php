@@ -50,7 +50,8 @@ class PagoClubType extends AbstractType {
 					'placeholder' => 'Seleccionar Club',
 					'label'       => 'Club *',
 					'attr'        => [ 'class' => 'select2' ]
-				] );
+				] )
+        ;
 	}
 
 	/**
