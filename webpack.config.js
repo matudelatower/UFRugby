@@ -29,6 +29,7 @@ Encore
     .addStyleEntry('css/charts', './assets/css/charts.scss')
     .addStyleEntry('css/app', './assets/css/app.scss')
     .addStyleEntry('css/login', './assets/css/login.scss')
+    .addStyleEntry('css/custom', './assets/css/custom.scss')
 
 
     // imgs

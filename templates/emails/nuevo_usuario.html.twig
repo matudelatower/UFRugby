@@ -1,0 +1,23 @@
+<div>
+    <img style="width: 128px; height: auto" src="{{ absolute_url(asset('build/img/logo_urp.jpg')) }}">
+
+    <h3>Nuevo Usuario</h3>
+
+    <p style="text-align: center">
+        Bienvenido, la Unión le ha creado un nuevo usuario.
+    </p>
+    <p style="text-align: center">
+        Usuario: <strong>{{ nombre }}</strong><br>
+        Contraseña: <strong>{{ password }}</strong>
+    </p>
+    <p style="text-align: center">
+        <strong>RECUERDE CAMBIAR SU CONTRASEÑA</strong>
+    </p>
+    <p style="text-align: center">
+        Arriba a la derecha (donde aparece su nombre) y luego click en el botón "Perfil"
+    </p>
+    <p style="text-align: center">
+        Para Iniciar Sesión ingrese al sieguiente
+        <a href="{{ url }}">link</a>
+    </p>
+</div>

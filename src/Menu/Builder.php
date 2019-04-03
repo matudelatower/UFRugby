@@ -180,6 +180,17 @@ class Builder {
 				);
 		}
 
+        if ( $this->authorizationChecker->isGranted( 'ROLE_UNION' ) ) {
+
+            $menu[ $keyAdministracion ]
+                ->addChild(
+                    'Usuarios',
+                    array(
+                        'route' => 'usuario_index',
+                    )
+                );
+        }
+
 
 		return $menu;
 	}
