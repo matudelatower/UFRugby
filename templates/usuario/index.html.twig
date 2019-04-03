@@ -1,0 +1,117 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Usuarios
+{% endblock title %}
+{% block body %}
+    <div class="row m-b-2">
+        <div class="col-md-12">
+            <a class="btn btn-primary" href="{{ path('usuario_new') }}">Nuevo Usuario</a>
+        </div>
+    </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box">
+                    <div class="box-header">
+                        <h3 class="box-title">Filtros</h3>
+
+                    </div>
+                    {{ form_start(filter_type) }}
+                    <div class="box-body">
+                        <div class="col-md-6">
+                            {{ form_row(filter_type.username) }}
+                            {{ form_row(filter_type.email) }}
+                            {{ form_row(filter_type.enabled) }}
+                        </div>
+                        <div class="col-md-6">
+                            {{ form_row(filter_type.roles) }}
+                            {{ form_row(filter_type.club) }}
+                        </div>
+
+                    </div>
+                    <div class="box-footer">
+                        {{ form_widget(filter_type.buscar) }}
+                        {{ form_widget(filter_type.limpiar) }}
+                    </div>
+                    {{ form_end(filter_type) }}
+                </div>
+            </div>
+        </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box">
+                <div class="box-header">
+                    <h3 class="box-title">Listado de Usuarios</h3>
+                </div>
+                <div class="box-body">
+                    <table class="table table-bordered table-striped data-table">
+                        <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Username</th>
+                            <th>Email</th>
+                            <th>Enabled</th>
+                            <th>Club</th>
+                            <th>Roles</th>
+                            <th>Último login</th>
+                            <th>actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for usuario in usuarios %}
+                            <tr>
+                                <td>{{ usuario.id }}</td>
+                                <td>{{ usuario.username }}</td>
+
+                                <td>{{ usuario.email }}</td>
+
+                                <td>
+                                    {% if usuario.enabled %}
+                                        <small class="label bg-green">Si</small>
+                                    {% else %}
+                                        <small class="label bg-red">No</small>
+                                    {% endif %}
+                                </td>
+
+
+
+
+                                <td>{{ usuario.club }}</td>
+                                <td>{{ usuario.roles ? usuario.roles|join(', ') : '' }}</td>
+                                <td>{{ usuario.lastLogin ? usuario.lastLogin|date('Y-m-d H:i:s') : '' }}</td>
+
+                                <td>
+                                    <a class="btn btn-default" href="{{ path('usuario_show', {'id': usuario.id}) }}"><i class="fa fa-eye"></i></a>
+                                    <a class="btn btn-default" href="{{ path('usuario_edit', {'id': usuario.id}) }}"><i class="fa fa-edit"></i></a>
+                                </td>
+                            </tr>
+
+                        {% else %}
+                            <tr>
+                                <td colspan="7">No se encontraron resultados</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <a class="btn btn-primary" href="{{ path('usuario_new') }}">Nuevo Usuario</a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <div class="navigation">
+                {{ knp_pagination_render(usuarios) }}
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}
+
