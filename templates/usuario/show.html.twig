@@ -1,66 +1,53 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Usuario{% endblock %}
+{% block title %}Usuario #{{ usuario.id }}{% endblock %}
 
 {% block body %}
-    <h1>Usuario</h1>
+    <h1>Usuario #{{ usuario.id }}</h1>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Username</th>
-                <td>{{ usuario.username }}</td>
-            </tr>
-            <tr>
-                <th>UsernameCanonical</th>
-                <td>{{ usuario.usernameCanonical }}</td>
-            </tr>
-            <tr>
-                <th>Email</th>
-                <td>{{ usuario.email }}</td>
-            </tr>
-            <tr>
-                <th>EmailCanonical</th>
-                <td>{{ usuario.emailCanonical }}</td>
-            </tr>
-            <tr>
-                <th>Enabled</th>
-                <td>{{ usuario.enabled ? 'Yes' : 'No' }}</td>
-            </tr>
-            <tr>
-                <th>Salt</th>
-                <td>{{ usuario.salt }}</td>
-            </tr>
-            <tr>
-                <th>Password</th>
-                <td>{{ usuario.password }}</td>
-            </tr>
-            <tr>
-                <th>LastLogin</th>
-                <td>{{ usuario.lastLogin ? usuario.lastLogin|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>ConfirmationToken</th>
-                <td>{{ usuario.confirmationToken }}</td>
-            </tr>
-            <tr>
-                <th>PasswordRequestedAt</th>
-                <td>{{ usuario.passwordRequestedAt ? usuario.passwordRequestedAt|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>Roles</th>
-                <td>{{ usuario.roles ? usuario.roles|join(', ') : '' }}</td>
-            </tr>
-            <tr>
-                <th>Id</th>
-                <td>{{ usuario.id }}</td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="row">
+        <div class="col-md-4">
 
-    <a href="{{ path('usuario_index') }}">back to list</a>
+            <!-- Profile Image -->
+            <div class="box box-primary">
+                <div class="box-body box-profile">
 
-    <a href="{{ path('usuario_edit', {'id': usuario.id}) }}">edit</a>
+                    <h3 class="profile-username text-center">{{ usuario.username }}</h3>
 
-    {{ include('usuario/_delete_form.html.twig') }}
+                    <ul class="list-group list-group-unbordered">
+                        <li class="list-group-item">
+                            <b>Email</b> <a class="pull-right">{{ usuario.email }}</a>
+                        </li>
+                        <li class="list-group-item">
+                            <b>Activo</b> <a class="pull-right">
+                                {% if usuario.enabled %}
+                                    <small class="label bg-green">Si</small>
+                                {% else %}
+                                    <small class="label bg-red">No</small>
+                                {% endif %}
+                            </a>
+                        </li>
+                        <li class="list-group-item">
+                            <b>Último Login</b> <a
+                                    class="pull-right">{{ usuario.lastLogin ? usuario.lastLogin|date('Y-m-d H:i:s') : '' }}</a>
+                        </li>
+                        <li class="list-group-item">
+                            <b>Roles</b> <a class="pull-right">{{ usuario.roles ? usuario.roles|join(', ') : '' }}</a>
+                        </li>
+                    </ul>
+
+
+                </div>
+                <div class="box-footer">
+                    <a class="btn btn-primary pull-right"
+                       href="{{ path('usuario_edit', {'id': usuario.id}) }}">Editar</a>
+                </div>
+                <!-- /.box-body -->
+
+            </div>
+        </div>
+    </div>
+    <a class="btn btn-default" href="{{ path('usuario_index') }}">Volver</a>
+
+
 {% endblock %}
