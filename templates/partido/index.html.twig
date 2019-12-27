@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Partido index{% endblock %}
+
+{% block body %}
+    <h1>Partido index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Fecha</th>
+                <th>Hora</th>
+                <th>Sede</th>
+                <th>Observaciones</th>
+                <th>Activo</th>
+                <th>FechaCreacion</th>
+                <th>FechaActualizacion</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for partido in partidos %}
+            <tr>
+                <td>{{ partido.id }}</td>
+                <td>{{ partido.fecha ? partido.fecha|date('Y-m-d') : '' }}</td>
+                <td>{{ partido.hora ? partido.hora|date('H:i:s') : '' }}</td>
+                <td>{{ partido.sede }}</td>
+                <td>{{ partido.observaciones }}</td>
+                <td>{{ partido.activo ? 'Yes' : 'No' }}</td>
+                <td>{{ partido.fechaCreacion ? partido.fechaCreacion|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ partido.fechaActualizacion ? partido.fechaActualizacion|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <a href="{{ path('partido_show', {'id': partido.id}) }}">show</a>
+                    <a href="{{ path('partido_edit', {'id': partido.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="9">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('partido_new') }}">Create new</a>
+{% endblock %}

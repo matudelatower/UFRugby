@@ -21,6 +21,7 @@ easy_admin:
             - { label: 'Posición Jugador', entity: PosicionJugador }
             - { label: 'Categoría', entity: Categoria }
             - { label: 'División', entity: Division }
+            - { label: 'Estado Partido', entity: EstadoPartido }
             - { label: 'Tipo Identificación', entity: TipoIdentificacion }
             - { label: 'Tipo Torneo', entity: TipoTorneo }
             - { label: 'Tipo Relación', entity: TipoRelacion }

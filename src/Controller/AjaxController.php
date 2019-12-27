@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Club;
 use App\Entity\ClubJugador;
 use App\Entity\Contacto;
 use App\Entity\Division;
@@ -13,10 +14,12 @@ use App\Entity\PosicionJugador;
 use App\Entity\Referee;
 use App\Entity\ResponsableJugador;
 use App\Entity\Usuario;
+use App\Form\MiembroEquipoPartidoType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Routing\Annotation\Route;
 
 class AjaxController extends Controller {
 	public function getSexosAction() {
@@ -495,16 +498,47 @@ class AjaxController extends Controller {
 		                 ->findBy( [ 'enabled' => true ] );
 		$usuarios = array_map( function ( Usuario $usuario ) {
 			return [
-				'id'           => $usuario->getId(),
-				'username'     => $usuario->getUsername(),
-				'nombre'       => $usuario->getPersona() ? $usuario->getPersona()->__toString() : null,
-				'club' => $usuario->getClub() ? $usuario->getClub()->__toString() : null,
-				'roles'        => $usuario->getRoles(),
+				'id'       => $usuario->getId(),
+				'username' => $usuario->getUsername(),
+				'nombre'   => $usuario->getPersona() ? $usuario->getPersona()->__toString() : null,
+				'club'     => $usuario->getClub() ? $usuario->getClub()->__toString() : null,
+				'roles'    => $usuario->getRoles(),
 			];
 		},
 			$usuarios );
 
 		return JsonResponse::create( $usuarios );
+	}
+
+
+	/**
+	 * @Route("/ajax/get_jugadores", name="ajax_get_jugadores", methods="GET")
+	 */
+	public function getJugadores( Request $request ) {
+		// Check security etc. if needed
+
+
+		$em = $this->getDoctrine()
+		           ->getManager();
+
+		$data['apellido'] = $request->get( 'q' );
+
+		$club = $em->getRepository( Club::class )->find( $request->get( 'club' ) );
+
+		$jugadores = $em->getRepository( Jugador::class )->getQbBuscarJugadoresByClub( $club, $data );
+
+//		$count = $countQB->getQuery()->getSingleScalarResult();
+		$paginationResults = $jugadores->getQuery()->getResult();
+
+		$result = [ 'results' => null ];
+
+
+		$result['results'] = array_map( function ( $item ) {
+			return [ 'id' => $item->getId(), 'text' => $item->__toString() ];
+		},
+			$paginationResults );
+
+		return new JsonResponse( $result );
 	}
 
 }

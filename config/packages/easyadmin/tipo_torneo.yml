@@ -1,10 +1,9 @@
 easy_admin:
     entities:
-        TipoTorneo:
-            label: "Tipo de Torneo"
-            class: App\Entity\TipoTorneo
+        EstadoPartido:
+            label: "Estado Partido"
+            class: App\Entity\EstadoPartido
             disabled_actions: ['delete']
             form:
                 fields:
                 - { property: 'nombre' }
-                - { property: 'descripcion' }

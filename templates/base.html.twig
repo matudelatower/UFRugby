@@ -13,8 +13,11 @@
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
+    <script src="{{ asset('build/manifest.js') }}"></script>
+    <script src="{{ asset('build/vendor.js') }}"></script>
 
     <link rel="stylesheet" href="{{ asset('build/css/adminlte.css') }}">
+    <link rel="stylesheet" href="{{ asset('build/css/app.css') }}">
 
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -224,6 +227,7 @@
 {% if is_granted('ROLE_ADMIN') %}
     {% include 'default/modal_usuarios_impersonar.html.twig' %}
 {% endif %}
+<script src="{{ asset('bundles/tetranzselect2entity/js/select2entity.js') }}"></script>
 {% block javascripts %}{% endblock %}
 </body>
 </html>

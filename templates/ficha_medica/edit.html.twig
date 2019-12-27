@@ -23,14 +23,3 @@
         </div>
     </div>
 {% endblock %}
-
-{% block javascripts %}
-    <script>
-        $(document).ready(function () {
-            $('.btn-guardar').click(function () {
-                $(this).addClass('disabled');
-                $(this).html('<i class="fa fa-circle-o-notch fa-spin"></i> Guardando');
-            })
-        });
-    </script>
-{% endblock javascripts %}

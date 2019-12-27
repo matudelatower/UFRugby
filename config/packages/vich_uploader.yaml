@@ -13,3 +13,7 @@ vich_uploader:
             uri_prefix:         /uploads/images/persona
             upload_destination: '%kernel.root_dir%/../public/uploads/images/persona'
             namer: vich_uploader.namer_uniqid
+        torneo_image:
+            uri_prefix:         /uploads/images/torneo
+            upload_destination: '%kernel.root_dir%/../public/uploads/images/torneo'
+            namer: vich_uploader.namer_uniqid

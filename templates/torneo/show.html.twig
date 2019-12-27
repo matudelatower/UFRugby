@@ -1,0 +1,158 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Torneo{% endblock %}
+
+{% block body %}
+    <h1>Torneo</h1>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box">
+                <div class="box-header">
+                    <h3 class="box-title">{{ torneo.nombre }}</h3>
+                </div>
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-md-3">
+                            {% if torneo.imageName %}
+                                <img class="img-responsive"
+                                     src="{{ asset('uploads/images/torneo/'~ torneo.imageName) }}">
+                            {% else %}
+                                <img class="img-responsive" src="{{ asset('build/img/copa.png') }}">
+                            {% endif %}
+                        </div>
+
+                        <div class="col-md-3 col-md-offset-3">
+
+                            <b>Organizador: </b>
+                            {{ torneo.clubOrganizador ? torneo.clubOrganizador : 'URP' }}<br>
+                            <b>División: </b>
+                            {{ torneo.division }}<br>
+                            <b>Sexo: </b>
+                            {{ torneo.sexo }}<br>
+                            <b>Estado: </b>
+
+                            {% if torneo.activo %}
+                                <small class="label bg-green">Activo</small>
+                            {% else %}
+                                <small class="label bg-danger">Inactivo</small>
+                            {% endif %}
+                            <br>
+                            <b>Máx. Titulares Por Equipo: </b>
+                            {{ torneo.maximoTitularesPorEquipo }}<br>
+                            <b>Máx. Suplentes Por Equipo: </b>
+                            {{ torneo.maximoSuplentesPorEquipo }}<br>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="nav-tabs-custom">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a href="#participantes" data-toggle="tab">Participantes</a></li>
+                    <li><a href="#rondas" data-toggle="tab">Rondas</a></li>
+
+                </ul>
+                <div class="tab-content">
+                    <div class="active tab-pane" id="participantes">
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                <tr>
+                                    <th>Club</th>
+                                    <th>Acciones</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for participanteTorneo in torneo.participanteTorneos %}
+                                    <tr>
+                                        <td>
+                                            <a href="{{ path('club_show', {'id': participanteTorneo.club.id }) }}">{{ participanteTorneo.club }}</a>
+                                        </td>
+                                        <td>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="rondas">
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                <tr>
+                                    <th>Ronda</th>
+                                    <th>Fechas</th>
+                                    <th>Estado</th>
+                                    <th>P.PG</th>
+                                    <th>P.PE</th>
+                                    <th>P.PP</th>
+                                    <th>W.O.</th>
+                                    <th>B.Tries</th>
+                                    <th>B.Dif.T.</th>
+                                    <th>B.Dif.P.</th>
+                                    <th>B.Conducta</th>
+                                    <th>Acciones</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for rondaTorneo in torneo.rondaTorneos %}
+                                    <tr>
+                                        <td>
+                                            <a href="{{ path('ronda_torneo_show', {'id': rondaTorneo.id }) }}">
+                                                {{ rondaTorneo }}
+                                            </a>
+                                        </td>
+                                        <td>{{ rondaTorneo.fechaRondas.count }}</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td>
+                                            <a class="btn btn-default" href="{{ path('ronda_torneo_edit', {'id': rondaTorneo.id }) }}">
+                                                <i class="fa fa-edit"></i>
+                                            </a>
+                                            <a class="btn btn-default" data-toggle="tooltip" title="Agregar Fecha"
+                                               href="{{ path('fecha_ronda_agregar', {'ronda': rondaTorneo.id}) }}">
+                                                <i class="fa fa-calendar-plus-o"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        <a class="btn btn-primary" href="{{ path('ronda_torneo_agregar', {'torneo': torneo.id}) }}">
+                            Agregar Ronda
+                        </a>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <a class="btn btn-default" href="{{ path('torneo_index') }}">Volver</a>
+
+    <a class="btn btn-primary" href="{{ path('torneo_edit', {'id': torneo.id}) }}">Modificar</a>
+
+    {#<a class="btn btn-primary" href="{{ path('participante_torneo_agregar', {'torneo': torneo.id}) }}">#}
+    {#<i class="fa fa-plus"></i>#}
+    {#Agregar Participantes#}
+    {#</a>#}
+
+    {#{{ include('torneo/_delete_form.html.twig') }}#}
+{% endblock %}

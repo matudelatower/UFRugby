@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nuevo Torneo{% endblock %}
+
+{% block body %}
+    <h1>Nuevo Torneo</h1>
+
+    <div class="box">
+        <div class="box-header">
+            <h3 class="box-title">Datos</h3>
+        </div>
+        <div class="box-body">
+            {{ include('torneo/_form.html.twig') }}
+        </div>
+    </div>
+
+    <a class="btn btn-default" href="{{ path('torneo_index') }}">Volver</a>
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Editar Torneo{% endblock %}
+
+{% block body %}
+    <h1>Editar Torneo</h1>
+    <div class="box">
+        <div class="box-header">
+            <h3 class="box-title">Datos</h3>
+        </div>
+        <div class="box-body">
+            {{ include('torneo/_form.html.twig', {'button_label': 'Actualizar'}) }}
+
+            {#<div class="row">#}
+                {#<div class="pull-right">#}
+                    {#<a class="btn btn-primary" href="{{ path('participante_torneo_agregar', {'torneo': torneo.id}) }}">#}
+                        {#<i class="fa fa-plus"></i>#}
+                        {#Agregar Participantes#}
+                    {#</a>#}
+                {#</div>#}
+            {#</div>#}
+        </div>
+    </div>
+
+
+
+    <a class="btn btn-default" href="{{ path('torneo_index') }}">Volver</a>
+
+    {#{{ include('torneo/_delete_form.html.twig') }}#}
+{% endblock %}

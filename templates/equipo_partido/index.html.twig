@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}EquipoPartido index{% endblock %}
+
+{% block body %}
+    <h1>EquipoPartido index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>FechaConfirmacion</th>
+                <th>Estado</th>
+                <th>Local</th>
+                <th>Visitante</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for equipo_partido in equipo_partidos %}
+            <tr>
+                <td>{{ equipo_partido.id }}</td>
+                <td>{{ equipo_partido.fechaConfirmacion ? equipo_partido.fechaConfirmacion|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ equipo_partido.estado }}</td>
+                <td>{{ equipo_partido.local ? 'Yes' : 'No' }}</td>
+                <td>{{ equipo_partido.visitante ? 'Yes' : 'No' }}</td>
+                <td>
+                    <a href="{{ path('equipo_partido_show', {'id': equipo_partido.id}) }}">show</a>
+                    <a href="{{ path('equipo_partido_edit', {'id': equipo_partido.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('equipo_partido_new') }}">Create new</a>
+{% endblock %}

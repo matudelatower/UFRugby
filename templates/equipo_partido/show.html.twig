@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}EquipoPartido{% endblock %}
+
+{% block body %}
+    <h1>EquipoPartido</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ equipo_partido.id }}</td>
+            </tr>
+            <tr>
+                <th>FechaConfirmacion</th>
+                <td>{{ equipo_partido.fechaConfirmacion ? equipo_partido.fechaConfirmacion|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Estado</th>
+                <td>{{ equipo_partido.estado }}</td>
+            </tr>
+            <tr>
+                <th>Local</th>
+                <td>{{ equipo_partido.local ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>Visitante</th>
+                <td>{{ equipo_partido.visitante ? 'Yes' : 'No' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('equipo_partido_index') }}">back to list</a>
+
+    <a href="{{ path('equipo_partido_edit', {'id': equipo_partido.id}) }}">edit</a>
+
+    {{ include('equipo_partido/_delete_form.html.twig') }}
+{% endblock %}

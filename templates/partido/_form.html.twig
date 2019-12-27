@@ -1,0 +1,19 @@
+{{ form_start(form) }}
+<div class="row">
+    <div class="col-md-6">{{ form_row(form.local) }}</div>
+    <div class="col-md-6">{{ form_row(form.visitante) }}</div>
+</div>
+<div class="row">
+    <div class="col-md-6">{{ form_row(form.fecha) }}</div>
+    <div class="col-md-6">{{ form_row(form.hora) }}</div>
+</div>
+<div class="row">
+    <div class="col-md-6">{{ form_row(form.sede) }}</div>
+    <div class="col-md-6">{{ form_row(form.observaciones) }}</div>
+</div>
+<div class="row">
+    <div class="col-md-6">{{ form_row(form.referee) }}</div>
+</div>
+{{ form_widget(form) }}
+<button class="btn btn-primary btn-guardar">{{ button_label|default('Guardar') }}</button>
+{{ form_end(form) }}

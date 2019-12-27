@@ -54,3 +54,8 @@ services:
         public: true
         arguments:
             - "@phpexcel"
+
+#    Select2Entity
+    tetranz_select2entity.autocomplete_service:
+        class: Tetranz\Select2EntityBundle\Service\AutocompleteService
+        public: true

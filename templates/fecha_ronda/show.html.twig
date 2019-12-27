@@ -1,0 +1,136 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ronda{% endblock %}
+
+{% block body %}
+    <h1>Ronda</h1>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box">
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <h2> Torneo:
+                                <a href="{{ path('torneo_show', {'id': fecha_ronda.ronda.torneo.id }) }}">
+                                    {{ fecha_ronda.ronda.torneo }}
+                                </a>
+                            </h2>
+
+
+                        </div>
+                        <div class="col-md-4">
+                            <h3> Ronda:
+                                <a href="{{ path('ronda_torneo_show', {'id': fecha_ronda.ronda.id }) }}">
+                                    {{ fecha_ronda.ronda }}
+                                </a>
+                            </h3>
+                        </div>
+                        <div class="col-md-4">
+                            <h4> Fecha: {{ fecha_ronda.nombre }} </h4>
+                            Fecha de juego tentativa: {{ fecha_ronda.fechaTentativa | date ('d/m/Y') }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box">
+                <div class="box-header">
+                </div>
+                <div class="box-body">
+
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th>Nro.</th>
+                                <th>Local</th>
+                                <th>Resultado</th>
+                                <th>Visitante</th>
+                                <th>Fecha</th>
+                                <th>Hora</th>
+                                <th>Arbitro</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for partido in fecha_ronda.partidos %}
+                                <tr>
+                                    <td>
+                                        <a href="{{ path('partido_show', {'id': partido.id}) }}">{{ partido.id }}</a>
+                                    </td>
+                                    <td>
+                                        <a href="{{ path('equipo_partido_editar_local', {'id': partido.local.id}) }}">{{ partido.local.equipo.club }}</a>
+                                    </td>
+                                    <td></td>
+                                    <td>
+                                        <a href="{{ path('equipo_partido_editar_visitante', {'id': partido.visitante.id}) }}">{{ partido.visitante.equipo.club }}</a>
+                                    </td>
+                                    <td>{{ partido.fecha | date('d/m/Y') }}</td>
+                                    <td>{{ partido.hora | date('H:m') }}</td>
+                                    <td>
+                                        {% if partido.referee %}
+                                            <a href="{{ path('club_show', {'id': partido.referee.id}) }}">{{ partido.referee }}</a>
+                                        {% else %}
+                                            (Sin Designar)
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% if partido.estado.slug == 'pendiente' %}
+                                            {% set estado = 'warning' %}
+                                            {% set icono = '<i class="fa fa-hourglass-half"></i>' %}
+                                        {% endif %}
+                                        {% if partido.estado.slug == 'cerrado' %}
+                                            {% set estado = 'info' %}
+                                            {% set icono = '<i class="fa fa-lock"></i>' %}
+                                        {% endif %}
+                                        {% if partido.estado.slug == 'confirmado' %}
+                                            {% set estado = 'primary' %}
+                                            {% set icono = '<i class="fa fa-check"></i>' %}
+                                        {% endif %}
+                                        {#{% if partido.estado.slug == 'cerrado' %}#}
+                                        {#{% set estado = 'primary' %}#}
+                                        {#{% endif %}#}
+
+
+                                        <span class="label label-{{ estado }}">
+                                            {{ icono |raw}}
+                                            {{ partido.estado }}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        {% if partido.estado.slug != 'cerrado' %}
+                                        <a href="{{ path('partido_edit', {'id': partido.id}) }}"
+                                           class="btn btn-default">
+                                            <i class="fa fa-edit"></i>
+                                        </a>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+                <div class="box-footer">
+                    <a href="{{ path('partido_agregar', {'fecha': fecha_ronda.id }) }}" class="btn btn-primary">Agregar
+                        Partido</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <a class="btn btn-default" href="{{ path('ronda_torneo_show', {'id': fecha_ronda.ronda.id }) }}">
+        Volver
+    </a>
+
+
+
+    {#{{ include('fecha_ronda/_delete_form.html.twig') }}#}
+{% endblock %}

@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}RondaTorneo index{% endblock %}
+
+{% block body %}
+    <h1>RondaTorneo index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nombre</th>
+                <th>PuntosGanado</th>
+                <th>PuntosPerdido</th>
+                <th>PuntosEmpatado</th>
+                <th>PuntosPorWalkover</th>
+                <th>TantosPorWalkover</th>
+                <th>BonusTriunfoCantidadTriesMayorA</th>
+                <th>BonusTriunfoDiferenciaTriesMayorA</th>
+                <th>BonusDerrotaDiferenciaPuntos</th>
+                <th>Activo</th>
+                <th>FechaCreacion</th>
+                <th>FechaActualizacion</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for ronda_torneo in ronda_torneos %}
+            <tr>
+                <td>{{ ronda_torneo.id }}</td>
+                <td>{{ ronda_torneo.nombre }}</td>
+                <td>{{ ronda_torneo.puntosGanado }}</td>
+                <td>{{ ronda_torneo.puntosPerdido }}</td>
+                <td>{{ ronda_torneo.puntosEmpatado }}</td>
+                <td>{{ ronda_torneo.puntosPorWalkover }}</td>
+                <td>{{ ronda_torneo.tantosPorWalkover }}</td>
+                <td>{{ ronda_torneo.bonusTriunfoCantidadTriesMayorA }}</td>
+                <td>{{ ronda_torneo.bonusTriunfoDiferenciaTriesMayorA }}</td>
+                <td>{{ ronda_torneo.bonusDerrotaDiferenciaPuntos }}</td>
+                <td>{{ ronda_torneo.activo ? 'Yes' : 'No' }}</td>
+                <td>{{ ronda_torneo.fechaCreacion ? ronda_torneo.fechaCreacion|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ ronda_torneo.fechaActualizacion ? ronda_torneo.fechaActualizacion|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <a href="{{ path('ronda_torneo_show', {'id': ronda_torneo.id}) }}">show</a>
+                    <a href="{{ path('ronda_torneo_edit', {'id': ronda_torneo.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="14">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('ronda_torneo_new') }}">Create new</a>
+{% endblock %}

@@ -1,0 +1,234 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Partido{% endblock %}
+
+{% block body %}
+
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box">
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-md-6 col-lg-6">
+                            <h3> Torneo:
+                                <a href="{{ path('torneo_show', {'id': partido.fechaRonda.ronda.torneo.id }) }}">
+                                    {{ partido.fechaRonda.ronda.torneo }}
+                                </a>
+                            </h3>
+                            <h5> Ronda:
+                                <a href="{{ path('ronda_torneo_show', {'id': partido.fechaRonda.ronda.id }) }}">
+                                    {{ partido.fechaRonda.ronda }}
+                                </a>
+                            </h5>
+                            <h5> Fecha: {{ partido.fechaRonda.nombre }} </h5>
+                            <p>
+                                Fecha de juego: {{ partido.fecha | date ('d/m/Y') }} - {{ partido.hora | date ('H:m') }}
+                            </p>
+                            <p>
+                                Referee: {{ partido.referee }}
+                            </p>
+                            <p>
+                                Sede: {{ partido.sede }}
+                            </p>
+                        </div>
+                        <div class="col-md-6 col-lg-6 text-center">
+                            <div class="col-sm-3">
+                                <h5>Local</h5>
+                                <h1>10</h1>
+                                <h3>
+                                    <a href="{{ path('club_show', {'id': partido.local.club.id}) }}">{{ partido.local }}</a>
+
+                                </h3>
+                            </div>
+                            <div class="col-sm-1">
+                                <h5></h5>
+                                <h1>-</h1>
+                            </div>
+                            <div class="col-sm-3">
+                                <h5>Visitante</h5>
+                                <h1>0</h1>
+                                <h3>
+                                    <a href="{{ path('club_show', {'id': partido.visitante.club.id}) }}">{{ partido.visitante }}</a>
+                                </h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box">
+                <div class="box-body">
+                    <h3>Partido</h3>
+                    <div class="row">
+
+                        <div class="col-md-6">
+                            <div class="box box-primary box-solid">
+                                <div class="box-header with-border">
+                                    <h3 class="box-title">Incidencias Local</h3>
+
+                                    <div class="box-tools pull-right">
+                                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
+                                                    class="fa fa-minus"></i>
+                                        </button>
+                                    </div>
+                                    <!-- /.box-tools -->
+                                </div>
+                                <!-- /.box-header -->
+                                <div class="box-body">
+                                    The body of the box
+                                </div>
+                                <!-- /.box-body -->
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="box box-primary box-solid">
+                                <div class="box-header with-border">
+                                    <h3 class="box-title">Incidencias Visitante</h3>
+
+                                    <div class="box-tools pull-right">
+                                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
+                                                    class="fa fa-minus"></i>
+                                        </button>
+                                    </div>
+                                    <!-- /.box-tools -->
+                                </div>
+                                <!-- /.box-header -->
+                                <div class="box-body">
+                                    The body of the box
+                                </div>
+                                <!-- /.box-body -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="box box-warning box-solid">
+                                <div class="box-header with-border">
+                                    <h3 class="box-title">Miembros del equipo Local</h3>
+
+                                    <div class="box-tools pull-right">
+                                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
+                                                    class="fa fa-minus"></i>
+                                        </button>
+                                    </div>
+                                    <!-- /.box-tools -->
+                                </div>
+                                <!-- /.box-header -->
+                                <div class="box-body">
+                                    The body of the box
+                                </div>
+                                <!-- /.box-body -->
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="box box-warning box-solid">
+                                <div class="box-header with-border">
+                                    <h3 class="box-title">Miembros del equipo Visitante</h3>
+
+                                    <div class="box-tools pull-right">
+                                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
+                                                    class="fa fa-minus"></i>
+                                        </button>
+                                    </div>
+                                    <!-- /.box-tools -->
+                                </div>
+                                <!-- /.box-header -->
+                                <div class="box-body">
+                                    The body of the box
+                                </div>
+                                <!-- /.box-body -->
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box">
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="box box-primary box-solid">
+                                <div class="box-header with-border">
+                                    <h3 class="box-title">Incidencias</h3>
+
+                                    <div class="box-tools pull-right">
+                                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
+                                                    class="fa fa-minus"></i>
+                                        </button>
+                                    </div>
+                                    <!-- /.box-tools -->
+                                </div>
+                                <!-- /.box-header -->
+                                <div class="box-body">
+                                    The body of the box
+                                </div>
+                                <!-- /.box-body -->
+                                <div class="box-footer">
+                                    <div class="text-center">
+                                        <a href="#" class="btn btn-primary">
+                                            <i class="fa fa-plus"></i>
+                                            Agregar Incidencia
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+    <div class="col-md-12">
+        <div class="box">
+            <div class="box-header">
+                <h3 class="box-title">Eventos del partido</h3>
+            </div>
+            <div class="box-body">
+
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>Fecha</th>
+                            <th>Hora</th>
+                            <th>Evento</th>
+                            <th>Actor</th>
+                            <th>Usuario</th>
+                            <th>Unión / Club</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    {#<a href="{{ path('partido_index') }}">back to list</a>#}
+
+    {#<a href="{{ path('partido_edit', {'id': partido.id}) }}">edit</a>#}
+
+    {#{{ include('partido/_delete_form.html.twig') }}#}
+{% endblock %}

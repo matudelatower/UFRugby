@@ -30,6 +30,11 @@ Encore
     .addStyleEntry('css/app', './assets/css/app.scss')
     .addStyleEntry('css/login', './assets/css/login.scss')
 
+    .createSharedEntry('vendor', [
+        'jquery',
+        'bootstrap',
+        './assets/js/expose-jquery.js'
+    ])
 
     // imgs
     .addPlugin(new CopyWebpackPlugin([

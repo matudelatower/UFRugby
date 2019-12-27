@@ -21,7 +21,8 @@ class ClubType extends AbstractType {
 				        'allow_delete' => true, // optional, default is true
 			        ] )
 		        ->add( 'categoria' )
-		        ->add( 'contacto', ContactoType::class );
+		        ->add( 'contacto', ContactoType::class )
+		        ->add( 'activo' );
 	}
 
 	/**

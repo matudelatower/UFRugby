@@ -1,0 +1,10 @@
+easy_admin:
+    entities:
+        TipoTorneo:
+            label: "Tipo de Torneo"
+            class: App\Entity\TipoTorneo
+            disabled_actions: ['delete']
+            form:
+                fields:
+                - { property: 'nombre' }
+                - { property: 'descripcion' }

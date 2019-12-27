@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New RondaTorneo{% endblock %}
+
+{% block body %}
+    <h1>Create new RondaTorneo</h1>
+
+    {{ include('ronda_torneo/_form.html.twig') }}
+
+    <a href="{{ path('ronda_torneo_index') }}">back to list</a>
+{% endblock %}

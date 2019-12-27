@@ -1,0 +1,123 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ronda{% endblock %}
+
+{% block body %}
+    <h1>Ronda</h1>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box">
+                <div class="box-header">
+                    <h2> Torneo:
+                        <a href="{{ path('torneo_show', {'id': ronda_torneo.torneo.id }) }}">
+                            {{ ronda_torneo.torneo }}
+                        </a>
+                    </h2>
+                    <h3> Ronda: {{ ronda_torneo.nombre }} </h3>
+                </div>
+                <div class="box-body">
+                    <div class="row">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="nav-tabs-custom">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a href="#fechas" data-toggle="tab">Fechas</a></li>
+                    <li><a href="#posiciones" data-toggle="tab">Posiciones</a></li>
+
+                </ul>
+                <div class="tab-content">
+                    <div class="active tab-pane" id="fechas">
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th>Fecha Tentativa</th>
+                                    <th>Estado</th>
+                                    <th>Acciones</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for fechaRonda in ronda_torneo.fechaRondas %}
+                                    <tr>
+                                        <td>
+                                            <a href="{{ path('fecha_ronda_show', {'id': fechaRonda.id }) }}">{{ fechaRonda.nombre }}</a>
+                                        </td>
+                                        <td>
+                                            {{ fechaRonda.fechaTentativa | date('d/m/Y') }}
+                                        </td>
+                                        <td>
+                                            {{ fechaRonda.activo }}
+                                        </td>
+                                        <td>
+                                            <a class="btn btn-default" href="{{ path('fecha_ronda_edit', {'id': fechaRonda.id }) }}"><i class="fa fa-edit"></i></a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="posiciones">
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                <tr>
+                                    <th>Equipo</th>
+                                    <th>Ptos Iniciales</th>
+                                    <th>Ptos</th>
+                                    <th>P. Jug</th>
+                                    <th>P. Gan</th>
+                                    <th>P. Emp</th>
+                                    <th>P. Per</th>
+                                    <th>P. Fav</th>
+                                    <th>P. En C</th>
+                                    <th>Dif. P</th>
+                                    <th>T. Fav</th>
+                                    <th>T. En C</th>
+                                    <th>B. Conducta</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    {#<a href="{{ path('ronda_torneo_index') }}">back to list</a>#}
+
+    {#<a href="{{ path('ronda_torneo_edit', {'id': ronda_torneo.id}) }}">edit</a>#}
+
+
+{% endblock %}

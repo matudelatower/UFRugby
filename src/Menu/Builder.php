@@ -180,6 +180,27 @@ class Builder {
 				);
 		}
 
+		$keyCompetencia = 'COMPETENCIA';
+		$menu->addChild(
+			$keyCompetencia,
+			array(
+				'childrenAttributes' => array(
+					'class' => 'treeview-menu',
+				),
+			)
+		)
+		     ->setUri( '#' )
+		     ->setExtra( 'icon', 'fa fa-trophy' )
+		     ->setAttribute( 'class', 'treeview' );
+
+		$menu[ $keyCompetencia ]
+			->addChild(
+				'Torneos',
+				array(
+					'route' => 'torneo_index',
+				)
+			);
+
 
 		return $menu;
 	}

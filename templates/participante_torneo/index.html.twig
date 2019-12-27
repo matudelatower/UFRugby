@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}ParticipanteTorneo index{% endblock %}
+
+{% block body %}
+    <h1>ParticipanteTorneo index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Activo</th>
+                <th>FechaCreacion</th>
+                <th>FechaActualizacion</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for participante_torneo in participante_torneos %}
+            <tr>
+                <td>{{ participante_torneo.id }}</td>
+                <td>{{ participante_torneo.activo ? 'Yes' : 'No' }}</td>
+                <td>{{ participante_torneo.fechaCreacion ? participante_torneo.fechaCreacion|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ participante_torneo.fechaActualizacion ? participante_torneo.fechaActualizacion|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <a href="{{ path('participante_torneo_show', {'id': participante_torneo.id}) }}">show</a>
+                    <a href="{{ path('participante_torneo_edit', {'id': participante_torneo.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('participante_torneo_new') }}">Create new</a>
+{% endblock %}

@@ -1,9 +1,3 @@
-try {
-    window.$ = window.jQuery = require('jquery');
-
-    require('bootstrap');
-} catch (e) {}
-
 require('select2')
 require('jquery-ui')
 require('bootstrap-daterangepicker')

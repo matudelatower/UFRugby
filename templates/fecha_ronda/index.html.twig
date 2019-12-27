@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}FechaRonda index{% endblock %}
+
+{% block body %}
+    <h1>FechaRonda index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nombre</th>
+                <th>FechaTentativa</th>
+                <th>Activo</th>
+                <th>FechaCreacion</th>
+                <th>FechaActualizacion</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for fecha_ronda in fecha_rondas %}
+            <tr>
+                <td>{{ fecha_ronda.id }}</td>
+                <td>{{ fecha_ronda.nombre }}</td>
+                <td>{{ fecha_ronda.fechaTentativa ? fecha_ronda.fechaTentativa|date('Y-m-d') : '' }}</td>
+                <td>{{ fecha_ronda.activo ? 'Yes' : 'No' }}</td>
+                <td>{{ fecha_ronda.fechaCreacion ? fecha_ronda.fechaCreacion|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ fecha_ronda.fechaActualizacion ? fecha_ronda.fechaActualizacion|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <a href="{{ path('fecha_ronda_show', {'id': fecha_ronda.id}) }}">show</a>
+                    <a href="{{ path('fecha_ronda_edit', {'id': fecha_ronda.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('fecha_ronda_new') }}">Create new</a>
+{% endblock %}

@@ -34,6 +34,10 @@ class Referee extends BaseClass
 	private $inscripcionReferee;
 
 
+	public function __toString() {
+		return $this->persona->__toString();
+	}
+
 	public function __construct()
 	{
 		$this->inscripcionReferee = new ArrayCollection();

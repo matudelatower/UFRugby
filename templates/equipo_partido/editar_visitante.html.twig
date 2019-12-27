@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Equipo Visitante{% endblock %}
+
+{% block body %}
+    <h1>Visitante</h1>
+    <div class="box">
+        {{ form_start(form) }}
+        <div class="box-body">
+
+            <h3>{{ equipo_partido.partido.visitante.equipo }}</h3>
+
+            <div class="col-md-6">
+                <h3>Titulares</h3>
+                {% for titular in form.miembroEquipoPartidos %}
+                    {% if titular.vars.data.titular == true %}
+                        <div class="row m-t-1">
+                            <div class="col-md-12">
+                                {{ form_widget(titular.jugador) }}
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+            <div class="col-md-6">
+                <h3>Suplentes</h3>
+                {% for suplente in form.miembroEquipoPartidos %}
+                    {% if suplente.vars.data.suplente == true %}
+                        <div class="row m-t-1">
+                            <div class="col-md-12">
+                                {{ form_widget(suplente.jugador) }}
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+
+
+        </div>
+        <div class="box-footer">
+
+            <div class="row">
+                <div class="col-md-12">
+                    <button class="btn btn-primary btn-guardar">{{ button_label|default('Guardar') }}</button>
+                    <div class="pull-right">
+                        {{ form_widget(form.confirmarEquipo) }}
+                    </div>
+                </div>
+            </div>
+
+            {{ form_widget(form) }}
+
+            {{ form_end(form) }}
+        </div>
+    </div>
+
+    <a class="btn btn-default" href="#">Volver</a>
+
+    {#{{ include('equipo_partido/_delete_form.html.twig') }}#}
+{% endblock %}

@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}ParticipanteTorneo{% endblock %}
+
+{% block body %}
+    <h1>ParticipanteTorneo</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ participante_torneo.id }}</td>
+            </tr>
+            <tr>
+                <th>Activo</th>
+                <td>{{ participante_torneo.activo ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>FechaCreacion</th>
+                <td>{{ participante_torneo.fechaCreacion ? participante_torneo.fechaCreacion|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>FechaActualizacion</th>
+                <td>{{ participante_torneo.fechaActualizacion ? participante_torneo.fechaActualizacion|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('participante_torneo_index') }}">back to list</a>
+
+    <a href="{{ path('participante_torneo_edit', {'id': participante_torneo.id}) }}">edit</a>
+
+    {{ include('participante_torneo/_delete_form.html.twig') }}
+{% endblock %}

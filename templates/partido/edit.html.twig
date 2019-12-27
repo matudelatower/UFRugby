@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Editar Partido{% endblock %}
+
+{% block body %}
+    <h1>Editar Partido</h1>
+
+    <div class="box">
+        <div class="box-header">
+            <h2> Torneo:
+                <a href="{{ path('torneo_show', {'id': partido.fechaRonda.ronda.torneo.id }) }}">
+                    {{ partido.fechaRonda.ronda.torneo }}
+                </a>
+            </h2>
+            <h3> Ronda:
+                <a href="{{ path('ronda_torneo_show', {'id': partido.fechaRonda.ronda.id }) }}">
+                    {{ partido.fechaRonda.ronda }}
+                </a>
+            </h3>
+            <h4> Fecha: {{ partido.fechaRonda }} </h4>
+
+        </div>
+        <div class="box-body">
+            {{ include('partido/_form.html.twig', {'button_label': 'Actualizar'}) }}
+        </div>
+    </div>
+
+    <a class="btn btn-default"
+       href="{{ path('fecha_ronda_show', {'id': partido.fechaRonda.id }) }}">Volver</a>
+
+    {#{{ include('partido/_delete_form.html.twig') }}#}
+{% endblock %}

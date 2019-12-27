@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Agregar Fecha{% endblock %}
+
+{% block body %}
+    <h1>Agregar Fecha</h1>
+
+    <div class="box">
+        <div class="box-header">
+            <h3 class="box-title">Ronda: {{ fecha_ronda.ronda }}</h3>
+        </div>
+        <div class="box-body">
+            {{ include('fecha_ronda/_form.html.twig') }}
+        </div>
+    </div>
+    <a class="btn btn-default" href="{{ path('torneo_show', {"id": fecha_ronda.ronda.torneo.id}) }}">Volver</a>
+{% endblock %}

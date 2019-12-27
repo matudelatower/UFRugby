@@ -1,0 +1,31 @@
+{{ form_start(form) }}
+<div class="row">
+    <div class="col-md-6">
+        {{ form_row(form.nombre) }}
+    </div>
+</div>
+<h3>Puntos por Partido</h3>
+<div class="row">
+    <div class="col-md-6">
+        {{ form_row(form.puntosGanado) }}
+        {{ form_row(form.puntosEmpatado) }}
+        {{ form_row(form.tantosPorWalkover) }}
+    </div>
+    <div class="col-md-6">
+        {{ form_row(form.puntosPerdido) }}
+        {{ form_row(form.puntosPorWalkover) }}
+    </div>
+</div>
+<h3>Bonus</h3>
+<div class="row">
+    <div class="col-md-6">
+        {{ form_row(form.bonusTriunfoCantidadTriesMayorA) }}
+        {{ form_row(form.bonusDerrotaDiferenciaPuntos) }}
+    </div>
+    <div class="col-md-6">
+        {{ form_row(form.bonusTriunfoDiferenciaTriesMayorA) }}
+    </div>
+</div>
+{{ form_widget(form) }}
+<button class="btn btn-primary btn-guardar">{{ button_label|default('Guardar') }}</button>
+{{ form_end(form) }}
