@@ -358,7 +358,13 @@ class AjaxController extends Controller {
 
 				$clubJugador->setClub( $clubFichaje );
 				$clubJugador->setConfirmado( false );
-				$clubJugador->setConfirmadoClub( false );
+
+				// por ahora se omitirá la confirmacion del club
+				$clubJugador->setConfirmadoClub( true );
+				$clubJugador->setFechaConfirmacionClub(new \DateTime('now'));
+				$clubJugador->setConfirmado( true );
+				// por ahora se omitirá la confirmacion del club
+
 				$clubJugador->setConfirmadoUnion( false );
 				$clubJugador->setConsentimiento( true );
 

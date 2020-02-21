@@ -114,7 +114,8 @@
                                         {% endif %}
                                         {% if (is_granted('ROLE_UNION')) %}
                                             {% if clubJugador.confirmado and clubJugador.confirmadoClub and not clubJugador.confirmadoUnion %}
-                                                <a class="btn btn-default"
+                                                <a class="btn btn-default" data-toggle="tooltip"
+                                                   title="Confirmar Jugador"
                                                    href="{{ path('clubjugador_confirmar', { 'id': clubJugador.id }) }}">
                                                     <i class="fa fa-check"></i>
                                                 </a>
@@ -126,10 +127,19 @@
                                             </a>
                                         {% endif %}
 
-                                        <a class="btn btn-default"
+                                        <a class="btn btn-default" data-toggle="tooltip" title="Rechazar Jugador"
                                            href="{{ path('clubjugador_rechazar', { 'id': clubJugador.id }) }}">
                                             <i class="fa fa-remove"></i>
                                         </a>
+
+                                        {% if clubJugador.confirmadoClub %}
+                                            <a class="btn btn-default" data-toggle="tooltip"
+                                               title="Reimprimir ficha precompetitiva"
+                                               target="_blank"
+                                               href="{{ path('jugador_ficha_precompetitiva', { 'clubJugadorId': clubJugador.id }) }}">
+                                                <i class="fa fa-print"></i>
+                                            </a>
+                                        {% endif %}
                                     </td>
                                 </tr>
                             {% endfor %}
