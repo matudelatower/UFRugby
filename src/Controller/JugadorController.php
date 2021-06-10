@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\ClubJugador;
 use App\Entity\Jugador;
 use App\Entity\Persona;
 use App\Form\Filter\BuscarJugadoresFilterType;
@@ -264,7 +265,7 @@ class JugadorController extends AbstractController {
 
 		$em = $this->getDoctrine()->getManager();
 
-		$clubJugador = $em->getRepository( 'App:ClubJugador' )->findOneById( $id );
+		$clubJugador = $em->getRepository( ClubJugador::class )->findOneById( $id );
 		$from        = $clubJugador->getJugador()->getPersona()->getFechaNacimiento();
 		$to          = new \DateTime( 'today' );
 		$edad        = $from->diff( $to )->y;

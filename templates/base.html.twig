@@ -11,38 +11,18 @@
     <link rel="icon" type="image/x-icon" href="{{ logoUnion }}"/>
     <title>{% block title %}Bienvenido!{% endblock %} | {{ site_name }}</title>
 
-    {#    <!-- Google Font: Source Sans Pro -->#}
-    {#    <link rel="stylesheet"#}
-    {#          href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">#}
-    {#    <!-- Font Awesome -->#}
-    {#    <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">#}
-    <!-- Ionicons -->
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-    {#    <!-- Tempusdominus Bootstrap 4 -->#}
-    {#    <link rel="stylesheet" href="plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">#}
-    {#    <!-- iCheck -->#}
-    {#    <link rel="stylesheet" href="plugins/icheck-bootstrap/icheck-bootstrap.min.css">#}
-    {#    <!-- JQVMap -->#}
-    {#    <link rel="stylesheet" href="plugins/jqvmap/jqvmap.min.css">#}
-    {#    <!-- Theme style -->#}
-    {#    <link rel="stylesheet" href="dist/css/adminlte.min.css">#}
-    <!-- overlayScrollbars -->
-    {#    <link rel="stylesheet" href="plugins/overlayScrollbars/css/OverlayScrollbars.min.css">#}
-    {#    <!-- Daterange picker -->#}
-    {#    <link rel="stylesheet" href="plugins/daterangepicker/daterangepicker.css">#}
-    {#    <!-- summernote -->#}
-    {#    <link rel="stylesheet" href="plugins/summernote/summernote-bs4.min.css">#}
+
     {{ encore_entry_link_tags('css/adminlte') }}
     {% block stylesheets %}{% endblock %}
-{#    {{ encore_entry_script_tags('adminlte') }}#}
-{#    {{ encore_entry_script_tags('main') }}#}
+
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
 
     <!-- Preloader -->
     <div class="preloader flex-column justify-content-center align-items-center">
-        <img class="animation__shake" src="{{ logoUnion }}" alt="AdminLTELogo" height="60" width="60">
+        <img class="animation__shake" src="{{ logoUnion }}" alt="Union Logo" height="60" width="60">
     </div>
 
     <!-- Navbar -->
@@ -141,10 +121,10 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel">{{ "Aviso" |trans }}!</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                                 aria-hidden="true">&times;</span>
                     </button>
-                    <h4 class="modal-title" id="myModalLabel">{{ "Aviso" |trans }}!</h4>
                 </div>
                 <div class="modal-body">
                     ...
@@ -162,10 +142,10 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel">{{ "Aviso" |trans }}!</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                                 aria-hidden="true">&times;</span>
                     </button>
-                    <h4 class="modal-title" id="myModalLabel">{{ "Aviso" |trans }}!</h4>
                 </div>
                 <div class="modal-body">
                     ...
@@ -239,10 +219,10 @@
     </div>
     <!-- /.content-wrapper -->
     <footer class="main-footer">
-        <strong>Copyright &copy; {{ "now"|date("Y") }} <a href="#">{{ union_name }}</a>.</strong>
-        All rights reserved.
+        <strong>Copyright &copy; {{ "now"|date("Y") }} <a href="{{ path('app_homepage') }}">{{ union_name }}</a>.</strong>
+        Todos los derechos Reservados.
         <div class="float-right d-none d-sm-inline-block">
-            <b>Version</b> {{ version }}
+            <b>Versión</b> {{ version }}
         </div>
     </footer>
 

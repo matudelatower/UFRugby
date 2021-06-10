@@ -3,34 +3,74 @@
 {% block title %}
 
 {% endblock title %}
+
+{% block styles %}
+    <style>
+        public-box {
+            width: 60%;
+            /*margin: 7% auto;*/
+            /*margin-top: 1%;*/
+            margin-right: auto;
+            /*margin-bottom: 7%;*/
+            margin-left: auto;
+        }
+
+        .public-logo {
+            font-size: 35px;
+            text-align: center;
+            margin-bottom: 25px;
+            font-weight: 300;
+        }
+
+        .public-box-body {
+            background: #fff;
+            padding: 20px;
+            border-top: 0;
+            color: #666;
+        }
+
+        .logo {
+            width: 75%;
+        }
+    </style>
+{% endblock styles %}
 {% block body %}
-    <div class="public-box">
+    <div class="col-2 offset-5 mt-3">
         <div class="public-logo center-block">
             <a href="#">
-                <img src="{{ asset('build/img/logo_urp.jpg') }}" class="img-responsive">
+                <img src="{{ asset('build/img/logo_urp.jpg') }}" class="img-fluid logo">
             </a>
         </div>
+    </div>
+
+    <div class="public-box">
 
         <div class="public-box-body">
-            <h1 class="text-center">EVALUACIÓN PRE-COMPETITIVA {{ "now" | date('Y') }}</h1>
+            <!-- /.login-logo -->
+            <div class="">
+                <div class="card-header text-center">
+                    <a href="#" class="h1">EVALUACIÓN PRE-COMPETITIVA {{ "now" | date('Y') }}</a>
+                </div>
+                <div class="card-body text-center">
+                    <h2>Muchas Gracias</h2>
+                    <p>
+                        {{ mensaje }}
+                    </p>
 
-            <div class="row text-center">
-                <h2>Muchas Gracias</h2>
-                <p>
-                    {{ mensaje }}
-                </p>
-
-                {% if clubJugador %}
-                    {% if edad > 5 %}
-                        <a class="btn btn-primary"
-                           href="{{ path('jugador_ficha_precompetitiva', {'clubJugadorId': clubJugador.id}) }}"> Imprimir
-                            Ficha Pre-Competitiva</a>
+                    {% if clubJugador %}
+                        {% if edad > 5 %}
+                            <a class="btn btn-primary"
+                               href="{{ path('jugador_ficha_precompetitiva', {'clubJugadorId': clubJugador.id}) }}">
+                                Imprimir
+                                Ficha Pre-Competitiva</a>
+                        {% endif %}
                     {% endif %}
-                {% endif %}
+
+                </div>
+
+
             </div>
-
-
+            <!-- /.form-box -->
         </div>
-        <!-- /.form-box -->
     </div>
 {% endblock %}

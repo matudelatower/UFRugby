@@ -61,8 +61,13 @@
 
                     <p class="text-muted">
                         <strong>Fecha de Nacimiento:</strong> {{ jugador.persona.fechaNacimiento | date('d/m/Y') }}<br>
-                        <strong>Identificación:</strong> {{ jugador.persona.tipoIdentificacion }} {{ jugador.persona.numeroIdentificacion }}
+                        <strong>Identificación:</strong>
+                        {{ jugador.persona.tipoIdentificacion.siglas }}: {{ jugador.persona.numeroIdentificacion }}
                         <br>
+                        {% if jugador.persona.identificacionFileName %}
+                            <img src="{{ asset('uploads/identificaciones/'~ jugador.persona.identificacionFileName) }}"
+                                 class="img-fluid">
+                        {% endif %}
                     </p>
 
                     <hr>

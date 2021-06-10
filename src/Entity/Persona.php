@@ -128,6 +128,11 @@ class Persona extends BaseClass {
 	private $identificacionFile;
 
 	/**
+	 * @ORM\Column(type="boolean", nullable=true)
+	 */
+	private $identificacionVerificada;
+
+	/**
 	 * If manually uploading a file (i.e. not using Symfony Form) ensure an instance
 	 * of 'UploadedFile' is injected into this setter to trigger the  update. If this
 	 * bundle's configuration parameter 'inject_on_load' is set to 'true' this setter
@@ -495,6 +500,16 @@ class Persona extends BaseClass {
 
 	public function setIdentificacionFileName( ?string $identificacionFileName ): self {
 		$this->identificacionFileName = $identificacionFileName;
+
+		return $this;
+	}
+
+	public function getIdentificacionVerificada(): ?bool {
+		return $this->identificacionVerificada;
+	}
+
+	public function setIdentificacionVerificada( ?bool $identificacionVerificada ): self {
+		$this->identificacionVerificada = $identificacionVerificada;
 
 		return $this;
 	}

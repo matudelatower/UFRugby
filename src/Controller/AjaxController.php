@@ -454,7 +454,6 @@ class AjaxController extends AbstractController {
 	}
 
 	public function enviarMailPrecompetitivo( $token, $mail, $persona ) {
-//		$mailer = $this->get( 'mailer' );
 
 		$mailer = $this->mailer;
 

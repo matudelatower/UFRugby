@@ -113,20 +113,10 @@
                 this.cargando = true;
 
               let formData = new FormData();
-              // formData.append('file', this.finalModel.identificacion);
-
-              // for ( let key in this.finalModel ) {
-              //   formData.append(key, this.finalModel[key]);
-              // }
-
 
               let data = this.buildFormData(formData, this.finalModel)
 
-
               axios.post(baseUrl + '/ajax-public/precompetitivo', data
-                // axios.post(baseUrl + '/ajax-public/precompetitivo', {
-                //     data: this.finalModel
-                // }
                 ,{
                   headers: {
                     'Content-Type': 'multipart/form-data'
@@ -135,7 +125,7 @@
                     .then(response => {
                         console.log(response);
                         this.cargando = false;
-                        // location.href = response.data;
+                        location.href = response.data;
 
                     })
                     .catch(error => {

@@ -29,14 +29,17 @@ require('overlayscrollbars')
 // require('admin-lte/plugins/pace-progress/pace.min')
 require('admin-lte')
 
-$(document).ready(function() {
+$(document).ready(function () {
     // $('[data-toggle="popover"]').popover();
     $('[data-toggle="tooltip"]').tooltip()
     $('.select2').select2(
-        { language: "es"}
+        {
+            language: "es",
+            theme: 'bootstrap4'
+        }
     );
 
-    $('.reset').click(function (){
+    $('.reset').click(function () {
         var formNameInputName = $(this).attr('name');
         var formName = formNameInputName.substr(formNameInputName, formNameInputName.indexOf("["))
 

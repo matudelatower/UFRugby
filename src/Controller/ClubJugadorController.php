@@ -9,7 +9,10 @@ use App\Form\Filter\BuscarJugadoresFilterType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Message;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Mime\Email;
 
 
 /**
@@ -17,6 +20,13 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
  *
  */
 class ClubJugadorController extends AbstractController {
+
+	private $mailer;
+
+	public function __construct( MailerInterface $mailer ) {
+		$this->mailer = $mailer;
+	}
+
 	/**
 	 * Lists all clubJugador entities.
 	 *
@@ -67,10 +77,10 @@ class ClubJugadorController extends AbstractController {
 		);
 
 		return $this->render( 'clubjugador/index.html.twig',
-			array(
+			[
 				'clubJugadors' => $clubJugadors,
 				'filter_type'  => $filterType->createView()
-			) );
+			] );
 	}
 
 	/**
@@ -141,6 +151,7 @@ class ClubJugadorController extends AbstractController {
 				$fichaMedica->setPrestador( $request->get( 'prestador' ) );
 				$jugador->getJugador()->setAltura( $request->get( 'altura' ) );
 				$jugador->getJugador()->setPeso( $request->get( 'peso' ) );
+				$jugador->getJugador()->getPersona()->setIdentificacionVerificada( true );
 			}
 
 
@@ -190,34 +201,32 @@ class ClubJugadorController extends AbstractController {
 
 
 	public function enviarMailRechazo( $mail, $persona ) {
-		$mailer = $this->get( 'mailer' );
-
-
-		$asunto = getenv( 'APP_SITE_NAME' ) . ' - Precompetitivo Rechazado';
+		$mailer = $this->mailer;
+		$asunto = $_ENV['APP_SITE_NAME'] . ' - Precompetitivo Rechazado';
 
 		$url = $this->get( 'router' )->generate( 'jugador_registro',
-			array(),
+			[],
 			UrlGeneratorInterface::ABSOLUTE_URL );
 
-		$message = ( new \Swift_Message( $asunto ) )
-			->setFrom( getenv( 'MAILER_USER' ), getenv( 'APP_UNION_NAME' ) )
-			->setTo( $mail )
-			->setBody(
+		$message = ( new Email() )
+			->from( $_ENV['MAILER_USER'] )
+			->to( $mail )
+			->html(
 				$this->renderView(
 					'emails/rechazo.html.twig',
 					[
 						'nombre' => $persona->getNombre() . ' ' . $persona->getApellido(),
 						'url'    => $url
 					]
-				),
-				'text/html'
-			);
+				)
+			)
+			->subject( $asunto );
 
 		$mailer->send( $message );
 	}
 
 	public function reenviarMailConfirmacion( Request $request, ClubJugador $id ) {
-		$mailer = $this->get( 'mailer' );
+		$mailer = $this->mailer;
 
 		$clubJugador = $id;
 
@@ -225,25 +234,25 @@ class ClubJugadorController extends AbstractController {
 		$token   = $clubJugador->getTokenConfirmacion();
 		$mail    = $clubJugador->getJugador()->getPersona()->getContacto()->getMail();
 
-		$asunto = getenv( 'APP_SITE_NAME' ) . ' - Confirmación Precompetitivo';
+		$asunto = $_ENV['APP_SITE_NAME'] . ' - Confirmación Precompetitivo';
 
 		$url = $this->get( 'router' )->generate( 'confirmacion_precompetitivo',
-			array( 'token' => $token ),
+			[ 'token' => $token ],
 			UrlGeneratorInterface::ABSOLUTE_URL );
 
-		$message = ( new \Swift_Message( $asunto ) )
-			->setFrom( getenv( 'MAILER_USER' ), getenv( 'APP_UNION_NAME' ) )
-			->setTo( $mail )
-			->setBody(
+		$message = ( new Email() )
+			->from( $_ENV['MAILER_USER'] )
+			->to( $mail )
+			->html(
 				$this->renderView(
 					'emails/precompetitivo.html.twig',
 					[
 						'nombre' => $persona->getNombre() . ' ' . $persona->getApellido(),
 						'url'    => $url
 					]
-				),
-				'text/html'
-			);
+				)
+			)
+			->subject( $asunto );
 
 		$mailer->send( $message );
 

@@ -109,6 +109,7 @@
                  class="form-control" type="file">
           <span class="help-block" v-if="$v.direccion.$error && !$v.direccion.required">Campo Requerido</span>
         </div>
+        <span class="text-yellow">(Solo imágenes: .jpg, .png, .jpeg)</span>
       </div>
     </div>
     <div class="row">

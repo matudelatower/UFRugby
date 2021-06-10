@@ -106,7 +106,11 @@
                                             <small class="badge bg-warning">El jugador no Confirmó su mail</small>
                                         {% endif %}
                                         {% if not clubJugador.confirmadoUnion %}
-                                            <small class="badge bg-warning">Pendiente Unión</small>
+                                            <small class="badge bg-warning">Pendiente Unión
+                                                {% if clubJugador.jugador.persona.identificacionFileName %}
+                                                    (Recuerde Verificar Identificación)
+                                                {% endif %}
+                                            </small>
                                         {% endif %}
                                         {% if not clubJugador.confirmadoClub %}
                                             <small class="badge bg-warning">Pendiente Club</small>
@@ -123,6 +127,14 @@
                                         {% endif %}
                                         {% if (is_granted('ROLE_UNION')) %}
                                             {% if clubJugador.confirmado and clubJugador.confirmadoClub and not clubJugador.confirmadoUnion %}
+                                                {% if clubJugador.jugador.persona.identificacionFileName %}
+                                                    <a class="btn btn-default btn-ver-identificacion" data-toggle="tooltip"
+                                                       title="Ver Identificación"
+                                                       data-url="{{ path('persona_ver_identificacion', { 'persona': clubJugador.jugador.persona.id }) }}">
+                                                        <i class="far fa-address-card"></i>
+                                                    </a>
+                                                {% endif %}
+
                                                 <a class="btn btn-default" data-toggle="tooltip"
                                                    title="Confirmar Jugador"
                                                    href="{{ path('clubjugador_confirmar', { 'id': clubJugador.id }) }}">
@@ -199,6 +211,19 @@
             $('.btn-resend').click(function () {
                 let url = $(this).data('url');
                 modalConfirm('Aviso!', 'Desea Reenviar el Mail?', url);
+            })
+
+            $('.btn-ver-identificacion').click(function () {
+                let url = $(this).data('url');
+
+                $.ajax({
+                    type: 'get',
+                    url: url,
+                    success: function (data) {
+                        modalAlert(data.data.html);
+                    }
+                });
+
             })
 
             $('#mostrar-resultados').change(function () {
