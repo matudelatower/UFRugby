@@ -15,12 +15,22 @@ use App\Entity\PosicionJugador;
 use App\Entity\Referee;
 use App\Entity\ResponsableJugador;
 use App\Entity\Usuario;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
-class AjaxController extends Controller {
+class AjaxController extends AbstractController {
+
+	private $mailer;
+
+	public function __construct( MailerInterface $mailer ) {
+		$this->mailer = $mailer;
+	}
+
 	public function getSexosAction() {
 
 		$entities = $this->getDoctrine()->getRepository( 'App:Sexo' )->findBy( [
@@ -207,8 +217,9 @@ class AjaxController extends Controller {
 
 		$em = $this->getDoctrine()->getManager();
 
-		$data = $request->getContent();
-		$data = json_decode( $data, true )['data'];
+		$data = $request->request->all();
+
+//		$data = json_decode( $data, true )['data'];
 
 		if ( $data ) {
 
@@ -242,6 +253,22 @@ class AjaxController extends Controller {
 				$contacto = $persona->getContacto();
 
 			}
+
+			//		subiendo archivo
+			$file = $request->files->get( 'identificacion' );
+			if ( $file ) {
+				$fileName = $data['numeroIdentificacion'] . '.' . $file->guessExtension();
+
+				// moves the file to the directory where usuarios are stored
+				$file->move(
+					$this->getParameter( 'app.path.persona_identificacion' ),
+					$fileName
+				);
+
+				$persona->setIdentificacionFileName( $fileName );
+			}
+
+			//		subiendo archivo
 
 			$contacto->setDireccion( $data['direccion'] );
 			$contacto->setTelefono( $data['telefono'] );
@@ -343,7 +370,7 @@ class AjaxController extends Controller {
 						[ 'jugador' => $jugadorPrevio ],
 						[ 'id' => 'desc' ] );
 
-					if ( $fichajePrevio && $fichajePrevio->getClub() !== $clubFichaje) {
+					if ( $fichajePrevio && $fichajePrevio->getClub() !== $clubFichaje ) {
 						// si tiene fichaje previo, genero una solicitud de pase
 						$pase = new Pase();
 						$pase->setClubOrigen( $fichajePrevio->getClub() );
@@ -361,7 +388,7 @@ class AjaxController extends Controller {
 
 				// por ahora se omitirá la confirmacion del club
 				$clubJugador->setConfirmadoClub( true );
-				$clubJugador->setFechaConfirmacionClub(new \DateTime('now'));
+				$clubJugador->setFechaConfirmacionClub( new \DateTime( 'now' ) );
 				$clubJugador->setConfirmado( true );
 				// por ahora se omitirá la confirmacion del club
 
@@ -427,30 +454,48 @@ class AjaxController extends Controller {
 	}
 
 	public function enviarMailPrecompetitivo( $token, $mail, $persona ) {
-		$mailer = $this->get( 'mailer' );
+//		$mailer = $this->get( 'mailer' );
 
+		$mailer = $this->mailer;
 
-		$asunto = getenv( 'APP_SITE_NAME' ) . ' - Confirmación Precompetitivo';
+		$asunto = $_ENV[ 'APP_SITE_NAME' ] . ' - Confirmación Precompetitivo';
 
 		$url = $this->get( 'router' )->generate( 'confirmacion_precompetitivo',
 			array( 'token' => $token ),
 			UrlGeneratorInterface::ABSOLUTE_URL );
 
-		$message = ( new \Swift_Message( $asunto ) )
-			->setFrom( getenv( 'MAILER_USER' ), getenv( 'APP_UNION_NAME' ) )
-			->setTo( $mail )
-			->setBody(
+
+		$email = (new Email())
+			->from($_ENV[ 'MAILER_USER' ])
+			->to($mail)
+			->html(
 				$this->renderView(
 					'emails/precompetitivo.html.twig',
 					[
 						'nombre' => $persona->getNombre() . ' ' . $persona->getApellido(),
 						'url'    => $url
 					]
-				),
-				'text/html'
-			);
+				)
+			)
+			->subject($asunto)
+		;
+		$mailer->send( $email );
 
-		$mailer->send( $message );
+//		$message = ( new \Swift_Message( $asunto ) )
+//			->setFrom( getenv( 'MAILER_USER' ), getenv( 'APP_UNION_NAME' ) )
+//			->setTo( $mail )
+//			->setBody(
+//				$this->renderView(
+//					'emails/precompetitivo.html.twig',
+//					[
+//						'nombre' => $persona->getNombre() . ' ' . $persona->getApellido(),
+//						'url'    => $url
+//					]
+//				),
+//				'text/html'
+//			);
+//
+//		$mailer->send( $message );
 
 	}
 

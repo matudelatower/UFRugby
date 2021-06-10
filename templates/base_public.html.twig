@@ -1,58 +1,67 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
     {% set logoUnion = asset('uploads/images/union/logo_union.png') %}
     {% if logoUnion %}
-        {#TODO cambiar cuando se instale en bolivia#}
+        {# TODO cambiar cuando se instale en bolivia #}
         {% set logoUnion = asset('build/img/logo_urp.jpg') %}
     {% endif %}
     <link rel="icon" type="image/x-icon" href="{{ logoUnion }}"/>
     <title>{{ site_name }} </title>
-    <!-- Tell the browser to be responsive to screen width -->
-    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome -->
+{#    <link rel="stylesheet" href="../../plugins/fontawesome-free/css/all.min.css">#}
+{#    <!-- icheck bootstrap -->#}
+{#    <link rel="stylesheet" href="../../plugins/icheck-bootstrap/icheck-bootstrap.min.css">#}
+{#    <!-- Theme style -->#}
+{#    <link rel="stylesheet" href="../../dist/css/adminlte.min.css">#}
     <link rel="manifest" href="{{ asset('build/manifest.json') }}">
-    <link rel="stylesheet" href="{{ asset('build/css/adminlte.css') }}">
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
-
-    <link rel="stylesheet" href="{{ asset('build/css/app.css') }}">
-    <link rel="stylesheet" href="{{ asset('build/js/app.css') }}">
+    {{ encore_entry_link_tags('css/adminlte') }}
+    {{ encore_entry_link_tags('vue') }}
+    {{ encore_entry_link_tags('app') }}
 
     <style>
-        .public-box {
-            width: 85%;
-            margin: 7% auto;
+
+        #app{
+            /*width: 85%;*/
+            /*height: auto;*/
+            /*margin-top: 20rem;*/
         }
 
-        .public-logo {
-            font-size: 35px;
-            text-align: center;
-            margin-bottom: 25px;
-            font-weight: 300;
-        }
+        /*.public-box {*/
+        /*    width: 85%;*/
+        /*    margin: 7% auto;*/
+        /*}*/
 
-        .public-box-body {
-            background: #fff;
-            padding: 20px;
-            border-top: 0;
-            color: #666;
-        }
+        /*.public-logo {*/
+        /*    font-size: 35px;*/
+        /*    text-align: center;*/
+        /*    margin-bottom: 25px;*/
+        /*    font-weight: 300;*/
+        /*}*/
 
-        .public-logo {
-            width: 10%;
-        }
+        /*.public-box-body {*/
+        /*    background: #fff;*/
+        /*    padding: 20px;*/
+        /*    border-top: 0;*/
+        /*    color: #666;*/
+        /*}*/
+
+        /*.public-logo {*/
+        /*    width: 10%;*/
+        /*}*/
 
     </style>
+    {% block styles %}
+    {% endblock styles %}
 </head>
-<body class="hold-transition register-page">
+<body class="hold-transition login-page">
 
 {# modal #}
 <div class="modal fade" id="modal-alert" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -75,18 +84,25 @@
     </div>
 </div>
 
-<div id="app">
-
-
+<div id="app" class="container-fluid">
     {% block body %}
     {% endblock body %}
 </div>
-<!-- /.register-box -->
 
-<script src="{{ asset('build/js/adminlte.js') }}"></script>
-<script src="{{ asset('build/js/app.js') }}"></script>
+<!-- /.login-box -->
+
+{#<!-- jQuery -->#}
+{#<script src="../../plugins/jquery/jquery.min.js"></script>#}
+{#<!-- Bootstrap 4 -->#}
+{#<script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>#}
+{#<!-- AdminLTE App -->#}
+{#<script src="../../dist/js/adminlte.min.js"></script>#}
+
+{{ encore_entry_script_tags('adminlte') }}
+{{ encore_entry_script_tags('vue') }}
 
 {% block javascript %}
 {% endblock javascript %}
 </body>
 </html>
+

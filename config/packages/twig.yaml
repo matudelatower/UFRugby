@@ -1,10 +1,12 @@
 twig:
-    paths: ['%kernel.project_dir%/templates']
-    debug: '%kernel.debug%'
-    strict_variables: '%kernel.debug%'
+    default_path: '%kernel.project_dir%/templates'
     form_themes: ['bootstrap_4_layout.html.twig']
     globals:
         version: '%env(APP_VERSION)%'
+        app_name: '%env(APP_SITE_NAME)%'
         site_name: '%env(APP_SITE_NAME)%'
         union_name: '%env(APP_UNION_NAME)%'
         menu: '@App\Menu\Builder'
+when@test:
+    twig:
+        strict_variables: true

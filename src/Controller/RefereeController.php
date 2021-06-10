@@ -6,12 +6,13 @@ use App\Entity\InscripcionReferee;
 use App\Entity\Referee;
 use App\Form\Filter\RefereeFilterType;
 use Symfony\Component\HttpFoundation\Request;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-class RefereeController extends Controller {
+class RefereeController extends AbstractController {
 
-	public function index( Request $request ) {
+	public function index( Request $request, PaginatorInterface $paginator ) {
 
 		$em = $this->getDoctrine()->getManager();
 
@@ -29,7 +30,7 @@ class RefereeController extends Controller {
 			$referees = $em->getRepository( Referee::class )->findQbAll();
 		}
 
-		$paginator = $this->get( 'knp_paginator' );
+		
 		$referees  = $paginator->paginate(
 			$referees, /* query NOT result */
 			$request->query->getInt( 'page', 1 )/*page number*/,

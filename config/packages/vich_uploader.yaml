@@ -3,13 +3,17 @@ vich_uploader:
     mappings:
         union_image:
             uri_prefix:         /uploads/images/union
-            upload_destination: '%kernel.root_dir%/../public/uploads/images/union'
+            upload_destination: '%kernel.project_dir%/public/uploads/images/union'
             namer: vich_uploader.namer_uniqid
         club_image:
             uri_prefix:         /uploads/images/club
-            upload_destination: '%kernel.root_dir%/../public/uploads/images/club'
+            upload_destination: '%kernel.project_dir%/public/uploads/images/club'
             namer: vich_uploader.namer_uniqid
         persona_image:
             uri_prefix:         /uploads/images/persona
-            upload_destination: '%kernel.root_dir%/../public/uploads/images/persona'
+            upload_destination: '%kernel.project_dir%/public/uploads/images/persona'
+            namer: vich_uploader.namer_uniqid
+        persona_identificacion:
+            uri_prefix:         /uploads/identificaciones
+            upload_destination: '%kernel.project_dir%/public/uploads/identificaciones'
             namer: vich_uploader.namer_uniqid

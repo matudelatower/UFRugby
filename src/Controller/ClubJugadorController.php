@@ -6,8 +6,9 @@ use App\Entity\ClubJugador;
 use App\Entity\FichaMedica;
 use App\Entity\GrupoSanguineo;
 use App\Form\Filter\BuscarJugadoresFilterType;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 
@@ -15,12 +16,12 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
  * Clubjugador controller.
  *
  */
-class ClubJugadorController extends Controller {
+class ClubJugadorController extends AbstractController {
 	/**
 	 * Lists all clubJugador entities.
 	 *
 	 */
-	public function indexAction( Request $request ) {
+	public function indexAction( Request $request, PaginatorInterface $paginator ) {
 		$em = $this->getDoctrine()->getManager();
 
 		$club = $this->getUser()->getClub();
@@ -31,17 +32,17 @@ class ClubJugadorController extends Controller {
 				'method' => 'GET'
 			] );
 
+		$filterType->handleRequest( $request );
+
 		if ( $club ) {
-			$filterType->handleRequest( $request );
+
 			if ( $filterType->isSubmitted() && $filterType->get( 'buscar' )->isClicked() ) {
 				$clubJugadors = $em->getRepository( ClubJugador::class )->getQbBuscarRegistroJugadores( $filterType->getData(),
 					$club );
 			} else {
 				$clubJugadors = $em->getRepository( ClubJugador::class )->getQbRegistroJugadores( $club );
 			}
-		} elseif ( $this->getUser()->hasRole( 'ROLE_UNION' ) ) {
-
-			$filterType->handleRequest( $request );
+		} elseif ( $this->isGranted( 'ROLE_UNION' ) ) {
 
 			if ( $filterType->isSubmitted() && $filterType->get( 'buscar' )->isClicked() ) {
 				$clubJugadors = $em->getRepository( ClubJugador::class )->getQbBuscarByUnion( $filterType->getData() );
@@ -53,9 +54,12 @@ class ClubJugadorController extends Controller {
 			$clubJugadors = [];
 		}
 
-		$cantidadRegistros = $filterType->getData()['cantidadRegistros'] ? $filterType->getData()['cantidadRegistros'] : 10;
+		$cantidadRegistros = 10;
+		if ( $filterType->getData() ) {
+			$cantidadRegistros = $filterType->getData()['cantidadRegistros'] ? $filterType->getData()['cantidadRegistros'] : 10;
+		}
 
-		$paginator    = $this->get( 'knp_paginator' );
+
 		$clubJugadors = $paginator->paginate(
 			$clubJugadors, /* query NOT result */
 			$request->query->getInt( 'page', 1 )/*page number*/,
@@ -84,8 +88,8 @@ class ClubJugadorController extends Controller {
 	public function confirmarAction( Request $request, $id ) {
 		$em = $this->getDoctrine()->getManager();
 
-		$confirmarUnion = $this->getUser()->hasRole( 'ROLE_UNION' );
-		$confirmarClub  = $this->getUser()->hasRole( 'ROLE_CLUB' );
+		$confirmarUnion = $this->isGranted( 'ROLE_UNION' );
+		$confirmarClub  = $this->isGranted( 'ROLE_CLUB' );
 
 		$jugador = $em->getRepository( ClubJugador::class )->find( $id );
 		$form    = $this->createForm( 'App\Form\ConfirmarType',

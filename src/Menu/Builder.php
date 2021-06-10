@@ -22,38 +22,38 @@ class Builder {
 	}
 
 	public function mainMenu( array $options ) {
-//		$menu = $factory->createItem('root');
-//
-//		$menu->addChild('Home', array('route' => 'app_homepage'));
+
 
 		$menu = $this->factory->createItem(
 			'root',
-			array(
-				'childrenAttributes' => array(
-					'class'       => 'sidebar-menu tree',
-					'data-widget' => 'tree'
-				),
-			)
+			[
+				'childrenAttributes' => [
+					'class'          => 'nav nav-pills nav-sidebar flex-column',
+					'data-widget'    => 'treeview',
+					'data-accordion' => 'false',
+					'role'           => 'menu'
+				],
+			]
 		);
 
 		$menu->addChild(
 			'MENU PRINCIPAL'
-		)->setAttribute( 'class', 'header' );
+		)->setAttribute( 'class', 'nav-header' );
 
 		if ( $this->authorizationChecker->isGranted( 'ROLE_USER' ) ) {
 
 			$keyAdministracion = 'ADMINISTRACIÓN';
 			$menu->addChild(
 				$keyAdministracion,
-				array(
-					'childrenAttributes' => array(
-						'class' => 'treeview-menu',
-					),
-				)
+				[
+					'childrenAttributes' =>
+						[ 'class' => 'nav nav-treeview', ],
+				]
 			)
 			     ->setUri( '#' )
-			     ->setExtra( 'icon', 'fa fa-folder-open-o' )
-			     ->setAttribute( 'class', 'treeview' );
+			     ->setLinkAttribute( 'class', 'nav-link' )
+			     ->setExtra( 'icon', 'fas fa-folder' )
+			     ->setAttribute( 'class', 'nav-item has-treeview' );
 
 			if ( $this->authorizationChecker->isGranted( 'ROLE_ADMIN' ) ) {
 
@@ -61,7 +61,9 @@ class Builder {
 					->addChild(
 						'Parámetros',
 						array(
-							'route' => 'admin',
+							'route'          => 'easyadmin',
+							'attributes'     => [ 'class' => 'nav-item' ],
+							'linkAttributes' => [ 'class' => 'nav-link' ]
 						)
 					);
 
@@ -72,9 +74,11 @@ class Builder {
 
 				$menu[ $keyAdministracion ]
 					->addChild(
-						'Clubs',
+						'Clubes',
 						array(
-							'route' => 'club_index',
+							'route'          => 'club_index',
+							'attributes'     => [ 'class' => 'nav-item' ],
+							'linkAttributes' => [ 'class' => 'nav-link' ]
 						)
 					);
 
@@ -82,7 +86,9 @@ class Builder {
 					->addChild(
 						'Registro de Pagos',
 						array(
-							'route' => 'pagoclub_index',
+							'route'          => 'pagoclub_index',
+							'attributes'     => [ 'class' => 'nav-item' ],
+							'linkAttributes' => [ 'class' => 'nav-link' ]
 						)
 					);
 
@@ -90,7 +96,9 @@ class Builder {
 					->addChild(
 						'Pases',
 						array(
-							'route' => 'pase_index',
+							'route'          => 'pase_index',
+							'attributes'     => [ 'class' => 'nav-item' ],
+							'linkAttributes' => [ 'class' => 'nav-link' ]
 						)
 					);
 
@@ -101,7 +109,9 @@ class Builder {
 					->addChild(
 						'Registro de Pagos',
 						array(
-							'route' => 'pagojugador_index',
+							'route'          => 'pagojugador_index',
+							'attributes'     => [ 'class' => 'nav-item' ],
+							'linkAttributes' => [ 'class' => 'nav-link' ]
 						)
 					);
 
@@ -109,7 +119,9 @@ class Builder {
 					->addChild(
 						'Buscar Jugadores',
 						array(
-							'route' => 'buscar_jugador',
+							'route'          => 'buscar_jugador',
+							'attributes'     => [ 'class' => 'nav-item' ],
+							'linkAttributes' => [ 'class' => 'nav-link' ]
 						)
 					);
 
@@ -123,14 +135,18 @@ class Builder {
 					)
 				)
 				     ->setUri( '#' )
-				     ->setExtra( 'icon', 'fa fa-exchange' )
-				     ->setAttribute( 'class', 'treeview' );
+				     ->setLinkAttribute( 'class', 'nav-link' )
+				     ->setExtra( 'icon', 'fas fa-exchange' )
+				     ->setAttribute( 'class', 'nav-item has-treeview' );
+
 
 				$menu['Pases']
 					->addChild(
 						'Solicitudes Enviadas',
 						array(
-							'route' => 'pase_solicitudes_enviadas',
+							'route'          => 'pase_solicitudes_enviadas',
+							'attributes'     => [ 'class' => 'nav-item' ],
+							'linkAttributes' => [ 'class' => 'nav-link' ]
 						)
 					);
 
@@ -138,7 +154,9 @@ class Builder {
 					->addChild(
 						'Solicitudes Recibidas',
 						array(
-							'route' => 'pase_solicitudes_recibidas',
+							'route'          => 'pase_solicitudes_recibidas',
+							'attributes'     => [ 'class' => 'nav-item' ],
+							'linkAttributes' => [ 'class' => 'nav-link' ]
 						)
 					);
 			}
@@ -150,21 +168,25 @@ class Builder {
 					->addChild(
 						'Registro de Jugadores',
 						array(
-							'route' => 'clubjugador_index',
+							'route'          => 'clubjugador_index',
+							'attributes'     => [ 'class' => 'nav-item' ],
+							'linkAttributes' => [ 'class' => 'nav-link' ]
 						)
 					);
 			}
 			if ( $this->authorizationChecker->isGranted( 'ROLE_ADMIN' ) ||
-				 $this->authorizationChecker->isGranted( 'ROLE_CLUB' ) ||
+			     $this->authorizationChecker->isGranted( 'ROLE_CLUB' ) ||
 			     $this->authorizationChecker->isGranted( 'ROLE_UNION' ) ) {
-			$menu[ $keyAdministracion ]
-				->addChild(
-					'Jugadores',
-					array(
-						'route' => 'jugador_index',
-					)
-				);
-		}
+				$menu[ $keyAdministracion ]
+					->addChild(
+						'Jugadores',
+						array(
+							'route'          => 'jugador_index',
+							'attributes'     => [ 'class' => 'nav-item' ],
+							'linkAttributes' => [ 'class' => 'nav-link' ]
+						)
+					);
+			}
 		}
 
 		if ( $this->authorizationChecker->isGranted( 'ROLE_ADMIN' ) ||
@@ -175,21 +197,25 @@ class Builder {
 				->addChild(
 					'Referees',
 					array(
-						'route' => 'referee_index',
+						'route'          => 'referee_index',
+						'attributes'     => [ 'class' => 'nav-item' ],
+						'linkAttributes' => [ 'class' => 'nav-link' ]
 					)
 				);
 		}
 
-        if ( $this->authorizationChecker->isGranted( 'ROLE_UNION' ) ) {
+		if ( $this->authorizationChecker->isGranted( 'ROLE_UNION' ) ) {
 
-            $menu[ $keyAdministracion ]
-                ->addChild(
-                    'Usuarios',
-                    array(
-                        'route' => 'usuario_index',
-                    )
-                );
-        }
+			$menu[ $keyAdministracion ]
+				->addChild(
+					'Usuarios',
+					array(
+						'route'          => 'usuario_index',
+						'attributes'     => [ 'class' => 'nav-item' ],
+						'linkAttributes' => [ 'class' => 'nav-link' ]
+					)
+				);
+		}
 
 
 		return $menu;

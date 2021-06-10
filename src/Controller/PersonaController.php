@@ -5,7 +5,7 @@ namespace App\Controller;
 use App\Entity\Persona;
 use App\Form\PersonaType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Request;use Knp\Component\Pager\PaginatorInterface;
 
 /**
  * Persona controller.

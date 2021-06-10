@@ -1,6 +1,0 @@
-fos_ck_editor:
-    default_config: my_config
-    configs:
-        my_config:
-#            toolbar: full
-            toolbar: [ ['Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo'],  ['Bold', 'Italic', 'Strike', '-', 'RemoveFormat'], ['JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'], '/', ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote'], ['Styles', 'Format'], ['Table']  ]

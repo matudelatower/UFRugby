@@ -58,7 +58,11 @@
                         {{ jugador.persona.sexo }}
                     </td>
                     <td>
-                        {{ jugador.clubJugador.last.fichaMedica.last.prestador }}
+                        {% if jugador.clubJugador.last.fichaMedica | length > 0 %}
+                            {{ jugador.clubJugador.last.fichaMedica.last.prestador }}
+                        {% else %}
+                            {{ jugador.clubJugador.last.fichaMedica.last }}
+                        {% endif %}
                     </td>
                     <td>
                         {{ jugador.peso }}

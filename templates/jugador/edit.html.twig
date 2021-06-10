@@ -6,11 +6,11 @@ Jugador
 {% block body %}
     <h1>Editar Jugador</h1>
     {{ form_start(edit_form) }}
-    <div class="box">
-        <div class="box-header">
-            <h3 class="box-title">Información Personal</h3>
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Información Personal</h3>
         </div>
-        <div class="box-body">
+        <div class="card-body">
 
 
             <div class="col-md-6">
@@ -30,11 +30,11 @@ Jugador
     </div>
 
 
-    <div class="box">
-        <div class="box-header">
-            <h3 class="box-title">Datos de Contacto</h3>
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Datos de Contacto</h3>
         </div>
-        <div class="box-body">
+        <div class="card-body">
             <div class="col-md-6">
                 {{ form_row(edit_form.contacto.telefono) }}
                 {{ form_row(edit_form.contacto.mail) }}
@@ -58,11 +58,11 @@ Jugador
 
         </div>
     </div>
-    <div class="box">
-        <div class="box-header">
-            <h3 class="box-title">Actualidad</h3>
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Actualidad</h3>
         </div>
-        <div class="box-body">
+        <div class="card-body">
             <div class="col-md-6">
                 {{ form_row(edit_form.jugador.peso) }}
                 {{ form_row(edit_form.jugador.categoria) }}
@@ -88,7 +88,7 @@ Jugador
 
     <input class="btn btn-primary" type="submit" value="Guardar"/>
     <a class="btn btn-default" href="{{ path('jugador_index') }}">Volver</a>
-    <div class="hidden">
+    <div class="d-none">
 
         {{ form_end(edit_form) }}
     </div>

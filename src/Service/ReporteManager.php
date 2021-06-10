@@ -9,13 +9,14 @@
 namespace App\Service;
 
 use Knp\Snappy\Pdf;
+use Twig\Environment;
 
 class ReporteManager {
 
 	private $twig;
 	private $pdf;
 
-	public function __construct( \Twig_Environment $twig, Pdf $pdf ) {
+	public function __construct( Environment $twig, Pdf $pdf ) {
 		$this->twig = $twig;
 		$this->pdf  = $pdf;
 	}

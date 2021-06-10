@@ -41,3 +41,23 @@ app_pase:
 app_homepage:
     path:     /
     controller: App\Controller\DefaultController::indexAction
+
+confirmacion_precompetitivo:
+    path:     /confirmacion_precompetitivo/{token}
+    controller: App\Controller\JugadorController::precompetitivoConfirmacionAction
+#    methods:  GET
+
+jugador_ficha_precompetitiva:
+    path:     /ficha_precompetitiva/{clubJugadorId}
+    controller: App\Controller\JugadorController::fichaPrecompetitivaAction
+#    methods:  [GET]
+
+jugador_registro:
+    path:     /registro
+    controller: App\Controller\JugadorController::precompetitivoAction
+#    methods:  [GET, POST]
+
+#referee
+confirmacion_referee:
+    path:     /confirmacion-referee/{token}
+    controller: App\Controller\RefereeController::confirmacionInscripcion

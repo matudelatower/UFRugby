@@ -9,27 +9,30 @@
             <div class="col-md-3">
 
                 <!-- Profile Image -->
-                <div class="box box-primary">
-                    <div class="box-body box-profile">
+                <div class="card card-primary card-outline">
+                    <div class="card-body box-profile">
                         {% set avatar =  asset('build/img/avatar.png') %}
 
-                        <img class="profile-user-img img-responsive img-circle" src="{{ avatar }}"
-                             alt="User profile picture">
+                        <div class="text-center">
+                            <img class="profile-user-img img-fluid img-circle"
+                                 src="{{ avatar }}"
+                                 alt="User profile picture">
+                        </div>
 
                         <h3 class="profile-username text-center">{{ referee.persona.nombre }} {{ referee.persona.apellido }}</h3>
 
                         <ul class="list-group list-group-unbordered">
                             {#<li class="list-group-item">#}
-                                {#<b>Jugadores</b> <a class="pull-right">{{ jugadores| length }}</a>#}
+                                {#<b>Jugadores</b> <a class="float-right">{{ jugadores| length }}</a>#}
                             {#</li>#}
                             {#<li class="list-group-item">#}
-                                {#<b>Jugadores (No Competitivos)</b> <a class="pull-right">{{ jugadores| length }}</a>#}
+                                {#<b>Jugadores (No Competitivos)</b> <a class="float-right">{{ jugadores| length }}</a>#}
                             {#</li>#}
                             {#<li class="list-group-item">#}
-                            {#<b>Altura</b> <a class="pull-right">{{ jugador.altura }} Mts</a>#}
+                            {#<b>Altura</b> <a class="float-right">{{ jugador.altura }} Mts</a>#}
                             {#</li>#}
                             {#<li class="list-group-item">#}
-                            {#<b>Friends</b> <a class="pull-right">13,287</a>#}
+                            {#<b>Friends</b> <a class="float-right">13,287</a>#}
                             {#</li>#}
                         </ul>
 
@@ -39,12 +42,12 @@
                 </div>
                 <!-- /.box -->
 
-                <div class="box box-primary">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">Datos Personales</h3>
+                <div class="card card-primary">
+                    <div class="card-header with-border">
+                        <h3 class="card-title">Datos Personales</h3>
                     </div>
                     <!-- /.box-header -->
-                    <div class="box-body">
+                    <div class="card-body">
 
                         {#<strong><i class="fa fa-pencil margin-r-5"></i> Skills</strong>#}
 

@@ -2,20 +2,48 @@
 
 namespace App\Entity;
 
-use FOS\UserBundle\Model\User as BaseUser;
+use App\Repository\UsuarioRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\UsuarioRepository")
+ * @ORM\Entity(repositoryClass=UsuarioRepository::class)
  * @ORM\Table(name="fos_user")
  */
-class Usuario extends BaseUser {
+class Usuario implements UserInterface, PasswordAuthenticatedUserInterface {
 	/**
 	 * @ORM\Id
+	 * @ORM\GeneratedValue
 	 * @ORM\Column(type="integer")
-	 * @ORM\GeneratedValue(strategy="AUTO")
 	 */
-	protected $id;
+	private $id;
+
+	/**
+	 * @ORM\Column(type="string", length=180, unique=true)
+	 */
+	private $username;
+
+	/**
+	 * @ORM\Column(type="json")
+	 */
+	private $roles = [];
+
+	/**
+	 * @var string The hashed password
+	 * @ORM\Column(type="string")
+	 */
+	private $password;
+
+	/**
+	 * @ORM\Column(type="string", length=180, unique=true)
+	 */
+	private $email;
+
+	/**
+	 * @ORM\Column(type="boolean")
+	 */
+	private $enabled;
 
 	/**
 	 * @var
@@ -33,58 +61,128 @@ class Usuario extends BaseUser {
 	 */
 	private $club;
 
+	public function __toString() {
+		return $this->username;
+	}
 
-	public function __construct() {
-		parent::__construct();
-		// your own logic
+	public function getId(): ?int {
+		return $this->id;
+	}
+
+	public function getUsername(): ?string {
+		return $this->username;
+	}
+
+	public function setUsername( string $username ): self {
+		$this->username = $username;
+
+		return $this;
+	}
+
+	/**
+	 * A visual identifier that represents this user.
+	 *
+	 * @see UserInterface
+	 */
+	public function getUserIdentifier(): string {
+		return (string) $this->username;
+	}
+
+	/**
+	 * @see UserInterface
+	 */
+	public function getRoles(): array {
+		$roles = $this->roles;
+		// guarantee every user at least has ROLE_USER
+		$roles[] = 'ROLE_USER';
+
+		return array_unique( $roles );
+	}
+
+	public function setRoles( array $roles ): self {
+		$this->roles = $roles;
+
+		return $this;
+	}
+
+	/**
+	 * @see PasswordAuthenticatedUserInterface
+	 */
+	public function getPassword(): string {
+		return $this->password;
+	}
+
+	public function setPassword( string $password ): self {
+		$this->password = $password;
+
+		return $this;
+	}
+
+	/**
+	 * Returning a salt is only needed, if you are not using a modern
+	 * hashing algorithm (e.g. bcrypt or sodium) in your security.yaml.
+	 *
+	 * @see UserInterface
+	 */
+	public function getSalt(): ?string {
+		return null;
+	}
+
+	/**
+	 * @see UserInterface
+	 */
+	public function eraseCredentials() {
+		// If you store any temporary, sensitive data on the user, clear it here
+		// $this->plainPassword = null;
+	}
+
+	public function getEmail(): ?string {
+		return $this->email;
+	}
+
+	public function setEmail( string $email ): self {
+		$this->email = $email;
+
+		return $this;
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function getPersona() {
+		return $this->persona;
+	}
+
+	/**
+	 * @param mixed $persona
+	 */
+	public function setPersona( $persona ): void {
+		$this->persona = $persona;
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function getClub() {
+		return $this->club;
+	}
+
+	/**
+	 * @param mixed $club
+	 */
+	public function setClub( $club ): void {
+		$this->club = $club;
+	}
+
+	public function getEnabled(): ?bool {
+		return $this->enabled;
+	}
+
+	public function setEnabled( bool $enabled ): self {
+		$this->enabled = $enabled;
+
+		return $this;
 	}
 
 
-    /**
-     * Set persona
-     *
-     * @param \App\Entity\Persona $persona
-     *
-     * @return Usuario
-     */
-    public function setPersona(\App\Entity\Persona $persona = null)
-    {
-        $this->persona = $persona;
-
-        return $this;
-    }
-
-    /**
-     * Get persona
-     *
-     * @return \App\Entity\Persona
-     */
-    public function getPersona()
-    {
-        return $this->persona;
-    }
-
-    /**
-     * Set club
-     *
-     * @param \App\Entity\Club $club
-     *
-     * @return Usuario
-     */
-    public function setClub(\App\Entity\Club $club = null)
-    {
-        $this->club = $club;
-
-        return $this;
-    }
-
-    /**
-     * Get club
-     *
-     * @return \App\Entity\Club
-     */
-    public function getClub()
-    {
-        return $this->club;
-    }
 }

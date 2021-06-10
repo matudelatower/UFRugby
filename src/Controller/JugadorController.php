@@ -8,7 +8,9 @@ use App\Form\Filter\BuscarJugadoresFilterType;
 use App\Form\Filter\BuscarJugadorFilterType;
 use App\Service\ReporteExcelManager;
 use App\Service\ReporteManager;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Knp\Component\Pager\PaginatorInterface;
+use Knp\Snappy\Pdf;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -18,12 +20,12 @@ use Symfony\Component\HttpFoundation\ResponseHeaderBag;
  * Jugador controller.
  *
  */
-class JugadorController extends Controller {
+class JugadorController extends AbstractController {
 	/**
 	 * Lists all jugador entities.
 	 *
 	 */
-	public function indexAction( Request $request ) {
+	public function indexAction( Request $request, PaginatorInterface $paginator ) {
 		$em = $this->getDoctrine()->getManager();
 
 		$club = $this->getUser()->getClub();
@@ -61,9 +63,12 @@ class JugadorController extends Controller {
 
 		}
 
-		$cantidadRegistros = $filterType->getData()['cantidadRegistros'] ? $filterType->getData()['cantidadRegistros'] : 10;
+		$cantidadRegistros = 10;
 
-		$paginator = $this->get( 'knp_paginator' );
+		if ($filterType->getData()){
+			$cantidadRegistros = $filterType->getData()['cantidadRegistros'] ? $filterType->getData()['cantidadRegistros'] : 10;
+		}
+		
 		$jugadors  = $paginator->paginate(
 			$jugadors, /* query NOT result */
 			$request->query->getInt( 'page', 1 )/*page number*/,
@@ -356,7 +361,7 @@ class JugadorController extends Controller {
 			) );
 	}
 
-	public function fichaPrecompetitivaAction( $clubJugadorId ) {
+	public function fichaPrecompetitivaAction( $clubJugadorId, Pdf $knpSnappyPdf ) {
 		$em          = $this->getDoctrine()->getManager();
 		$clubJugador = $em->getRepository( 'App:ClubJugador' )->findOneById( $clubJugadorId );
 
@@ -377,7 +382,7 @@ class JugadorController extends Controller {
 //        return new Response($html);
 
 		return new Response(
-			$this->get( 'knp_snappy.pdf' )->getOutputFromHtml( $html,
+			$knpSnappyPdf->getOutputFromHtml( $html,
 				array(
 					'margin-left'  => "3cm",
 					'margin-right' => "3cm",
@@ -393,7 +398,7 @@ class JugadorController extends Controller {
 
 	}
 
-	public function buscarJugador( Request $request ) {
+	public function buscarJugador( Request $request, PaginatorInterface $paginator) {
 		$em = $this->getDoctrine()->getManager();
 
 		$filterType = $this->createForm( BuscarJugadorFilterType::class,
@@ -412,7 +417,7 @@ class JugadorController extends Controller {
 
 		}
 
-		$paginator = $this->get( 'knp_paginator' );
+		
 		$jugadors  = $paginator->paginate(
 			$jugadors, /* query NOT result */
 			$request->query->getInt( 'page', 1 )/*page number*/,
@@ -565,15 +570,18 @@ class JugadorController extends Controller {
 		// create the response
 		$response = $reporteManager->exportarExcel( $title, $data, 'Jugadores' );
 		// adding headers
-		$dispositionHeader = $response->headers->makeDisposition(
-			ResponseHeaderBag::DISPOSITION_ATTACHMENT,
-			$title . '.xlsx'
-		);
-		$response->headers->set( 'Content-Type', 'text/vnd.ms-excel; charset=utf-8' );
-		$response->headers->set( 'Pragma', 'public' );
-		$response->headers->set( 'Cache-Control', 'maxage=1' );
-		$response->headers->set( 'Content-Disposition', $dispositionHeader );
+//		$dispositionHeader = $response->headers->makeDisposition(
+//			ResponseHeaderBag::DISPOSITION_ATTACHMENT,
+//			$title . '.xlsx'
+//		);
+//		$response->headers->set( 'Content-Type', 'text/vnd.ms-excel; charset=utf-8' );
+//		$response->headers->set( 'Pragma', 'public' );
+//		$response->headers->set( 'Cache-Control', 'maxage=1' );
+//		$response->headers->set( 'Content-Disposition', $dispositionHeader );
+		header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+		header('Content-Disposition: attachment; filename="'. $title . '.xlsx'.'"');
 
+		$response->save('php://output');
 		return $response;
 
 	}
