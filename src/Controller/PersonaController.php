@@ -4,14 +4,18 @@ namespace App\Controller;
 
 use App\Entity\Persona;
 use App\Form\PersonaType;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Persona controller.
  *
+ * @Route("/persona")
  */
-class PersonaController extends Controller {
+class PersonaController extends AbstractController {
 	/**
 	 * Lists all persona entities.
 	 *
@@ -131,4 +135,20 @@ class PersonaController extends Controller {
 		            ->setMethod( 'DELETE' )
 		            ->getForm();
 	}
+
+	/**
+	 * @Route("/persona-ver-identificacion/{persona}", name="persona_ver_identificacion", methods={"GET"})
+	 */
+	public function verIdentificacion( Request $request, Persona $persona ) {
+
+		$html         = $this->renderView( 'persona/ver_identificacion.html.twig',
+			[
+				'persona' => $persona
+			] );
+		$data['html'] = $html;
+
+		return new JsonResponse( [ 'data' => $data ] );
+
+	}
+
 }

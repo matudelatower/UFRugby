@@ -3,24 +3,24 @@
 namespace App\Controller;
 
 use App\Entity\PagoClub;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Request;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;use Knp\Component\Pager\PaginatorInterface;
 
 /**
  * Pagoclub controller.
  *
  */
-class PagoClubController extends Controller {
+class PagoClubController extends AbstractController {
 	/**
 	 * Lists all pagoClub entities.
 	 *
 	 */
-	public function indexAction( Request $request ) {
+	public function indexAction( Request $request, PaginatorInterface $paginator ) {
 		$em = $this->getDoctrine()->getManager();
 
 		$pagoClubs = $em->getRepository( PagoClub::class )->findQbAll();
 
-		$paginator = $this->get( 'knp_paginator' );
+		
 		$pagoClubs = $paginator->paginate(
 			$pagoClubs, /* query NOT result */
 			$request->query->getInt( 'page', 1 )/*page number*/,

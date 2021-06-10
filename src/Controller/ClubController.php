@@ -5,19 +5,20 @@ namespace App\Controller;
 use App\Entity\Club;
 use App\Entity\Jugador;
 use App\Form\Filter\ClubFilterType;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Club controller.
  *
  */
-class ClubController extends Controller {
+class ClubController extends AbstractController {
 	/**
 	 * Lists all club entities.
 	 *
 	 */
-	public function indexAction( Request $request ) {
+	public function indexAction( Request $request, PaginatorInterface $paginator ) {
 		$em = $this->getDoctrine()->getManager();
 
 		$filterType = $this->createForm( ClubFilterType::class,
@@ -34,7 +35,7 @@ class ClubController extends Controller {
 			$clubs = $em->getRepository( Club::class )->findQbAll();
 		}
 
-		$paginator = $this->get( 'knp_paginator' );
+
 		$clubs     = $paginator->paginate(
 			$clubs, /* query NOT result */
 			$request->query->getInt( 'page', 1 )/*page number*/,

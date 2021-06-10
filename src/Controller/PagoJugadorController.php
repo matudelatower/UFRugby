@@ -3,19 +3,20 @@
 namespace App\Controller;
 
 use App\Entity\PagoJugador;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Pagojugador controller.
  *
  */
-class PagoJugadorController extends Controller {
+class PagoJugadorController extends AbstractController {
 	/**
 	 * Lists all pagoJugador entities.
 	 *
 	 */
-	public function indexAction( Request $request ) {
+	public function indexAction( Request $request, PaginatorInterface $paginator) {
 		$em = $this->getDoctrine()->getManager();
 
 		$club = $this->getUser()->getClub();
@@ -23,7 +24,7 @@ class PagoJugadorController extends Controller {
 		$pagoJugadors = $em->getRepository( PagoJugador::class )->findQbByClub( $club );
 
 
-		$paginator    = $this->get( 'knp_paginator' );
+//		$paginator    = $this->get( 'knp_paginator' );
 		$pagoJugadors = $paginator->paginate(
 			$pagoJugadors, /* query NOT result */
 			$request->query->getInt( 'page', 1 )/*page number*/,

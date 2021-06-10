@@ -6,44 +6,47 @@
             <div class="col-md-3">
 
                 <!-- Profile Image -->
-                <div class="box box-primary">
-                    <div class="box-body box-profile">
+                <div class="card card-primary card-outline">
+                    <div class="card-body box-profile">
                         {% set avatar =  asset('build/img/avatar.png') %}
                         {% if club.imageName %}
                             {% set avatar = asset('uploads/images/club/'~ club.imageName) %}
                         {% endif %}
-                        <img class="profile-user-img img-responsive img-circle" src="{{ avatar }}"
-                             alt="User profile picture">
+                        <div class="text-center">
+                            <img class="profile-user-img img-fluid img-circle"
+                                 src="{{ avatar }}"
+                                 alt="User profile picture">
+                        </div>
 
                         <h3 class="profile-username text-center">{{ club.nombre }}</h3>
 
                         <ul class="list-group list-group-unbordered">
                             <li class="list-group-item">
-                                <b>Jugadores</b> <a class="pull-right">{{ jugadores| length }}</a>
+                                <b>Jugadores</b> <a class="float-right">{{ jugadores| length }}</a>
                             </li>
                             <li class="list-group-item">
-                                <b>Jugadores (No Competitivos)</b> <a class="pull-right">{{ jugadores| length }}</a>
+                                <b>Jugadores (No Competitivos)</b> <a class="float-right">{{ jugadores| length }}</a>
                             </li>
-                            {#<li class="list-group-item">#}
-                            {#<b>Altura</b> <a class="pull-right">{{ jugador.altura }} Mts</a>#}
-                            {#</li>#}
-                            {#<li class="list-group-item">#}
-                            {#<b>Friends</b> <a class="pull-right">13,287</a>#}
-                            {#</li>#}
+                            {# <li class="list-group-item"> #}
+                            {# <b>Altura</b> <a class="float-right">{{ jugador.altura }} Mts</a> #}
+                            {# </li> #}
+                            {# <li class="list-group-item"> #}
+                            {# <b>Friends</b> <a class="float-right">13,287</a> #}
+                            {# </li> #}
                         </ul>
 
-                        {#<a href="#" class="btn btn-primary btn-block"><b>Follow</b></a>#}
+                        {# <a href="#" class="btn btn-primary btn-block"><b>Follow</b></a> #}
                     </div>
                     <!-- /.box-body -->
                 </div>
                 <!-- /.box -->
 
-                <div class="box box-primary">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">Datos </h3>
+                <div class="card card-primary">
+                    <div class="card-header with-border">
+                        <h3 class="card-title">Datos </h3>
                     </div>
                     <!-- /.box-header -->
-                    <div class="box-body">
+                    <div class="card-body">
 
                         <strong><i class="fa fa-phone margin-r-5"></i> Contacto</strong>
 
@@ -72,23 +75,27 @@
             </div>
             <!-- /.col -->
             <div class="col-md-9">
-                <div class="nav-tabs-custom">
-                    <ul class="nav nav-tabs">
-                        <li class="active"><a href="#activity" data-toggle="tab">Pagos</a></li>
-                        <li><a href="#pases" data-toggle="tab">Historial de Pases</a></li>
+                <div class="card">
+                    <div class="card-header p-2">
+                        <ul class="nav nav-pills">
+                            <li class="nav-item"><a class="nav-link active" href="#activity" data-toggle="tab">Pagos</a></li>
+                            <li class="nav-item"><a class="nav-link"href="#pases" data-toggle="tab">Historial de Pases</a></li>
 
-                    </ul>
-                    <div class="tab-content">
-                        <div class="active tab-pane" id="activity">
+                        </ul>
+                    </div>
+                    <div class="card-body">
+                        <div class="tab-content">
+                            <div class="active tab-pane" id="activity">
 
+
+                            </div>
+                            <!-- /.tab-pane -->
+                            <div class="tab-pane" id="pases">
+
+                            </div>
+                            <!-- The timeline -->
 
                         </div>
-                        <!-- /.tab-pane -->
-                        <div class="tab-pane" id="pases">
-
-                        </div>
-                        <!-- The timeline -->
-
                     </div>
                     <!-- /.tab-content -->
                 </div>

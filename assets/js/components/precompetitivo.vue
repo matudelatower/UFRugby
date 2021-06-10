@@ -112,8 +112,15 @@
 
                 this.cargando = true;
 
-                axios.post(baseUrl + '/ajax-public/precompetitivo', {
-                    data: this.finalModel
+              let formData = new FormData();
+
+              let data = this.buildFormData(formData, this.finalModel)
+
+              axios.post(baseUrl + '/ajax-public/precompetitivo', data
+                ,{
+                  headers: {
+                    'Content-Type': 'multipart/form-data'
+                  }
                 })
                     .then(response => {
                         console.log(response);
@@ -126,7 +133,19 @@
                         console.log(error);
 
                     });
+            },
+          buildFormData(formData, data, parentKey){
+            if (data && typeof data === 'object' && !(data instanceof Date) && !(data instanceof File)) {
+              Object.keys(data).forEach(key => {
+                this.buildFormData(formData, data[key], parentKey ? `${parentKey}[${key}]` : key);
+              });
+            } else {
+              const value = data == null ? '' : data;
+
+              formData.append(parentKey, value);
             }
+            return formData;
+          }
         },
         mounted() {
             console.log('Component ready.')

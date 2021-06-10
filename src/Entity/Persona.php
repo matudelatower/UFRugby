@@ -112,6 +112,27 @@ class Persona extends BaseClass {
 	private $imageName;
 
 	/**
+	 * @ORM\Column(type="string", length=255, nullable=true)
+	 */
+	private $identificacionFileName;
+
+	/**
+	 * NOTE: This is not a mapped field of entity metadata, just a simple property.
+	 *
+	 * @Vich\UploadableField(mapping="persona_identificacion", fileNameProperty="identificacionFileName")
+	 *
+	 * @var File
+	 *
+	 * @Assert\File(mimeTypes={ "image/*" })
+	 */
+	private $identificacionFile;
+
+	/**
+	 * @ORM\Column(type="boolean", nullable=true)
+	 */
+	private $identificacionVerificada;
+
+	/**
 	 * If manually uploading a file (i.e. not using Symfony Form) ensure an instance
 	 * of 'UploadedFile' is injected into this setter to trigger the  update. If this
 	 * bundle's configuration parameter 'inject_on_load' is set to 'true' this setter
@@ -120,7 +141,36 @@ class Persona extends BaseClass {
 	 *
 	 * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile $image
 	 *
-	 * @return Product
+	 * @return Persona
+	 */
+	public function setIdentificacionFile( File $image = null ) {
+		$this->identificacionFile = $image;
+		if ( $image ) {
+			// It is required that at least one field changes if you are using doctrine
+			// otherwise the event listeners won't be called and the file is lost
+			$this->fechaActualizacion = new \DateTime( 'now' );
+		}
+
+		return $this;
+	}
+
+	/**
+	 * @return File
+	 */
+	public function getIdentificacionFile() {
+		return $this->identificacionFile;
+	}
+
+	/**
+	 * If manually uploading a file (i.e. not using Symfony Form) ensure an instance
+	 * of 'UploadedFile' is injected into this setter to trigger the  update. If this
+	 * bundle's configuration parameter 'inject_on_load' is set to 'true' this setter
+	 * must be able to accept an instance of 'File' as the bundle will inject one here
+	 * during Doctrine hydration.
+	 *
+	 * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile $image
+	 *
+	 * @return Persona
 	 */
 	public function setImageFile( File $image = null ) {
 		$this->imageFile = $image;
@@ -442,5 +492,25 @@ class Persona extends BaseClass {
 	 */
 	public function getReferee() {
 		return $this->referee;
+	}
+
+	public function getIdentificacionFileName(): ?string {
+		return $this->identificacionFileName;
+	}
+
+	public function setIdentificacionFileName( ?string $identificacionFileName ): self {
+		$this->identificacionFileName = $identificacionFileName;
+
+		return $this;
+	}
+
+	public function getIdentificacionVerificada(): ?bool {
+		return $this->identificacionVerificada;
+	}
+
+	public function setIdentificacionVerificada( ?bool $identificacionVerificada ): self {
+		$this->identificacionVerificada = $identificacionVerificada;
+
+		return $this;
 	}
 }

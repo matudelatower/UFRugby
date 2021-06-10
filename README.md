@@ -1,4 +1,5 @@
 #UFRugby
+###Uniones y Federaciones de Rugby
 
 A Symfony project created on August 17, 2017, 3:27 pm.
 
@@ -6,7 +7,7 @@ A Symfony project created on August 17, 2017, 3:27 pm.
 
 - apache2
 - MySQL
-- php7.1
+- php7.4
 - composer
 - npm
 

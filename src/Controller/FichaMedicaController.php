@@ -5,15 +5,15 @@ namespace App\Controller;
 use App\Entity\FichaMedica;
 use App\Form\FichaMedica1Type;
 use App\Repository\FichaMedicaRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Request;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Route("/ficha-medica")
  */
-class FichaMedicaController extends Controller {
+class FichaMedicaController extends AbstractController {
 	/**
 	 * @Route("/", name="ficha_medica_index", methods="GET")
 	 */

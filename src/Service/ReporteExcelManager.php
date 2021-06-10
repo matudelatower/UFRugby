@@ -8,22 +8,30 @@
 
 namespace App\Service;
 
-use Onurb\Bundle\ExcelBundle\Factory\CompatibilityFactory;
+
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use Symfony\Component\DependencyInjection\ParameterBag\ContainerBagInterface;
+
 
 class ReporteExcelManager {
 
-	private $phpexcel;
+//	private $phpexcel;
+	private $container;
 
-	public function __construct( CompatibilityFactory $phpexcel ) {
-		$this->phpexcel = $phpexcel;
+	public function __construct( ContainerBagInterface $container) {
+//		$this->phpexcel = $phpexcel;
+		$this->container = $container;
 	}
-
 
 	public function exportarExcel( $title, $data, $titleSheet = 'Hoja 1' ) {
 
-		$phpExcelObject = $this->phpexcel->createPHPExcelObject();
+//		$phpExcelObject = $this->phpexcel->createPHPExcelObject();
+//		$phpExcelObject = $this->phpexcel;
+		$phpExcelObject = new Spreadsheet();
 
-		$phpExcelObject->getProperties()->setCreator( "URP" )
+
+		$phpExcelObject->getProperties()->setCreator( $this->container->get('app.site_name') )
 //		               ->setLastModifiedBy("Giulio De Donato")
                        ->setTitle( $title )
 //		               ->setSubject("Office 2005 XLSX Test Document")
@@ -47,9 +55,14 @@ class ReporteExcelManager {
 		$phpExcelObject->setActiveSheetIndex( 0 );
 
 		// create the writer
-		$writer = $this->phpexcel->createWriter( $phpExcelObject, 'Xlsx' );
+//		$writer = $this->phpexcel->createWriter( $phpExcelObject, 'Xlsx' );
 
-		return $this->phpexcel->createStreamedResponse( $writer );
+		$writer = new Xlsx($phpExcelObject);
+
+		return $writer;
+//		$writer->save();
+//
+//		return $this->phpexcel->createStreamedResponse( $writer );
 
 	}
 }

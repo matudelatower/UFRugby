@@ -6,15 +6,16 @@ use App\Entity\HistorialSeleccion;
 use App\Entity\Jugador;
 use App\Form\HistorialSeleccionType;
 use App\Repository\HistorialSeleccionRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Route("/historial/seleccion")
  */
-class HistorialSeleccionController extends Controller {
+class HistorialSeleccionController extends AbstractController {
 	/**
 	 * @Route("/", name="historial_seleccion_index", methods="GET")
 	 */

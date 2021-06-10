@@ -8,58 +8,66 @@
 {% endblock stylesheets %}
 {% block body %}
     <div class="row">
+
+
         <div class="col-md-3">
 
             <!-- Profile Image -->
-            <div class="box box-primary">
-                <div class="box-body box-profile">
+            <div class="card card-primary card-outline">
+                <div class="card-body box-profile">
                     {% set avatar =  asset('build/img/avatar.png') %}
                     {% if jugador.persona.imageName %}
                         {% set avatar = jugador.persona.imageName %}
                     {% endif %}
-                    <img class="profile-user-img img-responsive img-circle" src="{{ avatar }}"
-                         alt="User profile picture">
+                    <div class="text-center">
+                        <img class="profile-user-img img-fluid img-circle"
+                             src="{{ avatar }}"
+                             alt="User profile picture">
+                    </div>
 
                     <h3 class="profile-username text-center">{{ jugador.persona.nombre }} {{ jugador.persona.apellido }}</h3>
 
                     <p class="text-muted text-center">{{ jugador.posicionHabitual }}</p>
 
-                    <ul class="list-group list-group-unbordered">
+                    <ul class="list-group list-group-unbordered mb-3">
                         <li class="list-group-item">
-                            <b>Peso</b> <a class="pull-right">{{ jugador.peso }} Kg</a>
+                            <b>Peso</b> <a class="float-right">{{ jugador.peso }} Kg</a>
                         </li>
                         <li class="list-group-item">
-                            <b>Altura</b> <a class="pull-right">{{ jugador.altura }} Mts</a>
+                            <b>Altura</b> <a class="float-right">{{ jugador.altura }} Mts</a>
                         </li>
                         <li class="list-group-item">
-                            <b>Otras Posiciones</b>
-                            <a class="pull-right">
+                            <b>Otras Posiciones</b> <a class="float-right">
                                 {{ jugador.posicionAlternativa }} <br>
-                                {{ jugador.segundaPosicionAlternativa }}
-                            </a>
+                                {{ jugador.segundaPosicionAlternativa }}</a>
                         </li>
                     </ul>
 
-                    {#<a href="#" class="btn btn-primary btn-block"><b>Follow</b></a>#}
+
                 </div>
-                <!-- /.box-body -->
             </div>
+            <!-- /.card-body -->
             <!-- /.box -->
 
             <!-- About Me Box -->
-            <div class="box box-primary">
-                <div class="box-header with-border">
-                    <h3 class="box-title">Datos Personales</h3>
+            <div class="card card-primary">
+                <div class="card-header with-border">
+                    <h3 class="card-title">Datos Personales</h3>
                 </div>
                 <!-- /.box-header -->
-                <div class="box-body">
+                <div class="card-body">
 
-                    {#<strong><i class="fa fa-pencil margin-r-5"></i> Skills</strong>#}
+                    {# <strong><i class="fa fa-pencil margin-r-5"></i> Skills</strong> #}
 
                     <p class="text-muted">
                         <strong>Fecha de Nacimiento:</strong> {{ jugador.persona.fechaNacimiento | date('d/m/Y') }}<br>
-                        <strong>Identificación:</strong> {{ jugador.persona.tipoIdentificacion }} {{ jugador.persona.numeroIdentificacion }}
+                        <strong>Identificación:</strong>
+                        {{ jugador.persona.tipoIdentificacion.siglas }}: {{ jugador.persona.numeroIdentificacion }}
                         <br>
+                        {% if jugador.persona.identificacionFileName %}
+                            <img src="{{ asset('uploads/identificaciones/'~ jugador.persona.identificacionFileName) }}"
+                                 class="img-fluid">
+                        {% endif %}
                     </p>
 
                     <hr>
@@ -91,127 +99,131 @@
         </div>
         <!-- /.col -->
         <div class="col-md-9">
-            <div class="nav-tabs-custom">
-                <ul class="nav nav-tabs">
-                    <li class="active"><a href="#activity" data-toggle="tab">Datos Médicos</a></li>
-                    <li><a href="#timeline" data-toggle="tab">Historial de Pases</a></li>
-                    <li><a href="#timeline-selecciones" data-toggle="tab">Historial de Seleccionados</a></li>
-                    {#<li><a href="#settings" data-toggle="tab">Settings</a></li>#}
-                </ul>
-                <div class="tab-content">
-                    <div class="active tab-pane" id="activity">
-                        {#{% for clubJugador in jugador.clubJugador %}#}
-                        {% set fichaMedica = jugador.clubJugador.last.fichaMedica.last %}
-                            {#{% for fichaMedica in clubJugador.fichaMedica %}#}
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="box-tools pull-right">
-                                            <a class="btn btn-default"
-                                               href="{{ path('editar_ficha_medica_jugador', { id: fichaMedica.id }) }}">
-                                                <i class="fa fa-edit"></i>
-                                            </a>
-                                        </div>
-                                        <strong>Prestador:</strong> {{ fichaMedica.prestador }} <br>
-                                        <strong>Nº afiliado:</strong> {{ fichaMedica.numeroAfiliado }}<br>
-                                        <strong>Grupo Sanguíneo:</strong> {{ fichaMedica.grupoSanguineo }}<br>
+            <div class="card">
+                <div class="card-header p-2">
+                    <ul class="nav nav-pills">
+                        <li class="nav-item"><a class="nav-link active" href="#activity" data-toggle="tab">Datos Médicos</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#timeline" data-toggle="tab">Historial de Pases</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#timeline-selecciones" data-toggle="tab">Historial de Seleccionados</a></li>
 
-                                    </div>
-
-                                </div>
-                            {#{% endfor %}#}
-                        {#{% endfor %}#}
-
-                    </div>
-                    <!-- /.tab-pane -->
-                    <div class="tab-pane" id="timeline">
-                        <!-- The timeline -->
-                        <ul class="timeline timeline-inverse">
-
-                            {% for pase in jugador.pases | reverse %}
-                                <!-- timeline time label -->
-                                <li class="time-label">
-                                    <span class="bg-red">
-                                      {{ pase.fechaConfirmacionUnion | date('d/m/Y') }}
-                                    </span>
-                                </li>
-                                <!-- /.timeline-label -->
-
-                                <!-- timeline item -->
-                                <li>
-                                    <i class="fa fa-exchange bg-aqua"></i>
-
-                                    <div class="timeline-item">
-                                        {#<span class="time"><i class="fa fa-clock-o"></i> {{ clubJugador.anio }}</span>#}
-
-                                        <h3 class="timeline-header no-border">{{ pase.clubOrigen }}
-                                            > {{ pase.clubDestino }}
-                                        </h3>
-                                        {% if not pase.confirmacionUnion %}
-                                            <div class="timeline-footer">
-                                                <span class="btn btn-warning btn-flat btn-xs">{{ pase.estado }}</span>
-                                            </div>
-                                        {% endif %}
-
-                                    </div>
-                                </li>
-                                <!-- END timeline item -->
-                            {% endfor %}
-                            <li>
-                                <i class="fa fa-clock-o bg-gray"></i>
-                            </li>
-
-                        </ul>
-                    </div>
-                    <!-- /.tab-pane -->
-
-                    <div class="tab-pane" id="timeline-selecciones">
-                        {% if is_granted('ROLE_UNION') %}
+                    </ul>
+                </div>
+                <div class="card-body">
+                    <div class="tab-content">
+                        <div class="active tab-pane" id="activity">
+                            {# {% for clubJugador in jugador.clubJugador %} #}
+                            {% set fichaMedica = jugador.clubJugador.last.fichaMedica.last %}
+                            {# {% for fichaMedica in clubJugador.fichaMedica %} #}
                             <div class="row">
                                 <div class="col-md-12">
-                                    <div class="box-tools pull-right">
-                                        <a href="{{ path('historial_seleccion_jugador_nuevo', {'jugador': jugador.id }) }}"
-                                           class="btn btn-primary">Agregar Historial</a>
+                                    <div class="card-tools float-right">
+                                        <a class="btn btn-default"
+                                           href="{{ path('editar_ficha_medica_jugador', { id: fichaMedica.id }) }}">
+                                            <i class="fa fa-edit"></i>
+                                        </a>
                                     </div>
+                                    <strong>Prestador:</strong> {{ fichaMedica.prestador }} <br>
+                                    <strong>Nº afiliado:</strong> {{ fichaMedica.numeroAfiliado }}<br>
+                                    <strong>Grupo Sanguíneo:</strong> {{ fichaMedica.grupoSanguineo }}<br>
+
                                 </div>
+
                             </div>
-                        {% endif %}
-                        <div class="row">
-                            <div class="col-md-12">
-                                <table class="table table-striped">
-                                    <thead>
-                                    <tr>
-                                        <th>Fecha</th>
-                                        <th>Selección</th>
-                                        <th>Torneo</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    {% for historialSeleccion in jugador.historialSeleccions %}
-                                        <tr>
-                                            <td>{{ historialSeleccion.fecha | date ('d/m/Y') }}</td>
-                                            <td>{{ historialSeleccion.seleccion }}</td>
-                                            <td>{{ historialSeleccion.torneo }}</td>
-                                        </tr>
-                                    {% endfor %}
-                                    </tbody>
-                                </table>
+                            {# {% endfor %} #}
+                            {# {% endfor %} #}
+
+                        </div>
+                        <!-- /.tab-pane -->
+                        <div class="tab-pane" id="timeline">
+                            <!-- The timeline -->
+                            <div class="timeline timeline-inverse">
+
+                                {% for pase in jugador.pases | reverse %}
+                                    <!-- timeline time label -->
+                                    <div class="time-label">
+                                    <span class="bg-danger">
+                                      {{ pase.fechaConfirmacionUnion | date('d/m/Y') }}
+                                    </span>
+                                    </div>
+                                    <!-- /.timeline-label -->
+
+                                    <!-- timeline item -->
+                                    <div>
+                                        <i class="fas fa-exchange-alt bg-info"></i>
+
+                                        <div class="timeline-item">
+                                            {# <span class="time"><i class="fa fa-clock-o"></i> {{ clubJugador.anio }}</span> #}
+
+                                            <h3 class="timeline-header no-border">{{ pase.clubOrigen }}
+                                                > {{ pase.clubDestino }}
+                                            </h3>
+                                            {% if not pase.confirmacionUnion %}
+                                                <div class="timeline-footer">
+                                                    <span class="btn btn-warning btn-flat btn-xs">{{ pase.estado }}</span>
+                                                </div>
+                                            {% endif %}
+
+                                        </div>
+                                    </div>
+                                    <!-- END timeline item -->
+                                {% endfor %}
+                                <div>
+                                    <i class="far fa-clock bg-gray"></i>
+                                </div>
+
                             </div>
                         </div>
-                    </div>
+                        <!-- /.tab-pane -->
 
+                        <div class="tab-pane" id="timeline-selecciones">
+                            {% if is_granted('ROLE_UNION') %}
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="card-tools float-right">
+                                            <a href="{{ path('historial_seleccion_jugador_nuevo', {'jugador': jugador.id }) }}"
+                                               class="btn btn-primary">Agregar Historial</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <table class="table table-striped">
+                                        <thead>
+                                        <tr>
+                                            <th>Fecha</th>
+                                            <th>Selección</th>
+                                            <th>Torneo</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for historialSeleccion in jugador.historialSeleccions %}
+                                            <tr>
+                                                <td>{{ historialSeleccion.fecha | date ('d/m/Y') }}</td>
+                                                <td>{{ historialSeleccion.seleccion }}</td>
+                                                <td>{{ historialSeleccion.torneo }}</td>
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- /.tab-content -->
                 </div>
-                <!-- /.tab-content -->
             </div>
             <!-- /.nav-tabs-custom -->
 
             <div class="row">
                 <div class="col-md-12">
-                    <div class="box box-primary">
+                    <div class="card box-primary">
 
-                        <div class="box-header with-border">
-                            <h3 class="box-title">Fichajes</h3>
+                        <div class="card-header with-border">
+                            <h3 class="card-title">Fichajes</h3>
                         </div>
-                        <div class="box-body">
+                        <div class="card-body">
                             <table class="table table-bordered">
                                 <tbody>
                                 <tr>
@@ -255,7 +267,7 @@
         <a class="btn btn-default" href="{{ path('jugador_index') }}">Volver</a>
     {% endif %}
 
-    {#<a class="btn btn-default" href="{{ path('jugador_edit', { 'id': jugador.id }) }}">Editar</a>#}
+    {# <a class="btn btn-default" href="{{ path('jugador_edit', { 'id': jugador.id }) }}">Editar</a> #}
 
 
 

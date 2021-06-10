@@ -1,2 +1,3 @@
-require('jquery')
-require('bootstrap')
+global.$ = global.jQuery = $;
+require('bootstrap');
+require('admin-lte')

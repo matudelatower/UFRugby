@@ -11,30 +11,29 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="ficha_medica")
  * @ORM\Entity(repositoryClass="App\Repository\FichaMedicaRepository")
  */
-class FichaMedica extends BaseClass
-{
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    private $id;
+class FichaMedica extends BaseClass {
+	/**
+	 * @var int
+	 *
+	 * @ORM\Column(name="id", type="integer")
+	 * @ORM\Id
+	 * @ORM\GeneratedValue(strategy="AUTO")
+	 */
+	private $id;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="prestador", type="string", length=255, nullable=true)
-     */
-    private $prestador;
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(name="prestador", type="string", length=255, nullable=true)
+	 */
+	private $prestador;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="numero_afiliado", type="string", length=255, nullable=true)
-     */
-    private $numeroAfiliado;
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(name="numero_afiliado", type="string", length=255, nullable=true)
+	 */
+	private $numeroAfiliado;
 
 	/**
 	 * @var
@@ -72,240 +71,225 @@ class FichaMedica extends BaseClass
 	 * @ORM\Column(name="matricula", type="string", length=255, nullable=true)
 	 */
 	private $matricula;
-	
-
-    /**
-     * Get id
-     *
-     * @return integer
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * Set prestador
-     *
-     * @param string $prestador
-     *
-     * @return FichaMedica
-     */
-    public function setPrestador($prestador)
-    {
-        $this->prestador = $prestador;
-
-        return $this;
-    }
-
-    /**
-     * Get prestador
-     *
-     * @return string
-     */
-    public function getPrestador()
-    {
-        return $this->prestador;
-    }
-
-    /**
-     * Set numeroAfiliado
-     *
-     * @param string $numeroAfiliado
-     *
-     * @return FichaMedica
-     */
-    public function setNumeroAfiliado($numeroAfiliado)
-    {
-        $this->numeroAfiliado = $numeroAfiliado;
-
-        return $this;
-    }
-
-    /**
-     * Get numeroAfiliado
-     *
-     * @return string
-     */
-    public function getNumeroAfiliado()
-    {
-        return $this->numeroAfiliado;
-    }
-
-    /**
-     * Set tieneCobertura
-     *
-     * @param boolean $tieneCobertura
-     *
-     * @return FichaMedica
-     */
-    public function setTieneCobertura($tieneCobertura)
-    {
-        $this->tieneCobertura = $tieneCobertura;
-
-        return $this;
-    }
-
-    /**
-     * Get tieneCobertura
-     *
-     * @return boolean
-     */
-    public function getTieneCobertura()
-    {
-        return $this->tieneCobertura;
-    }
-
-    /**
-     * Set fechaCreacion
-     *
-     * @param \DateTime $fechaCreacion
-     *
-     * @return FichaMedica
-     */
-    public function setFechaCreacion($fechaCreacion)
-    {
-        $this->fechaCreacion = $fechaCreacion;
-
-        return $this;
-    }
-
-    /**
-     * Set fechaActualizacion
-     *
-     * @param \DateTime $fechaActualizacion
-     *
-     * @return FichaMedica
-     */
-    public function setFechaActualizacion($fechaActualizacion)
-    {
-        $this->fechaActualizacion = $fechaActualizacion;
-
-        return $this;
-    }
 
 
-    /**
-     * Set grupoSanguineo
-     *
-     * @param \App\Entity\GrupoSanguineo $grupoSanguineo
-     *
-     * @return FichaMedica
-     */
-    public function setGrupoSanguineo(\App\Entity\GrupoSanguineo $grupoSanguineo = null)
-    {
-        $this->grupoSanguineo = $grupoSanguineo;
+	public function __toString() {
+		return 'Afiliado: ' . $this->numeroAfiliado;
+	}
 
-        return $this;
-    }
+	/**
+	 * Get id
+	 *
+	 * @return integer
+	 */
+	public function getId() {
+		return $this->id;
+	}
 
-    /**
-     * Get grupoSanguineo
-     *
-     * @return \App\Entity\GrupoSanguineo
-     */
-    public function getGrupoSanguineo()
-    {
-        return $this->grupoSanguineo;
-    }
+	/**
+	 * Set prestador
+	 *
+	 * @param string $prestador
+	 *
+	 * @return FichaMedica
+	 */
+	public function setPrestador( $prestador ) {
+		$this->prestador = $prestador;
 
-    /**
-     * Set creadoPor
-     *
-     * @param \App\Entity\Usuario $creadoPor
-     *
-     * @return FichaMedica
-     */
-    public function setCreadoPor(\App\Entity\Usuario $creadoPor = null)
-    {
-        $this->creadoPor = $creadoPor;
+		return $this;
+	}
 
-        return $this;
-    }
+	/**
+	 * Get prestador
+	 *
+	 * @return string
+	 */
+	public function getPrestador() {
+		return $this->prestador;
+	}
 
-    /**
-     * Set actualizadoPor
-     *
-     * @param \App\Entity\Usuario $actualizadoPor
-     *
-     * @return FichaMedica
-     */
-    public function setActualizadoPor(\App\Entity\Usuario $actualizadoPor = null)
-    {
-        $this->actualizadoPor = $actualizadoPor;
+	/**
+	 * Set numeroAfiliado
+	 *
+	 * @param string $numeroAfiliado
+	 *
+	 * @return FichaMedica
+	 */
+	public function setNumeroAfiliado( $numeroAfiliado ) {
+		$this->numeroAfiliado = $numeroAfiliado;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * Set doctor
-     *
-     * @param string $doctor
-     *
-     * @return FichaMedica
-     */
-    public function setDoctor($doctor)
-    {
-        $this->doctor = $doctor;
+	/**
+	 * Get numeroAfiliado
+	 *
+	 * @return string
+	 */
+	public function getNumeroAfiliado() {
+		return $this->numeroAfiliado;
+	}
 
-        return $this;
-    }
+	/**
+	 * Set tieneCobertura
+	 *
+	 * @param boolean $tieneCobertura
+	 *
+	 * @return FichaMedica
+	 */
+	public function setTieneCobertura( $tieneCobertura ) {
+		$this->tieneCobertura = $tieneCobertura;
 
-    /**
-     * Get doctor
-     *
-     * @return string
-     */
-    public function getDoctor()
-    {
-        return $this->doctor;
-    }
+		return $this;
+	}
 
-    /**
-     * Set matricula
-     *
-     * @param string $matricula
-     *
-     * @return FichaMedica
-     */
-    public function setMatricula($matricula)
-    {
-        $this->matricula = $matricula;
+	/**
+	 * Get tieneCobertura
+	 *
+	 * @return boolean
+	 */
+	public function getTieneCobertura() {
+		return $this->tieneCobertura;
+	}
 
-        return $this;
-    }
+	/**
+	 * Set fechaCreacion
+	 *
+	 * @param \DateTime $fechaCreacion
+	 *
+	 * @return FichaMedica
+	 */
+	public function setFechaCreacion( $fechaCreacion ) {
+		$this->fechaCreacion = $fechaCreacion;
 
-    /**
-     * Get matricula
-     *
-     * @return string
-     */
-    public function getMatricula()
-    {
-        return $this->matricula;
-    }
+		return $this;
+	}
 
-    /**
-     * Set clubJugador
-     *
-     * @param \App\Entity\ClubJugador $clubJugador
-     *
-     * @return FichaMedica
-     */
-    public function setClubJugador(\App\Entity\ClubJugador $clubJugador = null)
-    {
-        $this->clubJugador = $clubJugador;
+	/**
+	 * Set fechaActualizacion
+	 *
+	 * @param \DateTime $fechaActualizacion
+	 *
+	 * @return FichaMedica
+	 */
+	public function setFechaActualizacion( $fechaActualizacion ) {
+		$this->fechaActualizacion = $fechaActualizacion;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * Get clubJugador
-     *
-     * @return \App\Entity\ClubJugador
-     */
-    public function getClubJugador()
-    {
-        return $this->clubJugador;
-    }
+
+	/**
+	 * Set grupoSanguineo
+	 *
+	 * @param \App\Entity\GrupoSanguineo $grupoSanguineo
+	 *
+	 * @return FichaMedica
+	 */
+	public function setGrupoSanguineo( \App\Entity\GrupoSanguineo $grupoSanguineo = null ) {
+		$this->grupoSanguineo = $grupoSanguineo;
+
+		return $this;
+	}
+
+	/**
+	 * Get grupoSanguineo
+	 *
+	 * @return \App\Entity\GrupoSanguineo
+	 */
+	public function getGrupoSanguineo() {
+		return $this->grupoSanguineo;
+	}
+
+	/**
+	 * Set creadoPor
+	 *
+	 * @param \App\Entity\Usuario $creadoPor
+	 *
+	 * @return FichaMedica
+	 */
+	public function setCreadoPor( \App\Entity\Usuario $creadoPor = null ) {
+		$this->creadoPor = $creadoPor;
+
+		return $this;
+	}
+
+	/**
+	 * Set actualizadoPor
+	 *
+	 * @param \App\Entity\Usuario $actualizadoPor
+	 *
+	 * @return FichaMedica
+	 */
+	public function setActualizadoPor( \App\Entity\Usuario $actualizadoPor = null ) {
+		$this->actualizadoPor = $actualizadoPor;
+
+		return $this;
+	}
+
+	/**
+	 * Set doctor
+	 *
+	 * @param string $doctor
+	 *
+	 * @return FichaMedica
+	 */
+	public function setDoctor( $doctor ) {
+		$this->doctor = $doctor;
+
+		return $this;
+	}
+
+	/**
+	 * Get doctor
+	 *
+	 * @return string
+	 */
+	public function getDoctor() {
+		return $this->doctor;
+	}
+
+	/**
+	 * Set matricula
+	 *
+	 * @param string $matricula
+	 *
+	 * @return FichaMedica
+	 */
+	public function setMatricula( $matricula ) {
+		$this->matricula = $matricula;
+
+		return $this;
+	}
+
+	/**
+	 * Get matricula
+	 *
+	 * @return string
+	 */
+	public function getMatricula() {
+		return $this->matricula;
+	}
+
+	/**
+	 * Set clubJugador
+	 *
+	 * @param \App\Entity\ClubJugador $clubJugador
+	 *
+	 * @return FichaMedica
+	 */
+	public function setClubJugador( \App\Entity\ClubJugador $clubJugador = null ) {
+		$this->clubJugador = $clubJugador;
+
+		return $this;
+	}
+
+	/**
+	 * Get clubJugador
+	 *
+	 * @return \App\Entity\ClubJugador
+	 */
+	public function getClubJugador() {
+		return $this->clubJugador;
+	}
 }

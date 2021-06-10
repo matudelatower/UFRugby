@@ -24,11 +24,11 @@ class PaseController extends AbstractController {
 	 */
 	public function index( Request $request, PaseRepository $paseRepository, PaginatorInterface $paginator ): Response {
 
-		if ( $this->getUser()->hasRole( 'ROLE_ADMIN' ) ) {
+		if ( $this->isGranted( 'ROLE_ADMIN' ) ) {
 			$pases = $paseRepository->findQbAll();
-		} elseif ( $this->getUser()->hasRole( 'ROLE_UNION' ) ) {
+		} elseif ( $this->isGranted( 'ROLE_UNION' ) ) {
 			$pases = $paseRepository->findQbPendientesUnion();
-		} elseif ( $this->getUser()->hasRole( 'ROLE_CLUB' ) ) {
+		} elseif ( $this->isGranted( 'ROLE_CLUB' ) ) {
 			$pases = [];
 		}
 

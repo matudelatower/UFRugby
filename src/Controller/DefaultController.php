@@ -4,10 +4,10 @@ namespace App\Controller;
 
 use App\Entity\ClubJugador;
 use App\Entity\Jugador;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Request;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;use Knp\Component\Pager\PaginatorInterface;
 
-class DefaultController extends Controller {
+class DefaultController extends AbstractController {
 	public function indexAction() {
 
 		$em = $this->getDoctrine()->getManager();

@@ -3,39 +3,50 @@
 {% block body %}
     <div class="row">
         <div class="col-md-6">
-            <div class="box">
-                <div class="box-header">
-                    <h3 class="box-title">Jugador</h3>
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Jugador</h3>
                 </div>
-                <div class="box-body">
+                <div class="card-body">
                     <div class="row">
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">Nombre</label>
+                        <div class="col-6">
+                            <div class="form-group">
 
-                            <div class="col-sm-10">
-                                {{ jugador.jugador.persona.nombre }}
-                                {{ jugador.jugador.persona.apellido }}
+                                <label class="col-sm-10 control-label">Nombre</label>
+
+                                <div class="col-sm-10">
+                                    {{ jugador.jugador.persona.nombre }}
+                                    {{ jugador.jugador.persona.apellido }}
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label class="col-sm-10 control-label">Nº Identificación</label>
+
+                                <div class="col-sm-10">
+                                    {{ jugador.jugador.persona.tipoIdentificacion.siglas }}:
+                                    {{ jugador.jugador.persona.numeroIdentificacion }}
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-10 control-label">Posición</label>
+
+                                <div class="col-sm-10">
+                                    {{ jugador.jugador.posicionHabitual }}
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">Nº Identificación</label>
-
-                            <div class="col-sm-10">
-                                {{ jugador.jugador.persona.numeroIdentificacion }}
-                            </div>
+                        <div class="col-6">
+                            {% if jugador.jugador.persona.identificacionFileName %}
+                                <label class="col-sm-10 control-label">Identificación</label>
+                                <img src="{{ asset('uploads/identificaciones/'~ jugador.jugador.persona.identificacionFileName) }}"
+                                     class="img-fluid">
+                            {% endif %}
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">Posición</label>
 
-                            <div class="col-sm-10">
-                                {{ jugador.jugador.posicionHabitual }}
-                            </div>
-                        </div>
-                    </div>
                     {{ form_start(form) }}
                     {% if is_granted('ROLE_UNION') %}
                         {% if not jugador.jugador.altura %}
@@ -64,7 +75,7 @@
                         {% endif %}
                     {% endif %}
                     {% if competitivo %}
-                        <h3 class="box-title">Ficha Médica</h3>
+                        <h3>Ficha Médica</h3>
 
                         {% if is_granted('ROLE_UNION') %}
                             {% if not fichaMedica.prestador %}
@@ -118,7 +129,7 @@
                     {% if is_granted('ROLE_UNION') %}
                         <div class="row">
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">Matrícula</label>
+                                <label class="col-sm-12 control-label">Matrícula</label>
                                 <div class="col-sm-10">
                                     {{ fichaMedica.matricula }}
                                 </div>
@@ -126,13 +137,15 @@
                         </div>
                         <div class="row">
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">Doctor</label>
+                                <label class="col-sm-12 control-label">Doctor</label>
                                 <div class="col-sm-10">
                                     {{ fichaMedica.doctor }}
                                 </div>
                             </div>
                         </div>
+
                         {{ form_widget(form.confirmadoUnion) }}
+
                     {% endif %}
                     <button type="submit" class="btn btn-primary">Confirmar</button>
                     {{ form_end(form) }}

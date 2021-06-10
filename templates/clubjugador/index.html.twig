@@ -1,39 +1,48 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-    Jugadores
+    Fichajes
 {% endblock title %}
 {% block body %}
 
     <div class="row">
         <div class="col-md-12">
-            <div class="box">
-                <div class="box-header">
-                    <h3 class="box-title">Filtros</h3>
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Filtros</h3>
 
                 </div>
                 {{ form_start(filter_type) }}
-                <div class="box-body">
-                    <div class="col-md-6">
-                        {{ form_row(filter_type.nombre) }}
-                        {{ form_row(filter_type.numeroIdentificacion) }}
-                        {% if is_granted('ROLE_UNION') %}
-                            {{ form_row(filter_type.club) }}
-                        {% endif %}
-                        {{ form_row(filter_type.fechaRegistroDesde) }}
-                    </div>
-                    <div class="col-md-6">
-                        {{ form_row(filter_type.apellido) }}
-                        {{ form_row(filter_type.posicion) }}
-                        {{ form_row(filter_type.estadoFichaje) }}
-                        {{ form_row(filter_type.fechaRegistroHasta) }}
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            {{ form_row(filter_type.nombre) }}
+                            {{ form_row(filter_type.numeroIdentificacion) }}
+                            {% if is_granted('ROLE_UNION') %}
+                                {{ form_row(filter_type.club) }}
+                            {% endif %}
+                            {{ form_row(filter_type.estadoFichaje) }}
+                        </div>
+                        <div class="col-md-6">
+                            {{ form_row(filter_type.apellido) }}
+                            {{ form_row(filter_type.posicion) }}
+                            <div class="row">
+                                <div class="col-6">
+                                    {{ form_row(filter_type.fechaRegistroDesde) }}
+                                </div>
+                                <div class="col-6">
+                                    {{ form_row(filter_type.fechaRegistroHasta) }}
+                                </div>
+
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="box-footer">
+                <div class="card-footer">
                     {{ form_widget(filter_type.buscar) }}
                     {{ form_widget(filter_type.limpiar) }}
                 </div>
-                <div class="hidden">
+                <div class="d-none">
                     {{ form_end(filter_type) }}
                 </div>
             </div>
@@ -43,11 +52,11 @@
     <div class="row">
         <div class="col-md-12">
             <form method="post" id="form-confirmar-fichajes" action="{{ path('clubjugador_confirmar_fichajes') }}">
-                <div class="box">
-                    <div class="box-header">
-                        <h3 class="box-title">Fichajes - {{ clubJugadors.getTotalItemCount }} encontrados</h3>
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Fichajes - {{ clubJugadors.getTotalItemCount }} encontrados</h3>
                     </div>
-                    <div class="box-body">
+                    <div class="card-body">
                         <table class="table table-bordered table-striped data-table">
                             <thead>
                             <tr>
@@ -94,13 +103,17 @@
                                     <td>{% if clubJugador.fechaCreacion %}{{ clubJugador.fechaCreacion|date('d/m/Y H:i:s') }}{% endif %}</td>
                                     <td class="col-md-2">
                                         {% if not clubJugador.confirmado %}
-                                            <small class="label bg-yellow">El jugador no Confirmó su mail</small>
+                                            <small class="badge bg-warning">El jugador no Confirmó su mail</small>
                                         {% endif %}
                                         {% if not clubJugador.confirmadoUnion %}
-                                            <small class="label bg-yellow">Pendiente Unión</small>
+                                            <small class="badge bg-warning">Pendiente Unión
+                                                {% if clubJugador.jugador.persona.identificacionFileName %}
+                                                    (Recuerde Verificar Identificación)
+                                                {% endif %}
+                                            </small>
                                         {% endif %}
                                         {% if not clubJugador.confirmadoClub %}
-                                            <small class="label bg-yellow">Pendiente Club</small>
+                                            <small class="badge bg-warning">Pendiente Club</small>
                                         {% endif %}
                                     </td>
                                     <td>
@@ -114,6 +127,14 @@
                                         {% endif %}
                                         {% if (is_granted('ROLE_UNION')) %}
                                             {% if clubJugador.confirmado and clubJugador.confirmadoClub and not clubJugador.confirmadoUnion %}
+                                                {% if clubJugador.jugador.persona.identificacionFileName %}
+                                                    <a class="btn btn-default btn-ver-identificacion" data-toggle="tooltip"
+                                                       title="Ver Identificación"
+                                                       data-url="{{ path('persona_ver_identificacion', { 'persona': clubJugador.jugador.persona.id }) }}">
+                                                        <i class="far fa-address-card"></i>
+                                                    </a>
+                                                {% endif %}
+
                                                 <a class="btn btn-default" data-toggle="tooltip"
                                                    title="Confirmar Jugador"
                                                    href="{{ path('clubjugador_confirmar', { 'id': clubJugador.id }) }}">
@@ -123,13 +144,13 @@
                                             <a class="btn btn-default btn-resend" data-toggle="tooltip"
                                                title="Reenviar Mail"
                                                data-url="{{ path('clubjugador_reenviar_mail_confirmacion', { 'id': clubJugador.id }) }}">
-                                                <i class="fa fa-send"></i>
+                                                <i class="fas fa-paper-plane"></i>
                                             </a>
                                         {% endif %}
 
                                         <a class="btn btn-default" data-toggle="tooltip" title="Rechazar Jugador"
                                            href="{{ path('clubjugador_rechazar', { 'id': clubJugador.id }) }}">
-                                            <i class="fa fa-remove"></i>
+                                            <i class="fas fa-times"></i>
                                         </a>
 
                                         {% if clubJugador.confirmadoClub %}
@@ -146,7 +167,7 @@
                             </tbody>
                         </table>
                     </div>
-                    <div class="box-footer">
+                    <div class="card-footer">
                         {% if (is_granted('ROLE_UNION')) %}
                             <button type="submit" id="btn-confirmar-fichajes" class="btn btn-primary"> Confirmar
                                 Fichajes
@@ -176,7 +197,7 @@
     <div class="row">
         <div class="col-md-12 text-center">
             <div class="navigation">
-                {{ knp_pagination_render(clubJugadors) }}
+                {{ knp_pagination_render(clubJugadors, null, {}, { 'align': 'center' }) }}
             </div>
         </div>
     </div>
@@ -190,6 +211,19 @@
             $('.btn-resend').click(function () {
                 let url = $(this).data('url');
                 modalConfirm('Aviso!', 'Desea Reenviar el Mail?', url);
+            })
+
+            $('.btn-ver-identificacion').click(function () {
+                let url = $(this).data('url');
+
+                $.ajax({
+                    type: 'get',
+                    url: url,
+                    success: function (data) {
+                        modalAlert(data.data.html);
+                    }
+                });
+
             })
 
             $('#mostrar-resultados').change(function () {

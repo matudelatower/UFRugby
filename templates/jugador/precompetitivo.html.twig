@@ -3,34 +3,93 @@
 {% block title %}
 
 {% endblock title %}
+
+{% block styles %}
+    <style>
+
+        .public-box {
+            width: 85%;
+            /*margin: 7% auto;*/
+            /*margin-top: 1%;*/
+            margin-right: auto;
+            /*margin-bottom: 7%;*/
+            margin-left: auto;
+        }
+
+        .public-logo {
+            font-size: 35px;
+            text-align: center;
+            margin-bottom: 25px;
+            font-weight: 300;
+        }
+
+        .public-box-body {
+            background: #fff;
+            padding: 20px;
+            border-top: 0;
+            color: #666;
+        }
+
+        .logo {
+            width: 75%;
+        }
+
+        .form-group.has-error label {
+            color: #dd4b39;
+        }
+
+        .form-group.has-error .form-control,
+        .form-group.has-error .input-group-addon {
+            border-color: #dd4b39;
+            box-shadow: none;
+        }
+
+        .form-group.has-error .help-block {
+            color: #dd4b39;
+        }
+
+    </style>
+{% endblock styles %}
 {% block body %}
-    <div class="public-box">
+
+    <div class="col-2 offset-5 mt-3">
         <div class="public-logo center-block">
             <a href="#">
-                <img src="{{ asset('build/img/logo_urp.jpg') }}" class="img-responsive">
+                <img src="{{ asset('build/img/logo_urp.jpg') }}" class="img-fluid logo">
             </a>
         </div>
+    </div>
 
+    <div class="public-box">
         <div class="public-box-body">
-            <h1 class="text-center">EVALUACIÓN PRE-COMPETITIVA {{ "now" | date('Y') }}</h1>
+            <!-- /.login-logo -->
+            <div class="">
+                <div class="card-header text-center">
+                    <a href="#" class="h1">EVALUACIÓN PRE-COMPETITIVA {{ "now" | date('Y') }}</a>
+                </div>
+                <div class="card-body">
+                    {# <p class="login-box-msg">EVALUACIÓN PRE-COMPETITIVA {{ "now" | date('Y') }}</p> #}
 
-            <div class="row">
+                    <div class="row">
+                        <div class="col-12">
+                            <precompetitivo>
+                                <template slot="textoPresentacion">
+                                    {{ texto_presentacion.cuerpo | raw }}
+                                </template>
+                            </precompetitivo>
+                        </div>
+                    </div>
 
-                <precompetitivo>
-                    <template slot="textoPresentacion">
-                        {{ texto_presentacion.cuerpo | raw }}
-                    </template>
-                </precompetitivo>
 
+                </div>
+                <!-- /.card-body -->
             </div>
-
-
+            <!-- /.card -->
         </div>
-        <!-- /.form-box -->
     </div>
 
 {% endblock %}
 
-{% block javascript %}
+    {% block javascript %}
 
-{% endblock javascript %}
+    {% endblock javascript %}

@@ -4,108 +4,125 @@
     Dashboard
 {% endblock title %}
 {% block stylesheets %}
-    <link rel="stylesheet" href="{{ asset('build/css/charts.css') }}">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
 {% endblock stylesheets %}
 {% block body %}
 
 
-    <section class="content">
-        <!-- Small boxes (Stat box) -->
-        <div class="row">
+    {# <section class="content"> #}
+    <!-- Small boxes (Stat box) -->
+    <div class="row">
 
-            <div class="col-lg-3 col-xs-6">
-                <!-- small box -->
-                <div class="small-box bg-green">
-                    <div class="inner">
-                        <h3>{{ cantidadJugadores }}</h3>
+        <div class="col-lg-3 col-xs-6">
+            <!-- small box -->
+            <div class="small-box bg-success">
+                <div class="inner">
+                    <h3>{{ cantidadJugadores }}</h3>
 
-                        <p>Jugadores</p>
-                    </div>
-                    <div class="icon">
-                        <i class="ion ion-bag"></i>
-                    </div>
-                    <a href="{{ path('jugador_index') }}" class="small-box-footer">Mas info <i class="fa fa-arrow-circle-right"></i></a>
+                    <p>Jugadores</p>
                 </div>
-            </div>
-
-            <div class="col-lg-3 col-xs-6">
-                <!-- small box -->
-                <div class="small-box bg-aqua">
-                    <div class="inner">
-                        <h3>{{ cantidadCompetitivos }}</h3>
-
-                        <p>Jugadores Competitivos</p>
-                    </div>
-                    <div class="icon">
-                        <i class="ion ion-bag"></i>
-                    </div>
-                    <a href="#" class="small-box-footer">Mas info <i class="fa fa-arrow-circle-right"></i></a>
+                <div class="icon">
+                    <i class="ion ion-person-stalker"></i>
                 </div>
+                <a href="{{ path('jugador_index') }}" class="small-box-footer">Mas info <i
+                            class="fa fa-arrow-circle-right"></i></a>
             </div>
-
-
-            <!-- ./col -->
-            <div class="col-lg-3 col-xs-6">
-                <!-- small box -->
-                <div class="small-box bg-green">
-                    <div class="inner">
-                        <h3>{{ juvenilesSobreMayores }}<sup style="font-size: 20px">%</sup></h3>
-
-                        <p>Juveniles</p>
-                    </div>
-                    <div class="icon">
-                        <i class="ion ion-stats-bars"></i>
-                    </div>
-                    <a href="#" class="small-box-footer">Mas info <i class="fa fa-arrow-circle-right"></i></a>
-                </div>
-            </div>
-            <!-- ./col -->
-            <div class="col-lg-3 col-xs-6">
-                <!-- small box -->
-                <div class="small-box bg-yellow">
-                    <div class="inner">
-                        <h3>{{ nuevosFichajes }}</h3>
-
-                        <p>Nuevos Registros</p>
-                    </div>
-                    <div class="icon">
-                        <i class="ion ion-person-add"></i>
-                    </div>
-                    <a href="{{ path('clubjugador_index') }}" class="small-box-footer">Mas info <i class="fa fa-arrow-circle-right"></i></a>
-                </div>
-            </div>
-            <!-- ./col -->
         </div>
 
-        <div class="row">
-            <!-- Left col -->
-            <section class="col-lg-7 connectedSortable">
-                <!-- Custom tabs (Charts with tabs)-->
-                <div class="nav-tabs-custom">
-                    <!-- Tabs within a box -->
-                    <ul class="nav nav-tabs pull-right">
+        <div class="col-lg-3 col-xs-6">
+            <!-- small box -->
+            <div class="small-box bg-info">
+                <div class="inner">
+                    <h3>{{ cantidadCompetitivos }}</h3>
 
-                        <li class="pull-left header"><i class="fa fa-inbox"></i> Fichajes</li>
-                    </ul>
-                    <div class="tab-content no-padding">
+                    <p>Jugadores Competitivos</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-ribbon-a"></i>
+                </div>
+                <a href="#" class="small-box-footer">Mas info <i class="fa fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+
+
+        <!-- ./col -->
+        <div class="col-lg-3 col-xs-6">
+            <!-- small box -->
+            <div class="small-box bg-success">
+                <div class="inner">
+                    <h3>{{ juvenilesSobreMayores }}<sup style="font-size: 20px">%</sup></h3>
+
+                    <p>Juveniles</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-android-people"></i>
+                </div>
+                <a href="#" class="small-box-footer">Mas info <i class="fa fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+        <!-- ./col -->
+        <div class="col-lg-3 col-xs-6">
+            <!-- small box -->
+            <div class="small-box bg-yellow">
+                <div class="inner">
+                    <h3>{{ nuevosFichajes }}</h3>
+
+                    <p>Nuevos Registros</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-person-add"></i>
+                </div>
+                <a href="{{ path('clubjugador_index') }}" class="small-box-footer">Mas info <i
+                            class="fa fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+        <!-- ./col -->
+    </div>
+
+    <div class="row">
+
+        <section class="col-lg-7 connectedSortable">
+            <!-- Custom tabs (Charts with tabs)-->
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        <i class="fas fa-chart-pie mr-1"></i>
+
+                    </h3>
+                    <div class="card-tools">
+                        <ul class="nav nav-pills ml-auto">
+                            <li class="nav-item">
+                                <a class="nav-link active" href="#revenue-chart" data-toggle="tab">Fichajes</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div><!-- /.card-header -->
+                <div class="card-body">
+                    <div class="tab-content p-0">
+                        <!-- Morris chart - Sales -->
                         <!-- Morris chart - Sales -->
                         <div class="chart tab-pane active" id="revenue-chart"
                              style="position: relative; height: 300px;"></div>
                         <div class="chart tab-pane" id="sales-chart" style="position: relative; height: 300px;"></div>
                     </div>
-                </div>
-            </section>
-        </div>
+                </div><!-- /.card-body -->
+            </div>
+            <!-- /.card -->
 
-    </section>
+
+        </section>
+    </div>
+
+    {# </section> #}
 
 
 
 {% endblock %}
 {% block javascripts %}
     <!-- Morris.js charts -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
-    <script src="{{ asset('build/js/charts.js') }}"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
     <script>
         /* Morris.js Charts */
         // Sales chart
@@ -124,7 +141,7 @@
             //     {y: '2017 Q1', item1: 10687, item2: 4460},
             //     {y: '2017 Q2', item1: 8432, item2: 5713}
             // ],
-            data: {{ jsonCompetitivos | raw}},
+            data: {{ jsonCompetitivos | raw }},
             xkey: 'y',
             // ykeys: ['item1', 'item2'],
             ykeys: ['competitivos', 'nocompetitivos'],

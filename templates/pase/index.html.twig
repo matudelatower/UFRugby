@@ -8,11 +8,11 @@
 
     <div class="row">
     <div class="col-md-12">
-    <div class="box">
-        <div class="box-header">
-            <h3 class="box-title">Pases</h3>
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Pases</h3>
         </div>
-        <div class="box-body">
+        <div class="card-body">
             <table class="table table-bordered table-striped data-table">
                 <thead>
                 <tr>
@@ -37,7 +37,19 @@
                         </td>
                         <td>{{ pase.clubOrigen }}</td>
                         <td>{{ pase.clubDestino }}</td>
-                        <td>{{ pase.estado }}</td>
+                        <td>
+
+
+                            <small class="badge {%if pase.estado == 'Pendiente' %}
+                            badge-warning
+                            {% elseif pase.estado == 'Aprobada' %}
+                            badge-success
+                            {% elseif pase.estado == 'Rechazada' %}
+                                badge-danger
+                            {% endif %}">
+                                {{ pase.estado }}</small>
+
+                        </td>
                         <td>
                             {#<a href="{{ path('pase_show', {'id': pase.id}) }}">show</a>#}
                             {#<a href="{{ path('pase_edit', {'id': pase.id}) }}">edit</a>#}
@@ -96,7 +108,7 @@
     <div class="row">
         <div class="col-md-12 text-center">
             <div class="navigation">
-                {{ knp_pagination_render(pases) }}
+                {{ knp_pagination_render(pases, null, {}, { 'align': 'center' }) }}
             </div>
         </div>
     </div>
