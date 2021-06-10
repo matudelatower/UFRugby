@@ -20,7 +20,7 @@ class UsuarioController extends AbstractController
     /**
      * @Route("/", name="usuario_index", methods={"GET"})
      */
-    public function index(Request $request): Response
+    public function index(Request $request, PaginatorInterface $paginator): Response
     {
 
 
