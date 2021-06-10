@@ -4,14 +4,14 @@ namespace App\Controller;
 
 use App\Entity\Persona;
 use App\Form\PersonaType;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Persona controller.
  *
  */
-class PersonaController extends Controller {
+class PersonaController extends AbstractController {
 	/**
 	 * Lists all persona entities.
 	 *
