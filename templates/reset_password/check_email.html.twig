@@ -13,6 +13,11 @@
     {% block stylesheets %}
         {{ encore_entry_link_tags('css/login') }}
     {% endblock %}
+    <style>
+        .img-fluid {
+            width: 7rem;
+        }
+    </style>
 </head>
 <body class="hold-transition login-page">
 <div class="login-box">
@@ -22,8 +27,11 @@
         </div>
         <div class="card-body">
 
-            <p class="login-box-msg">Se ha enviado un correo electrónico que contiene un enlace en el que puede hacer click para restablecer su
-                contraseña. Este enlace caducará en {{ resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle') }} hora(s).</p>
+            <p class="login-box-msg">Se ha enviado un correo electrónico que contiene un enlace en el que puede hacer
+                click para restablecer su
+                contraseña. Este enlace caducará
+                en {{ resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle') }}
+                hora(s).</p>
             <p class="login-box-msg">Si no recibe un correo electrónico, revise su carpeta de correo no deseado o <a
                         href="{{ path('app_forgot_password_request') }}">Vuelva a intentar</a>.</p>
 
