@@ -16,12 +16,16 @@
     {% block stylesheets %}
         {{ encore_entry_link_tags('css/login') }}
     {% endblock %}
+    <style>
+        .img-fluid {
+            width: 7rem;
+        }
+    </style>
 </head>
 <body class="hold-transition login-page">
 <div class="login-box">
     <div class="card card-outline card-primary">
         <div class="card-header text-center">
-            {# <a href="../../index2.html" class="h1"><b>Admin</b>LTE</a> #}
             <img class="img-fluid" src="{{ logoUnion }}" alt="logo">
         </div>
         <div class="card-body">

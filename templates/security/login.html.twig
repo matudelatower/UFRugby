@@ -6,7 +6,7 @@
     <title>{{ siglas }} | Login</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" type="image/png" href="{{ logo }}">
+    <link rel="icon" type="image/png" href="{% if logo %}{{ asset('uploads/images/union/'~logo) }}{% endif %}">
 
     <!-- Ionicons -->
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
@@ -14,6 +14,11 @@
     {% block stylesheets %}
         {{ encore_entry_link_tags('css/login') }}
     {% endblock %}
+    <style>
+        .img-fluid{
+            width: 7rem;
+        }
+    </style>
 </head>
 <body class="hold-transition login-page">
 
@@ -45,7 +50,7 @@
     </div>
     <div class="login-logo">
         <a href="{{ path('app_homepage') }}">
-            <img style="margin-left: 6%" class="img-fluid" src="{{ logo }}" alt="logo">
+            <img class="img-fluid" src="{% if logo %}{{ asset('uploads/images/union/'~logo) }}{% endif %}" alt="logo">
         </a>
     </div>
     <!-- /.login-logo -->
