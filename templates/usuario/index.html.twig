@@ -4,20 +4,21 @@
     Usuarios
 {% endblock title %}
 {% block body %}
-    <div class="row m-b-2">
+    <div class="row mb-3">
         <div class="col-md-12">
             <a class="btn btn-primary" href="{{ path('usuario_new') }}">Nuevo Usuario</a>
         </div>
     </div>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-header">
-                        <h3 class="card-title">Filtros</h3>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Filtros</h3>
 
-                    </div>
-                    {{ form_start(filter_type) }}
-                    <div class="card-body">
+                </div>
+                {{ form_start(filter_type) }}
+                <div class="card-body">
+                    <div class="row">
                         <div class="col-md-6">
                             {{ form_row(filter_type.username) }}
                             {{ form_row(filter_type.email) }}
@@ -27,16 +28,17 @@
                             {{ form_row(filter_type.roles) }}
                             {{ form_row(filter_type.club) }}
                         </div>
+                    </div>
 
-                    </div>
-                    <div class="card-footer">
-                        {{ form_widget(filter_type.buscar) }}
-                        {{ form_widget(filter_type.limpiar) }}
-                    </div>
-                    {{ form_end(filter_type) }}
                 </div>
+                <div class="card-footer">
+                    {{ form_widget(filter_type.buscar) }}
+                    {{ form_widget(filter_type.limpiar) }}
+                </div>
+                {{ form_end(filter_type) }}
             </div>
         </div>
+    </div>
 
     <div class="row">
         <div class="col-md-12">
@@ -54,7 +56,6 @@
                             <th>Enabled</th>
                             <th>Club</th>
                             <th>Roles</th>
-                            <th>Último login</th>
                             <th>actions</th>
                         </tr>
                         </thead>
@@ -75,15 +76,14 @@
                                 </td>
 
 
-
-
                                 <td>{{ usuario.club }}</td>
                                 <td>{{ usuario.roles ? usuario.roles|join(', ') : '' }}</td>
-                                <td>{{ usuario.lastLogin ? usuario.lastLogin|date('Y-m-d H:i:s') : '' }}</td>
 
                                 <td>
-                                    <a class="btn btn-default" href="{{ path('usuario_show', {'id': usuario.id}) }}"><i class="fa fa-eye"></i></a>
-                                    <a class="btn btn-default" href="{{ path('usuario_edit', {'id': usuario.id}) }}"><i class="fa fa-edit"></i></a>
+                                    <a class="btn btn-default" href="{{ path('usuario_show', {'id': usuario.id}) }}"><i
+                                                class="fa fa-eye"></i></a>
+                                    <a class="btn btn-default" href="{{ path('usuario_edit', {'id': usuario.id}) }}"><i
+                                                class="fa fa-edit"></i></a>
                                 </td>
                             </tr>
 
