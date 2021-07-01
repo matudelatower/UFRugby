@@ -28,10 +28,6 @@
                             </a>
                         </li>
                         <li class="list-group-item">
-                            <b>Último Login</b> <a
-                                    class="float-right">{{ usuario.lastLogin ? usuario.lastLogin|date('Y-m-d H:i:s') : '' }}</a>
-                        </li>
-                        <li class="list-group-item">
                             <b>Roles</b> <a class="float-right">{{ usuario.roles ? usuario.roles|join(', ') : '' }}</a>
                         </li>
                     </ul>
