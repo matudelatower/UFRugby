@@ -2,7 +2,6 @@
 <html lang="es">
 <head>
     <meta charset="utf-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     {% set logoUnion = asset('uploads/images/union/logo_union.png') %}
@@ -15,12 +14,6 @@
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-    <!-- Font Awesome -->
-{#    <link rel="stylesheet" href="../../plugins/fontawesome-free/css/all.min.css">#}
-{#    <!-- icheck bootstrap -->#}
-{#    <link rel="stylesheet" href="../../plugins/icheck-bootstrap/icheck-bootstrap.min.css">#}
-{#    <!-- Theme style -->#}
-{#    <link rel="stylesheet" href="../../dist/css/adminlte.min.css">#}
     <link rel="manifest" href="{{ asset('build/manifest.json') }}">
     {{ encore_entry_link_tags('css/adminlte') }}
     {{ encore_entry_link_tags('vue') }}
@@ -29,33 +22,8 @@
     <style>
 
         #app{
-            /*width: 85%;*/
-            /*height: auto;*/
-            /*margin-top: 20rem;*/
+
         }
-
-        /*.public-box {*/
-        /*    width: 85%;*/
-        /*    margin: 7% auto;*/
-        /*}*/
-
-        /*.public-logo {*/
-        /*    font-size: 35px;*/
-        /*    text-align: center;*/
-        /*    margin-bottom: 25px;*/
-        /*    font-weight: 300;*/
-        /*}*/
-
-        /*.public-box-body {*/
-        /*    background: #fff;*/
-        /*    padding: 20px;*/
-        /*    border-top: 0;*/
-        /*    color: #666;*/
-        /*}*/
-
-        /*.public-logo {*/
-        /*    width: 10%;*/
-        /*}*/
 
     </style>
     {% block styles %}
@@ -68,10 +36,10 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel">{{ "Aviso" |trans }}!</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                             aria-hidden="true">&times;</span>
                 </button>
-                <h4 class="modal-title" id="myModalLabel">{{ "Aviso" |trans }}!</h4>
             </div>
             <div class="modal-body">
                 ...
@@ -90,13 +58,6 @@
 </div>
 
 <!-- /.login-box -->
-
-{#<!-- jQuery -->#}
-{#<script src="../../plugins/jquery/jquery.min.js"></script>#}
-{#<!-- Bootstrap 4 -->#}
-{#<script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>#}
-{#<!-- AdminLTE App -->#}
-{#<script src="../../dist/js/adminlte.min.js"></script>#}
 
 {{ encore_entry_script_tags('adminlte') }}
 {{ encore_entry_script_tags('vue') }}

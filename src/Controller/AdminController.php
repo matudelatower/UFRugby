@@ -26,20 +26,20 @@ class AdminController extends EasyAdminController {
 		return $this->listAction();
 	}
 
-	public function persistUserEntity( $user ) {
+	public function persistUsuarioEntity( $user ) {
 		$user->setPassword( $this->passwordEncoder->encodePassword(
 			$user,
-			$this->request->get( 'user' )['plainPassword']
+			$this->request->get( 'usuario' )['plainPassword']
 		) );
 		parent::persistEntity( $user );
 	}
 
 //
-	public function updateUserEntity( $user ) {
+	public function updateUsuarioEntity( $user ) {
 		if ( $this->request->get( 'user' ) && $this->request->get( 'user' )['plainPassword'] ) {
 			$user->setPassword( $this->passwordEncoder->encodePassword(
 				$user,
-				$this->request->get( 'user' )['plainPassword']
+				$this->request->get( 'usuario' )['plainPassword']
 			) );
 		}
 		parent::updateEntity( $user );
