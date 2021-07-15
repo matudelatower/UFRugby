@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\ClubJugador;
 use App\Entity\FichaMedica;
 use App\Entity\GrupoSanguineo;
+use App\Entity\ResponsableJugador;
 use App\Form\Filter\BuscarJugadoresFilterType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -184,7 +185,7 @@ class ClubJugadorController extends AbstractController {
 		$persona = $jugador->getJugador()->getPersona();
 
 		$em->remove( $jugador );
-		$responsable = $em->getRepository( 'App:ResponsableJugador' )->findOneByJugador( $jugador->getJugador() );
+		$responsable = $em->getRepository( ResponsableJugador::class )->findOneByJugador( $jugador->getJugador() );
 		if ( $responsable ) {
 			$em->remove( $responsable );
 		}

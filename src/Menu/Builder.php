@@ -6,7 +6,8 @@ use Knp\Menu\FactoryInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 
-class Builder {
+class Builder
+{
 
 	private $factory;
 	private $authorizationChecker;
@@ -16,14 +17,14 @@ class Builder {
 	 *
 	 * Add any other dependency you need
 	 */
-	public function __construct( FactoryInterface $factory, AuthorizationCheckerInterface $authorizationChecker ) {
+	public function __construct(FactoryInterface $factory, AuthorizationCheckerInterface $authorizationChecker)
+	{
 		$this->factory              = $factory;
 		$this->authorizationChecker = $authorizationChecker;
 	}
 
-	public function mainMenu( array $options ) {
-
-
+	public function mainMenu(array $options)
+	{
 		$menu = $this->factory->createItem(
 			'root',
 			[
@@ -40,14 +41,14 @@ class Builder {
 			'MENU PRINCIPAL'
 		)->setAttribute( 'class', 'nav-header' );
 
-		if ( $this->authorizationChecker->isGranted( 'ROLE_USER' ) ) {
+		if ($this->authorizationChecker->isGranted( 'ROLE_USER' )) {
 
 			$keyAdministracion = 'ADMINISTRACIÓN';
 			$menu->addChild(
 				$keyAdministracion,
 				[
 					'childrenAttributes' =>
-						[ 'class' => 'nav nav-treeview', ],
+						['class' => 'nav nav-treeview',],
 				]
 			)
 			     ->setUri( '#' )
@@ -55,88 +56,86 @@ class Builder {
 			     ->setExtra( 'icon', 'fas fa-folder' )
 			     ->setAttribute( 'class', 'nav-item has-treeview' );
 
-			if ( $this->authorizationChecker->isGranted( 'ROLE_ADMIN' ) ) {
+			if ($this->authorizationChecker->isGranted( 'ROLE_ADMIN' )) {
 
-				$menu[ $keyAdministracion ]
+				$menu[$keyAdministracion]
 					->addChild(
 						'Parámetros',
 						array(
 							'route'          => 'easyadmin',
-							'attributes'     => [ 'class' => 'nav-item' ],
-							'linkAttributes' => [ 'class' => 'nav-link' ]
+							'attributes'     => ['class' => 'nav-item'],
+							'linkAttributes' => ['class' => 'nav-link']
 						)
 					);
 
 			}
 
-			if ( $this->authorizationChecker->isGranted( 'ROLE_ADMIN' ) ||
-			     $this->authorizationChecker->isGranted( 'ROLE_UNION' ) ) {
+			if ($this->authorizationChecker->isGranted( 'ROLE_ADMIN' ) ||
+			    $this->authorizationChecker->isGranted( 'ROLE_UNION' )) {
 
-				$menu[ $keyAdministracion ]
+				$menu[$keyAdministracion]
 					->addChild(
 						'Clubes',
 						array(
 							'route'          => 'club_index',
-							'attributes'     => [ 'class' => 'nav-item' ],
-							'linkAttributes' => [ 'class' => 'nav-link' ]
+							'attributes'     => ['class' => 'nav-item'],
+							'linkAttributes' => ['class' => 'nav-link']
 						)
 					);
 
-				$menu[ $keyAdministracion ]
+				$menu[$keyAdministracion]
 					->addChild(
 						'Registro de Pagos',
 						array(
 							'route'          => 'pagoclub_index',
-							'attributes'     => [ 'class' => 'nav-item' ],
-							'linkAttributes' => [ 'class' => 'nav-link' ]
+							'attributes'     => ['class' => 'nav-item'],
+							'linkAttributes' => ['class' => 'nav-link']
 						)
 					);
 
-				$menu[ $keyAdministracion ]
+				$menu[$keyAdministracion]
 					->addChild(
 						'Pases',
 						array(
 							'route'          => 'pase_index',
-							'attributes'     => [ 'class' => 'nav-item' ],
-							'linkAttributes' => [ 'class' => 'nav-link' ]
+							'attributes'     => ['class' => 'nav-item'],
+							'linkAttributes' => ['class' => 'nav-link']
 						)
 					);
 
 			}
 
-			if ( $this->authorizationChecker->isGranted( 'ROLE_CLUB' ) ) {
-				$menu[ $keyAdministracion ]
+			if ($this->authorizationChecker->isGranted( 'ROLE_CLUB' )) {
+				$menu[$keyAdministracion]
 					->addChild(
 						'Registro de Pagos',
 						array(
 							'route'          => 'pagojugador_index',
-							'attributes'     => [ 'class' => 'nav-item' ],
-							'linkAttributes' => [ 'class' => 'nav-link' ]
+							'attributes'     => ['class' => 'nav-item'],
+							'linkAttributes' => ['class' => 'nav-link']
 						)
 					);
 
-				$menu[ $keyAdministracion ]
+				$menu[$keyAdministracion]
 					->addChild(
 						'Buscar Jugadores',
 						array(
 							'route'          => 'buscar_jugador',
-							'attributes'     => [ 'class' => 'nav-item' ],
-							'linkAttributes' => [ 'class' => 'nav-link' ]
+							'attributes'     => ['class' => 'nav-item'],
+							'linkAttributes' => ['class' => 'nav-link']
 						)
 					);
 
-
 				$menu->addChild(
 					'Pases',
-					array(
-						'childrenAttributes' => array(
-							'class' => 'treeview-menu',
-						),
-					)
+					[
+						'childrenAttributes' =>
+							['class' => 'nav nav-treeview',],
+					]
 				)
 				     ->setUri( '#' )
 				     ->setLinkAttribute( 'class', 'nav-link' )
-				     ->setExtra( 'icon', 'fas fa-exchange' )
+				     ->setExtra( 'icon', 'fas fa-exchange-alt' )
 				     ->setAttribute( 'class', 'nav-item has-treeview' );
 
 
@@ -145,8 +144,8 @@ class Builder {
 						'Solicitudes Enviadas',
 						array(
 							'route'          => 'pase_solicitudes_enviadas',
-							'attributes'     => [ 'class' => 'nav-item' ],
-							'linkAttributes' => [ 'class' => 'nav-link' ]
+							'attributes'     => ['class' => 'nav-item'],
+							'linkAttributes' => ['class' => 'nav-link']
 						)
 					);
 
@@ -155,64 +154,64 @@ class Builder {
 						'Solicitudes Recibidas',
 						array(
 							'route'          => 'pase_solicitudes_recibidas',
-							'attributes'     => [ 'class' => 'nav-item' ],
-							'linkAttributes' => [ 'class' => 'nav-link' ]
+							'attributes'     => ['class' => 'nav-item'],
+							'linkAttributes' => ['class' => 'nav-link']
 						)
 					);
 			}
 
-			if ( $this->authorizationChecker->isGranted( 'ROLE_CLUB' ) ||
-			     $this->authorizationChecker->isGranted( 'ROLE_UNION' ) ) {
+			if ($this->authorizationChecker->isGranted( 'ROLE_CLUB' ) ||
+			    $this->authorizationChecker->isGranted( 'ROLE_UNION' )) {
 
-				$menu[ $keyAdministracion ]
+				$menu[$keyAdministracion]
 					->addChild(
 						'Registro de Jugadores',
 						array(
 							'route'          => 'clubjugador_index',
-							'attributes'     => [ 'class' => 'nav-item' ],
-							'linkAttributes' => [ 'class' => 'nav-link' ]
+							'attributes'     => ['class' => 'nav-item'],
+							'linkAttributes' => ['class' => 'nav-link']
 						)
 					);
 			}
-			if ( $this->authorizationChecker->isGranted( 'ROLE_ADMIN' ) ||
-			     $this->authorizationChecker->isGranted( 'ROLE_CLUB' ) ||
-			     $this->authorizationChecker->isGranted( 'ROLE_UNION' ) ) {
-				$menu[ $keyAdministracion ]
+			if ($this->authorizationChecker->isGranted( 'ROLE_ADMIN' ) ||
+			    $this->authorizationChecker->isGranted( 'ROLE_CLUB' ) ||
+			    $this->authorizationChecker->isGranted( 'ROLE_UNION' )) {
+				$menu[$keyAdministracion]
 					->addChild(
 						'Jugadores',
 						array(
 							'route'          => 'jugador_index',
-							'attributes'     => [ 'class' => 'nav-item' ],
-							'linkAttributes' => [ 'class' => 'nav-link' ]
+							'attributes'     => ['class' => 'nav-item'],
+							'linkAttributes' => ['class' => 'nav-link']
 						)
 					);
 			}
 		}
 
-		if ( $this->authorizationChecker->isGranted( 'ROLE_ADMIN' ) ||
-		     $this->authorizationChecker->isGranted( 'ROLE_UNION' ) ||
-		     $this->authorizationChecker->isGranted( 'ROLE_REFEREE_ADMIN' ) ) {
+		if ($this->authorizationChecker->isGranted( 'ROLE_ADMIN' ) ||
+		    $this->authorizationChecker->isGranted( 'ROLE_UNION' ) ||
+		    $this->authorizationChecker->isGranted( 'ROLE_REFEREE_ADMIN' )) {
 
-			$menu[ $keyAdministracion ]
+			$menu[$keyAdministracion]
 				->addChild(
 					'Referees',
 					array(
 						'route'          => 'referee_index',
-						'attributes'     => [ 'class' => 'nav-item' ],
-						'linkAttributes' => [ 'class' => 'nav-link' ]
+						'attributes'     => ['class' => 'nav-item'],
+						'linkAttributes' => ['class' => 'nav-link']
 					)
 				);
 		}
 
-		if ( $this->authorizationChecker->isGranted( 'ROLE_UNION' ) ) {
+		if ($this->authorizationChecker->isGranted( 'ROLE_UNION' )) {
 
-			$menu[ $keyAdministracion ]
+			$menu[$keyAdministracion]
 				->addChild(
 					'Usuarios',
 					array(
 						'route'          => 'usuario_index',
-						'attributes'     => [ 'class' => 'nav-item' ],
-						'linkAttributes' => [ 'class' => 'nav-link' ]
+						'attributes'     => ['class' => 'nav-item'],
+						'linkAttributes' => ['class' => 'nav-link']
 					)
 				);
 		}
