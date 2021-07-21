@@ -55,7 +55,7 @@
                     <h2>Muchas Gracias</h2>
                     <p>
                         Se presentó una solicitud para el jugador {{ clubJugador.jugador.persona.nombre }}
-                        {{ clubJugador.jugador.persona.apellido }}, con C.I. N°
+                        {{ clubJugador.jugador.persona.apellido }}, con {{ clubJugador.jugador.persona.tipoIdentificacion.siglas }} N°
                         {{ clubJugador.jugador.persona.numeroIdentificacion }}
                     </p>
                     <p>
@@ -66,12 +66,12 @@
                             Recordá acercarle un apto físico.
                         </p>
                     {% endif %}
-                    <p>
-                        Te hemos enviado un mail con la dirección que indicaste.
-                    </p>
-                    <p>
-                        Cuando lo recibas, vas a poder imprimir tu solicitud de registro.
-                    </p>
+{#                    <p>#}
+{#                        Te hemos enviado un mail con la dirección que indicaste.#}
+{#                    </p>#}
+{#                    <p>#}
+{#                        Cuando lo recibas, vas a poder imprimir tu solicitud de registro.#}
+{#                    </p>#}
 
                 </div>
 
